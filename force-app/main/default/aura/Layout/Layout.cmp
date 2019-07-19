@@ -1,0 +1,24 @@
+<aura:component implements="forceCommunity:themeLayout" access="global" description="Sample Custom Theme Layout">
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="blueBackground" type="Boolean" default="false"/>
+ 	<aura:attribute name="smallLogo" type="Boolean" default="false" />
+
+    <div>
+        <div class="header">
+        	<div class="unum-logo">
+                <img src="{!$Resource.Logo}" alt="Unum CLI Reporting" />
+            </div>
+            <div class="header-subtitle">Claims &amp; Leave Insights</div>
+        </div>
+        <div class="navigation">
+            {!v.navBar}
+        </div>
+        <div class="mainContentArea">
+            {!v.body}
+        </div>
+        <div class="footer">
+            {!v.footer}
+        </div>
+    </div>
+</aura:component>

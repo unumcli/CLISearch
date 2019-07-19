@@ -1,3 +1,6 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
 	CLI Search
+    <c:CLISearchFilter />
+    <c:CLISearchEmployeeList />
+    
 </aura:component>

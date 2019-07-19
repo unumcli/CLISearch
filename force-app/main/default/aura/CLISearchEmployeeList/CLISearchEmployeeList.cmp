@@ -1,0 +1,72 @@
+<aura:component controller="CLISearchEmployeeList" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+        
+        <aura:attribute name="selectedOrgEvent" type="String"/>
+        <aura:attribute name="searchByValueEvent" type="String"/>
+        <aura:attribute name="searchBoxEvent" type="String"/>
+        <aura:attribute name="ssnDisplayEvent" type="String"/>
+        <aura:attribute name="numEvents" type="Integer" default="0"/>
+        <aura:attribute name="showHideMatchingResults" type="boolean" />
+        <aura:attribute name="employeeDetails" type="String" />
+    
+        
+        <!-- Attributes -->
+        <aura:attribute name="empNames" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
+                                                                          'LastName__c': 'Dixit',
+                                                                          'FirstName__c' : 'Arun',                                      
+                                                                          'SSN__c': '1234' }]"/>
+        <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
+        <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+        
+        <aura:if isTrue="{!v.showHideMatchingResults}"> 
+            <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
+                <p><strong>empCount</strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
+            </div>  
+            <div style="background-color: LightBlue ; width : 24rem">
+                
+                <div class="slds-grid slds-grid_vertical">
+                    <div class="slds-col">
+                        <div class="slds-scrollable" style="height:24rem;width:24rem">
+                            
+                            <aura:iteration items="{!v.empNames}" var="empName">
+                                
+                                <div class="slds-box">
+                                    <span class="c-container">
+                                        <lightning:layout >
+                                            
+                                            <lightning:layoutItem padding="around-small">
+                                                <div class="header-column">
+                                                    <span class="slds-avatar slds-avatar_circle">
+                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name">AB</abbr>
+                                                    </span>
+                                                </div>
+                                            </lightning:layoutItem>
+                                            
+                                            <lightning:layoutItem padding="around-small">
+                                                <ul class="slds-has-dividers_around slds-has-block-links_space">
+                                                <div class="header-column">
+                                                    <li class="slds-item">
+                                                        <a href="javascript:void(0);">{!empName.LastName__c} , {!empName.FirstName__c} </a>
+                                                    </li>
+                                                    <br/>
+                                                    <div class="search-result-id-text">
+                                                        <li class="slds-item">
+                                                            <a href="javascript:void(0);">{!empName.SSN__c}  </a>
+                                                        </li>
+                                                    </div>
+                                                     </div>
+                                                    </ul>                                       
+                                            </lightning:layoutItem>
+                                            
+                                        </lightning:layout>     
+                                    </span>
+                                </div>
+                                
+                            </aura:iteration> 
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+    </aura:component>

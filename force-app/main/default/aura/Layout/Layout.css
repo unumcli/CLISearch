@@ -1,0 +1,26 @@
+.THIS {
+    position: relative;
+    z-index: 1;
+}
+
+.THIS .header {
+    background-color: #0A5492;
+    height:80px;
+}
+
+.THIS .header .unum-logo {
+    float: left;
+    margin: 15px 15px 15px 10px;
+    padding: 0px 10px 0px 0px;
+    width: 145px;
+    height: auto;
+    border-right: 1px solid #fff;
+}
+
+.THIS .header-subtitle {
+    float: left;
+    margin: 25px 0px 0px 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 28px;
+    color:#fff;
+}
