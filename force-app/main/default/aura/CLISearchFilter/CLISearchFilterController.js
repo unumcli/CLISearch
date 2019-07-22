@@ -4,7 +4,7 @@
         var orgValidity = component.find("selectedOrg").get("v.validity");
        	var searchBoxValidity = component.find("searchBox").get("v.validity");
         if(orgValidity.valid===false||searchBoxValidity.valid===false) {
-        component.set('v.isButtonActive',false);
+        component.set('v.isButtonActive',true);
         var OrganisationField = component.find("selectedOrg");    
         OrganisationField.showHelpMessageIfInvalid();
         var searchBoxField = component.find("searchBox");    
@@ -12,22 +12,24 @@
         }
         else{
         debugger
-         component.set('v.isButtonActive',false);
+        //component.set('v.isButtonActive',true);
         var OrganisationName = component.find("selectedOrg").get("v.value");
         var searchBy = component.find("searchByValue").get("v.value");
         var searchBoxValue = component.find("searchBox").get("v.value");
         var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
         var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
         
-/*        var actionSearchByLastName = component.get("c.SearchByLastName");
-        actionSearchByLastName.setParams({ userId : "architdutt@gmail.com",vganisationId : 1,lastName: searchBoxValue,ssn: "123456789" });
-        $A.enqueueAction(actionSearchByLastName); */
+        
         
         var appEvent = $A.get("e.c:FormDataEvent");
         var OrganisationField = component.find("selectedOrg");
         appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag });
         appEvent.fire();
-   	 /*   actionSearchByLastName.setCallback(this, function(response) {
+            
+        var actionSearchByLastName = component.get("c.SearchByLastName");
+        actionSearchByLastName.setParams({ userId : "architdutt@gmail.com",organisationId : 1,lastame: searchBoxValue,ssn: "123456789" });
+        $A.enqueueAction(actionSearchByLastName); 
+   	    actionSearchByLastName.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 // Alert the user with the value returned 
@@ -51,7 +53,7 @@
                     console.log("Unknown error");
                 }
             }
-        });     */                  
+        });                      
         }
          
        
@@ -60,17 +62,33 @@
     
     ValidationCheck: function (component,event,helper) {
        var SearchByInput = component.find('searchByValue').get('v.value');
-        
        var SearchByInputSource = event.getSource();
-       var SearchedValue = event.getSource().get("v.value"); // get the right value
+       var SearchedValue = event.getSource().get("v.value");// get the right value
         debugger;
+        if(SearchedValue==="") {
+            component.set('v.SearchFlag',false);
+            component.set('v.isButtonActive',true);
+        }
+        else {
+            component.set('v.SearchFlag',true);
+            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
+            {
+              component.set('v.isButtonActive',false);  
+            }
+            else {
+                component.set('v.isButtonActive',true);
+            }
+        }
+        if(component.get('v.SearchFlag')&&component.get('v.SearchFlag'))  
+        var SearchByInput = component.find('searchByValue').get('v.value');
         if(SearchByInput==="LastName") {
         var SearchBoxInput = component.find('searchBox').get('v.value');
 		var patternLastname = new RegExp("^[A-Za-z]+$");
         var res = patternLastname.test(SearchBoxInput);
   		 if(res==true)
         {
-        console.log("valid lname");   
+        console.log("valid lname");
+         
         SearchByInputSource.setCustomValidity(''); //do not get any message
         SearchByInputSource.reportValidity();
         }
@@ -91,6 +109,7 @@
         if(res==true) 
         {
             console.log("valid empid");
+            
             SearchByInputSource.setCustomValidity(''); //do not get any message
     		SearchByInputSource.reportValidity();
             
@@ -106,6 +125,7 @@
        	   var res = patterncl.test(SearchBoxInput);
         	if(res==false) 
          {
+             
              SearchByInputSource.setCustomValidity('Leave number must be numeric'); //do not get any message
              SearchByInputSource.reportValidity();
         }
@@ -116,6 +136,7 @@
             }
           }
         else if(SearchByInput==="ClaimNumber") {
+            
            var SearchBoxInput = component.find('searchBox').get('v.value'); 
 		   var patterncl = new RegExp("^[0-9]*$");
        	   var res = patterncl.test(SearchBoxInput);
@@ -141,6 +162,7 @@
     			 SearchByInputSource.reportValidity();
        	 }
                   else if(SearchBoxInput=="") {
+                      
                 SearchByInputSource.setCustomValidity(''); //do not get any message
         		SearchByInputSource.reportValidity();
             }
@@ -151,8 +173,8 @@
         } 
                   
               }
-       component.set('v.isButtonActive',false);
-        
+       
+         
     },
     clearSearchInput: function (component, event, helper) {
         debugger;
@@ -160,7 +182,10 @@
          var searchBoxValues = component.find("searchBox");
         //var SearchByInputSource = event.getSource();
          searchBoxValues.setCustomValidity(''); 
-   		 searchBoxValues.reportValidity();        
+   		 searchBoxValues.reportValidity();
+         component.set('v.SearchFlag',false);
+         component.set('v.isButtonActive',true);
+        
 		},
     ClearSearch: function(component, event, helper){
         debugger
@@ -168,6 +193,9 @@
          clearSearchValues.setCustomValidity(''); 
    		 clearSearchValues.reportValidity();
         document.getElementById("searchForm").reset();
+        component.set('v.SearchFlag',false);
+        component.set('v.OrganisationFlag',false);
+        component.set('v.isButtonActive',true);
         component.find("searchByValue").set("v.value","LastName");
         var HideCLISearchEmployeeListEvent = $A.get("e.c:HideCLISearchEmployeeList");
         component.set("v.toggleCLISearchEmployeeList",false);
@@ -180,5 +208,26 @@
     onInit: function(component, event, helper){
         debugger
         component.find("searchByValue").set("v.value","LastName");
+    },
+    onOrgansationChange: function(component, event, helper){
+        debugger
+        var OrganisationName = component.find("selectedOrg").get("v.value");
+        var searchBoxValue = component.find("searchBox").get("v.value");
+        if(OrganisationName==='Select Organisation'){
+        component.set('v.OrganisationFlag',false);
+        component.set('v.isButtonActive',true);
+        }
+        else{
+           component.set('v.OrganisationFlag',true); 
+            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
+            {
+              component.set('v.isButtonActive',false);  
+            }
+            else {
+                component.set('v.isButtonActive',true);
+            }
+        }
+    
     }
-   })
+  
+ })

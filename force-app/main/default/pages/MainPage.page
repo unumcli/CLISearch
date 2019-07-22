@@ -1,0 +1,16 @@
+<apex:page >
+    function saveData(data, callback){
+    //TO DO
+}
+
+$Lightning.use("DemoApp", function() {
+    $Lightning.createComponent("PDFGenertorExample",
+    { 
+        sendData : saveData
+    },
+    "lightning",
+    function(cmp) {
+        // do some stuff
+    });
+});
+</apex:page>

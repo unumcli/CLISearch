@@ -3,8 +3,9 @@
     <aura:registerEvent name="HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
     <aura:handler name="init" action="{!c.onInit}" value="{!this}"/>
     <aura:attribute name="toggleCLISearchEmployeeList" type="Boolean" default="true"/>
+     <aura:attribute name="OrganisationFlag" type="Boolean" default="false"/>
+     <aura:attribute name="SearchFlag" type="Boolean" default="false"/>
     <aura:attribute name="isButtonActive" type="Boolean" default="true" /> 
-   <!-- <aura:attribute name="goButton" type="Boolean" default="false"/>  -->
    <!-- <aura:handler event="aura:waiting" action="{!c.showSpinner}"/> --> 
   <!--  <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> -->
  <!--   <aura:attribute name="Spinner" type="boolean" default="false"/> -->
@@ -27,8 +28,8 @@
             	<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	
             </div>
             <div class="slds-col">
-                <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" >
-                    <option value="">Select Organisation</option>
+                <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
+                    <option value="Select Organisation">Select Organisation</option>
                     <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
                     <option value="AA New Org">AA New Org</option>
                     <option value="AB New Org">AB New Org</option>

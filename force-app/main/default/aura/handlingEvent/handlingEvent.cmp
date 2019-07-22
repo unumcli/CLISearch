@@ -1,0 +1,4 @@
+<aura:component >
+    <aura:attribute name="DisplayEvent" type="String"/>
+	<aura:handler event="c:showEmployeeDetailsEvent" action="{!c.CLISearchEmployeeListEvent}"/>
+</aura:component>

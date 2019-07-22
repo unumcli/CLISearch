@@ -21,5 +21,21 @@
         debugger
         var toggleValue = event.getParam("hideEmployeeListComponent"); 
         component.set("v.showHideMatchingResults", toggleValue);
+    },
+    
+    clickdetails : function(component, event, helper) {
+        debugger
+        //var employeeDetails = event.getSource().getElement().getAttribute('data-EmployeeListDetails');
+        var appEvent = $A.get("e.c:showEmployeeDetailsEvent");
+        var employeeDetails = component.find("showEmployeeListDetails");
+        
+       // var btnClicked = event.getSource();         // the button
+       // var btnMessage = btnClicked.get("v.label"); // the button's label
+       // component.set("v.message", btnMessage); 
+       // appEvent.setParams({  });
+        appEvent.setParams({
+              "showEmployeeListDetails" : employeeDetails
+         });
+        appEvent.fire(); 
     }
 })

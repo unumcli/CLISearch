@@ -4,16 +4,21 @@
         <aura:attribute name="searchByValueEvent" type="String"/>
         <aura:attribute name="searchBoxEvent" type="String"/>
         <aura:attribute name="ssnDisplayEvent" type="String"/>
+    
         <aura:attribute name="numEvents" type="Integer" default="0"/>
         <aura:attribute name="showHideMatchingResults" type="boolean" />
-        <aura:attribute name="employeeDetails" type="String" />
+    
+       <!-- <aura:attribute name="employeeDetails" type="String" /> 
+        
+        <aura:registerEvent name="showEmployeeDetailsEvent" type="c:showEmployeeDetailsEvent"/> -->
     
         
         <!-- Attributes -->
         <aura:attribute name="empNames" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
-                                                                          'LastName__c': 'Dixit',
-                                                                          'FirstName__c' : 'Arun',                                      
-                                                                          'SSN__c': '1234' }]"/>
+                                                                          'LastName__c': '',
+                                                                          'FirstName__c' : '',                                      
+                                                                          'SSN__c': '' }]"/>
+    
         <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
         <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
         
@@ -42,15 +47,15 @@
                                             </lightning:layoutItem>
                                             
                                             <lightning:layoutItem padding="around-small">
-                                                <ul class="slds-has-dividers_around slds-has-block-links_space">
+                                                <ul>
                                                 <div class="header-column">
-                                                    <li class="slds-item">
-                                                        <a href="javascript:void(0);">{!empName.LastName__c} , {!empName.FirstName__c} </a>
+                                                    <li>
+                                                        <a href="#" data-EmployeeListDetails="{!empName}" onclick="{!c.clickdetails}" id="{!empName.Id}">{!empName.LastName__c} , {!empName.FirstName__c} </a>
                                                     </li>
                                                     <br/>
                                                     <div class="search-result-id-text">
                                                         <li class="slds-item">
-                                                            <a href="javascript:void(0);">{!empName.SSN__c}  </a>
+                                                            <a href="#" onclick="{!c.clickdetails}">{!empName.SSN__c}  </a>
                                                         </li>
                                                     </div>
                                                      </div>

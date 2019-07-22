@@ -1,0 +1,8 @@
+<aura:event type="APPLICATION" description="Event template" >
+    
+    <aura:attribute name="showEmployeeListDetails" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
+                                                                          'LastName__c': '',
+                                                                          'FirstName__c' : '',                                      
+                                                                          'SSN__c': '' }]" />
+    
+</aura:event>
