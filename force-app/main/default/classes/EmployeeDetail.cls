@@ -8,10 +8,10 @@ public with sharing class EmployeeDetail {
         @AuraEnabled public String ssnFilter {get;set;}
         @AuraEnabled public Integer IsClaimOrLeave {get;set;}
         @AuraEnabled public String SSN {get;set;}
-    	@AuraEnabled public List<EmployeeDetail> listEmployeeDetail {get;set;}
+    //	@AuraEnabled public List<EmployeeDetail> listEmployeeDetail {get;set;}
     
     
-    @AuraEnabled
+  /*  @AuraEnabled
   public static List<EmployeeDetail> SearchByLastName(String userId, String orgId, String searchString, String searchBy){
         System.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
         
@@ -44,17 +44,20 @@ public with sharing class EmployeeDetail {
    // return class instance
    return EmployeeDetailList;
    }
-    
+    */
     
     //Use @AuraEnabled to enable client- and server-side access to the method
- /*   @AuraEnabled
+    @AuraEnabled
     public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
         system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
-        
+        String mockRespone = '[{"EmployeeID":"29307","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29307","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
+            
         List<EmployeeDetail> employeeDetail;
+        
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://anypoint.mulesoft.com/mocking/api/v1/links/40930352-1007-455a-b14d-5f330f8dc7af/api/SearchByLastName');
+        system.debug(APIEndPoints.EmployeeDetails);
+        request.setEndpoint(APIEndPoints.EmployeeDetails);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
        // request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
@@ -68,27 +71,18 @@ public with sharing class EmployeeDetail {
         request.setBody('{"searchBy": "we","userId": "12","orgId": "12","searchString": "we"}');
         System.debug('request= ' + request);
         HttpResponse response = http.send(request);             
-        //Object results = (Object) map_results.get('animal');
-		//system.debug('results= ' + results.animal.name);
-        //return(results.animal.name);
-        //system.debug('results= ' + results);
-        // Parse the JSON response
+        
 		if (response.getStatusCode() != 200) {
     	System.debug('The status code returned was not expected: ' +
         response.getStatusCode() + ' ' + response.getStatus());
-		} else {
+		} 
+        else {
     	System.debug(response.getBody());
-        //Map<String,EmployeeDetail> map_results = (Map<String,EmployeeDetail>) JSON.deserializeUntyped(response.getBody());
-        //employeeDetail = (List<EmployeeDetail>)JSON.deserialize(JSON.stringify('[' + response.getBody() + ']'),List<EmployeeDetail>.class);
-		//employeeDetail = (List<EmployeeDetail>)response.getBody();
-		
-         //System.debug('employeeDetails = ' + employeeDetail);    
-        //EmployeeDetail result1 = (EmployeeDetail) map_results.get('EmployeeDetail');
-		//system.debug('result1= ' + result1.EmployeeID);
-        //return(result1.animal.name);             
+        employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockRespone,List<EmployeeDetail>.class);
+		System.debug(employeeDetail);         
        }
         return employeeDetail; 
         
-    }   */
+    }   
 
 }

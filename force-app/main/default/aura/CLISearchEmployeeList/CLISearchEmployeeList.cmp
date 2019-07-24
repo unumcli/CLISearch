@@ -1,52 +1,52 @@
-<aura:component controller="EmployeeDetail" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
-        
-        <aura:attribute name="selectedOrgEvent" type="String"/>
-        <aura:attribute name="searchByValueEvent" type="String"/>
-        <aura:attribute name="searchBoxEvent" type="String"/>
-        <aura:attribute name="ssnDisplayEvent" type="String"/>
-        <aura:attribute name="showHideMatchingResults" type="boolean" />
-        <aura:attribute name="employeeDetails" type="String" />
-        <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>  
-
-        <aura:registerEvent name="appEvent" type="c:showEmployeeDetailsEvent"/> 
+<aura:component  implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
     
-        
-        <!-- Attributes -->
-        <aura:attribute name="empNames" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
-                                                                          'LastName__c': '',
-                                                                          'FirstName__c' : '',                                      
-                                                                          'SSN__c': '' }]"/>
-    <aura:attribute name="empCount" type="EmployeeList__c[]" />
+    <aura:attribute name="selectedOrgEvent" type="String"/>
+    <aura:attribute name="searchByValueEvent" type="String"/>
+    <aura:attribute name="searchBoxEvent" type="String"/>
+    <aura:attribute name="ssnDisplayEvent" type="String"/>
+    <aura:attribute name="showHideMatchingResults" type="boolean" />
+    <!--  <aura:attribute name="employeeDetails" type="String" /> -->
+    <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>  
     
-        <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
-        <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
-        
-        <aura:if isTrue="{!v.showHideMatchingResults}"> 
-            <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
-                <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
-            </div>  
-            <div style="background-color: LightBlue ; width : 24rem">
-                
-                <div class="slds-grid slds-grid_vertical">
-                    <div class="slds-col">
-                        <div class="slds-scrollable" style="height:24rem;width:24rem">
+    <!--  <aura:registerEvent name="appEvent" type="c:showEmployeeDetailsEvent"/> -->
+    
+    
+    <!-- Attributes -->
+    <aura:attribute name="empNames" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
+                                                                      'LastName__c': '',
+                                                                      'FirstName__c' : '',                                      
+                                                                      'SSN__c': '' }]"/>
+    <!-- <aura:attribute name="empCount" type="EmployeeList__c[]" /> -->
+    
+    <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
+    <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+    
+    <aura:if isTrue="{!v.showHideMatchingResults}"> 
+        <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
+            <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
+        </div>  
+        <div style="background-color: LightBlue ; width : 24rem">
+            
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col">
+                    <div class="slds-scrollable" style="height:24rem;width:24rem">
+                        
+                        <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">
                             
-                            <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">
-                                
-                                <div class="slds-box">
-                                    <span class="c-container">
-                                        <lightning:layout >
-                                            
-                                            <lightning:layoutItem padding="around-small">
-                                                <div class="header-column">
-                                                    <span class="slds-avatar slds-avatar_circle">
-                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name">AB</abbr>
-                                                    </span>
-                                                </div>
-                                            </lightning:layoutItem>
-                                            
-                                            <lightning:layoutItem padding="around-small">
-                                                <ul>
+                            <div class="slds-box">
+                                <span class="c-container">
+                                    <lightning:layout >
+                                        
+                                        <lightning:layoutItem padding="around-small">
+                                            <div class="header-column">
+                                                <span class="slds-avatar slds-avatar_circle">
+                                                    <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name">AB</abbr>
+                                                </span>
+                                            </div>
+                                        </lightning:layoutItem>
+                                        
+                                        <lightning:layoutItem padding="around-small">
+                                            <ul>
                                                 <div class="header-column">
                                                     <li>
                                                         <a href="#"  onclick="{!c.clickdetails}" >{!empDetail.LastName} , {!empDetail.FirstName} </a>
@@ -57,20 +57,20 @@
                                                             <a href="#" onclick="{!c.clickdetails}">{!empDetail.SSN}  </a>
                                                         </li>
                                                     </div>
-                                                     </div>
-                                                    </ul>                                       
-                                            </lightning:layoutItem>
-                                            
-                                        </lightning:layout>     
-                                    </span>
-                                </div>
-                                
-                            </aura:iteration> 
+                                                </div>
+                                            </ul>                                       
+                                        </lightning:layoutItem>
+                                        
+                                    </lightning:layout>     
+                                </span>
+                            </div>
                             
-                        </div>
+                        </aura:iteration> 
+                        
                     </div>
                 </div>
             </div>
-        </aura:if>
-        
-    </aura:component>
+        </div>
+    </aura:if>
+    
+</aura:component>

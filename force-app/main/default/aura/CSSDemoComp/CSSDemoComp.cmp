@@ -1,0 +1,13 @@
+<aura:component >
+  <!--Select TOP LEVEL Elements-->
+    <h1>This is top level heading</h1>
+    <p>This is top level Paragraph elements</p>
+    <p id="name">I have an id</p>
+     
+  <!--Nested level Wrap in DIV-->
+    <div>
+      <h1>This is nested level (wrap in div) heading</h1>
+      <p>This is nested level (wrap in div) Paragraph elements</p>
+        <p id="name2">I have a nested id</p>
+    </div>
+</aura:component>

@@ -1,0 +1,36 @@
+.THIS.slds-form--stacked .form_row1{
+    margin: .75rem 0px;
+    background: transparent;
+}
+.THIS.slds-form--stacked .form_row2{
+    border: 1px solid #ccc;
+    margin: .75rem;
+    background: #fff;
+}
+.THIS .form_row1 label{
+    max-width:160px;
+    display:inline-block;
+}
+.THIS .form_row2 label{
+    display: inline-block;
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+    align-items: center;
+    top: 3px;
+}
+.THIS .form_row1 .slds-form-element__control{
+    display:inline-block;
+    min-width:75%;
+}
+.THIS .form_row2 .p-l-125 .slds-form-element__control{
+    padding-left:150px;
+}
+.THIS .form_row2 .slds-form-element__control{
+    display:inline-block;
+    min-width:100%;
+    padding-left:65px;
+}
+.THIS .form_row2 .slds-select,.THIS .form_row2 .slds-input{
+    border:none;
+}

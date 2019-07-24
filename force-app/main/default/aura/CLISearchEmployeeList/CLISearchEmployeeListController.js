@@ -6,16 +6,19 @@
         var searchBoxValue = event.getParam("searchBox");
         var ssnDisplayValue = event.getParam("ssnDisplay");
         var showEmployeeListComponentValue = event.getParam("showEmployeeListComponent");
+        
         var EmployeeDetailValue = event.getParam("EmployeeDetail");
+       
         // set the handler attributes based on event data
         component.set("v.selectedOrgEvent", selectedOrgValue);
         component.set("v.searchByValueEvent", searchByValues);
         component.set("v.searchBoxEvent", searchBoxValue);
         component.set("v.ssnDisplayEvent", ssnDisplayValue);
         component.set("v.showHideMatchingResults", showEmployeeListComponentValue);
+        
         component.set("v.EmployeeDetail", EmployeeDetailValue);
         
-        helper.iterateEmployeeListMethod(component);
+      //  helper.iterateEmployeeListMethod(component);
     },
     
     showHideCLISearchEmployeeListEvent : function(component, event, helper) {
@@ -34,5 +37,5 @@
               "showEmployeeListDetails" : employeeDetails
          });
         appEvent.fire(); 
-    }
+    } 
 })

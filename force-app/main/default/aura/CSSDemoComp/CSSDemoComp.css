@@ -1,0 +1,27 @@
+.THIS h1 {
+    color:red;
+    font-size:14px;
+}
+.THIS p {
+    color:red;
+    font-size:14px;
+}
+
+h1.THIS {
+    color:blue;
+    font-size:20px;
+}
+
+p.THIS {
+    color:blue;
+    font-size:20px;
+}
+
+.THIS#name {
+   color:blue; 
+   font-size:20px;
+}
+.THIS#name2 {
+    color:red;
+    font-size:14px;
+}
