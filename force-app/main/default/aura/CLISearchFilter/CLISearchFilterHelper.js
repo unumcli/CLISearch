@@ -1,5 +1,6 @@
 ({
-	helperMethod : function() {
-		
+	passCLISearchAPIResponse : function() {
+        debugger
+		 
 	}
 })

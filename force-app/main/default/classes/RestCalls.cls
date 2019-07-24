@@ -5,14 +5,14 @@ public with sharing class RestCalls {
     
     public with sharing class EmployeeDetail{
     	
-        @AuraEnabled public String EmployeeID;
-        @AuraEnabled public String FirstName;
-        @AuraEnabled public String LastName;
-        @AuraEnabled public String MiddleName;
-        @AuraEnabled public String DateOfBirth;
-        @AuraEnabled public String ssnFilter;
-        @AuraEnabled public Integer IsClaimOrLeave;
-        @AuraEnabled public String SSN;
+        @AuraEnabled public String EmployeeID {get;set;}
+        @AuraEnabled public String FirstName {get;set;}
+        @AuraEnabled public String LastName {get;set;}
+        @AuraEnabled public String MiddleName {get;set;}
+        @AuraEnabled public String DateOfBirth {get;set;}
+        @AuraEnabled public String ssnFilter {get;set;}
+        @AuraEnabled public Integer IsClaimOrLeave {get;set;}
+        @AuraEnabled public String SSN {get;set;}
     }
 
     public with sharing class ClaimLeaveData{
@@ -45,31 +45,31 @@ public with sharing class RestCalls {
         @AuraEnabled public Boolean RTWStatus;
     }
 
-    public class EmployeeCLIDetail {
-        public EmployeeDetail EmployeeDetail;
-        public ClaimLeaveData[] ClaimLeaveData;
+    public with sharing class EmployeeCLIDetail {
+        @AuraEnabled public EmployeeDetail EmployeeDetail;
+        @AuraEnabled public ClaimLeaveData[] ClaimLeaveData;
     }
 
-    public class LeaveDetails {
-        public EmployeeDetail EmployeeDetail;
-        public LeaveData LeaveData;
-        public String Historical;
-        public Date LastDayWorked;
-        public String OfficeLocation;
-        public String ManagerName;
-        public Date LeaveStartDate;
-        public Date LeaveEndDate;
-        public String LeaveSpecialist;
-        public String RelatedSTDClaims;
-        public Date ServerTime;
-        public Boolean isASR;
-        public Availabletime[] AvailableTime;
+    public with sharing class LeaveDetails {
+        @AuraEnabled public EmployeeDetail EmployeeDetail;
+        @AuraEnabled public LeaveData LeaveData;
+        @AuraEnabled public String Historical;
+        @AuraEnabled public Date LastDayWorked;
+        @AuraEnabled public String OfficeLocation;
+        @AuraEnabled public String ManagerName;
+        @AuraEnabled public Date LeaveStartDate;
+        @AuraEnabled public Date LeaveEndDate;
+        @AuraEnabled public String LeaveSpecialist;
+        @AuraEnabled public String RelatedSTDClaims;
+        @AuraEnabled public Date ServerTime;
+        @AuraEnabled public Boolean isASR;
+        @AuraEnabled public Availabletime[] AvailableTime;
     }
 
-    public class AvailableTime {
-        public String Description;
-        public String HoursTaken;
-        public String HoursAvailable;
+    public with sharing class AvailableTime {
+        @AuraEnabled public String Description;
+        @AuraEnabled public String HoursTaken;
+        @AuraEnabled public String HoursAvailable;
     }
 
     public class JSONOutput{
@@ -85,22 +85,25 @@ public with sharing class RestCalls {
 
     //Use @AuraEnabled to enable client- and server-side access to the method
     @AuraEnabled
-    public static List<EmployeeDetail> SearchByLastName (String userId, Integer organisationId, String lastName, String ssn) {
-        system.debug('inside searchByLastName' + userId + ' ' + organisationId + ' ' + lastName + ' ' +  ssn);
-        List<EmployeeDetail> results;
+    public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
+        system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
+        
+        List<EmployeeDetail> employeeDetail;
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/ffb51f70-e8be-4e18-b031-10f4e8bb7b1c/testapi/1.0.11/m/api/SearchByLastName?userId=0&organisationId=27232&lastame=Smith&ssn=partial');
-        request.setMethod('GET');
-        //request.setHeader('Content-Type','application/json');
+        request.setEndpoint('https://anypoint.mulesoft.com/mocking/api/v1/links/40930352-1007-455a-b14d-5f330f8dc7af/api/SearchByLastName');
+        request.setMethod('POST');
+        request.setHeader('Content-Type','application/json');
        // request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
         //request.setHeader('userId','architdutt@gmail.com');
        // request.setHeader('organisationId','1');
        // request.setHeader('lastName','sharma');
        // request.setHeader('ssn','123');
-		//System.debug('request= ' + request);		
+				
 	    // Set the body as a JSON object
-		//request.setBody('{"userId":"architdutt@gmail.com"},{"organisationId":1},{"lastName":"sharma"},{"ssn":"123"}');       
+		//request.setBody('{"userId":"1"},{"orgId":"orgId"},{"searchString":"searchString"},{"searchBy":"searchBy"}');
+        request.setBody('{"searchBy": "we","userId": "12","orgId": "12","searchString": "we"}');
+        System.debug('request= ' + request);
         HttpResponse response = http.send(request);             
         //Object results = (Object) map_results.get('animal');
 		//system.debug('results= ' + results.animal.name);
@@ -113,53 +116,35 @@ public with sharing class RestCalls {
 		} else {
     	System.debug(response.getBody());
         //Map<String,EmployeeDetail> map_results = (Map<String,EmployeeDetail>) JSON.deserializeUntyped(response.getBody());
-       	results = (List<EmployeeDetail>)JSON.deserialize(response.getBody(),List<EmployeeDetail>.class);
-		System.debug('results= ' + results);     
+       //	results = (List<EmployeeDetail>)JSON.deserialize(response.getBody(),List<EmployeeDetail>.class);
+		//System.debug('results= ' + results);     
         //EmployeeDetail result1 = (EmployeeDetail) map_results.get('EmployeeDetail');
 		//system.debug('result1= ' + result1.EmployeeID);
         //return(result1.animal.name);             
        }
-        return results; 
+        return employeeDetail; 
+        
+    }  
+    
+  /*   @AuraEnabled
+   public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
+        system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
+        List<EmployeeDetail> employeeDetailMock = new List<EmployeeDetail>();
+        EmployeeDetail emp1 = new EmployeeDetail (EmployeeID = 111 , FirstName='James' , LastName='Abe' , MiddleName='Smith' , DateOfBirth='01-03-1978' , ssnFilter='6789' , IsClaimOrLeave=1 , SSN='123456789');
+        EmployeeDetail emp2 = new EmployeeDetail (EmployeeID = 112 , FirstName='Maria' , LastName='R' , MiddleName='Gracia' , DateOfBirth='01-04-1978' , ssnFilter='567894123' , IsClaimOrLeave=1 , SSN='567894123');
+        EmployeeDetail emp3 = new EmployeeDetail (EmployeeID = 113 , FirstName='David' , LastName='k' , MiddleName='Smith' , DateOfBirth='01-05-1978' , ssnFilter='567423891' , IsClaimOrLeave=1 , SSN='567423891');
+        EmployeeDetail emp4 = new EmployeeDetail (EmployeeID = 114 , FirstName='Peter' , LastName='John' , MiddleName='White' , DateOfBirth='01-06-1980' , ssnFilter='4123' , IsClaimOrLeave=0 , SSN='657894123');
+        EmployeeDetail emp5 = new EmployeeDetail (EmployeeID = 115 , FirstName='Ruby' , LastName='Mie' , MiddleName='Yang' , DateOfBirth='01-04-1982' , ssnFilter='567894167' , IsClaimOrLeave=1 , SSN='567894167');
+   		employeeDetailMock.add(emp1);
+        employeeDetailMock.add(emp2);
+        employeeDetailMock.add(emp3);
+        employeeDetailMock.add(emp4);
+        employeeDetailMock.add(emp5);  
+        
+        return employeeDetailMock; 
         
     }
+*/
     
-    //Use @AuraEnabled to enable client- and server-side access to the method
-/*    @AuraEnabled
-    public static List<LeaveDetails> GetLeaveDetails (Integer leaveNo, String userId, Integer orgId, Integer employeeId) {
-        system.debug('inside GetLeaveDetails' + leaveNo + ' ' + userId + ' ' + orgId + ' ' +  employeeId);
-        List<LeaveDetails> results;
-        Http http = new Http();
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/ffb51f70-e8be-4e18-b031-10f4e8bb7b1c/testapi/1.0.11/m/api/SearchByLastName?userId=architdutt@gmail.com&organisationId=1&lastName=sharma&ssn=123');
-        request.setMethod('GET');
-        //request.setHeader('Content-Type','application/json');
-        request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
-        //request.setHeader('userId','architdutt@gmail.com');
-       // request.setHeader('organisationId','1');
-       // request.setHeader('lastName','sharma');
-       // request.setHeader('ssn','123');
-		//System.debug('request= ' + request);		
-	    // Set the body as a JSON object
-		//request.setBody('{"userId":"architdutt@gmail.com"},{"organisationId":1},{"lastName":"sharma"},{"ssn":"123"}');       
-        HttpResponse response = http.send(request);             
-        //Object results = (Object) map_results.get('animal');
-		//system.debug('results= ' + results.animal.name);
-        //return(results.animal.name);
-        //system.debug('results= ' + results);
-        // Parse the JSON response
-		if (response.getStatusCode() != 200) {
-    	System.debug('The status code returned was not expected: ' +
-        response.getStatusCode() + ' ' + response.getStatus());
-		} else {
-    	System.debug(response.getBody());
-        //Map<String,EmployeeDetail> map_results = (Map<String,EmployeeDetail>) JSON.deserializeUntyped(response.getBody());
-       	results = (List<EmployeeDetail>)JSON.deserialize(response.getBody(),List<EmployeeDetail>.class);
-		System.debug('results= ' + results);     
-        //EmployeeDetail result1 = (EmployeeDetail) map_results.get('EmployeeDetail');
-		//system.debug('result1= ' + result1.EmployeeID);
-        //return(result1.animal.name);             
-       }
-        return results; 
-        
-    }*/
+    
 }

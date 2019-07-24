@@ -6,14 +6,15 @@
         var searchBoxValue = event.getParam("searchBox");
         var ssnDisplayValue = event.getParam("ssnDisplay");
         var showEmployeeListComponentValue = event.getParam("showEmployeeListComponent");
+        var EmployeeDetailValue = event.getParam("EmployeeDetail");
         // set the handler attributes based on event data
         component.set("v.selectedOrgEvent", selectedOrgValue);
         component.set("v.searchByValueEvent", searchByValues);
         component.set("v.searchBoxEvent", searchBoxValue);
         component.set("v.ssnDisplayEvent", ssnDisplayValue);
         component.set("v.showHideMatchingResults", showEmployeeListComponentValue);
-        var numEventsHandled = parseInt(component.get("v.numEvents")) + 1;
-        component.set("v.numEvents", numEventsHandled);
+        component.set("v.EmployeeDetail", EmployeeDetailValue);
+        
         helper.iterateEmployeeListMethod(component);
     },
     
@@ -29,10 +30,6 @@
         var appEvent = $A.get("e.c:showEmployeeDetailsEvent");
         var employeeDetails = component.find("showEmployeeListDetails");
         
-       // var btnClicked = event.getSource();         // the button
-       // var btnMessage = btnClicked.get("v.label"); // the button's label
-       // component.set("v.message", btnMessage); 
-       // appEvent.setParams({  });
         appEvent.setParams({
               "showEmployeeListDetails" : employeeDetails
          });

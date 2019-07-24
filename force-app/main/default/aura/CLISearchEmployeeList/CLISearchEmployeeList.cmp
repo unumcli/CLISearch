@@ -1,16 +1,14 @@
-<aura:component controller="CLISearchEmployeeList" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+<aura:component controller="EmployeeDetail" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
         
         <aura:attribute name="selectedOrgEvent" type="String"/>
         <aura:attribute name="searchByValueEvent" type="String"/>
         <aura:attribute name="searchBoxEvent" type="String"/>
         <aura:attribute name="ssnDisplayEvent" type="String"/>
-    
-        <aura:attribute name="numEvents" type="Integer" default="0"/>
         <aura:attribute name="showHideMatchingResults" type="boolean" />
-    
-       <!-- <aura:attribute name="employeeDetails" type="String" /> 
-        
-        <aura:registerEvent name="showEmployeeDetailsEvent" type="c:showEmployeeDetailsEvent"/> -->
+        <aura:attribute name="employeeDetails" type="String" />
+        <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>  
+
+        <aura:registerEvent name="appEvent" type="c:showEmployeeDetailsEvent"/> 
     
         
         <!-- Attributes -->
@@ -18,13 +16,14 @@
                                                                           'LastName__c': '',
                                                                           'FirstName__c' : '',                                      
                                                                           'SSN__c': '' }]"/>
+    <aura:attribute name="empCount" type="EmployeeList__c[]" />
     
         <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
         <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
         
         <aura:if isTrue="{!v.showHideMatchingResults}"> 
             <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
-                <p><strong>empCount</strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
+                <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
             </div>  
             <div style="background-color: LightBlue ; width : 24rem">
                 
@@ -32,7 +31,7 @@
                     <div class="slds-col">
                         <div class="slds-scrollable" style="height:24rem;width:24rem">
                             
-                            <aura:iteration items="{!v.empNames}" var="empName">
+                            <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">
                                 
                                 <div class="slds-box">
                                     <span class="c-container">
@@ -50,12 +49,12 @@
                                                 <ul>
                                                 <div class="header-column">
                                                     <li>
-                                                        <a href="#" data-EmployeeListDetails="{!empName}" onclick="{!c.clickdetails}" id="{!empName.Id}">{!empName.LastName__c} , {!empName.FirstName__c} </a>
+                                                        <a href="#"  onclick="{!c.clickdetails}" >{!empDetail.LastName} , {!empDetail.FirstName} </a>
                                                     </li>
                                                     <br/>
                                                     <div class="search-result-id-text">
                                                         <li class="slds-item">
-                                                            <a href="#" onclick="{!c.clickdetails}">{!empName.SSN__c}  </a>
+                                                            <a href="#" onclick="{!c.clickdetails}">{!empDetail.SSN}  </a>
                                                         </li>
                                                     </div>
                                                      </div>

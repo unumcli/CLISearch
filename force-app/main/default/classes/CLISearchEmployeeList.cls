@@ -20,6 +20,9 @@ public with sharing class CLISearchEmployeeList {
         empList.add(emp7);
         empList.add(emp8);
         empList.add(emp9);
+
+        Integer empCount = [SELECT COUNT() FROM EmployeeList__c];
         return empList;
     }
+
 }

@@ -18,8 +18,14 @@
         var searchBoxValue = component.find("searchBox").get("v.value");
         var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
         var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
-        var EmployeeDetail;
-        //SearchByLastName API Call
+        
+        
+        
+        var appEvent = $A.get("e.c:FormDataEvent");
+        var OrganisationField = component.find("selectedOrg");
+        appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag });
+        appEvent.fire();
+            
         var actionSearchByLastName = component.get("c.SearchByLastName");
         actionSearchByLastName.setParams({ userId : "architdutt@gmail.com",organisationId : 1,lastame: searchBoxValue,ssn: "123456789" });
         $A.enqueueAction(actionSearchByLastName); 
@@ -28,16 +34,7 @@
             if (state === "SUCCESS") {
                 // Alert the user with the value returned 
                 // from the server
-                console.log("From server: " + response.getReturnValue());
-                component.set("v.EmployeeDetail",response.getReturnValue());
-                
-                console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail"));
-                EmployeeDetail = component.get("v.EmployeeDetail");
-                //Passing the CLISearchAPI Response
-       			var appEvent = $A.get("e.c:FormDataEvent");
-        		var OrganisationField = component.find("selectedOrg");
-        		appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail });
-        		appEvent.fire();
+                console.log("From server: " + response.getReturnValue()); 	 	 	
                 // You would typically fire a event here to trigger 
                 // client-side notification that the server-side 
                 // action is complete
@@ -56,11 +53,9 @@
                     console.log("Unknown error");
                 }
             }
-        });
-        
-       
+        });                      
         }
-          
+         
        
     },
    
@@ -233,17 +228,6 @@
             }
         }
     
-    },
-    // this function automatic call by aura:waiting event  
-    showSpinner: function(component, event, helper) {
-       // make Spinner attribute true for display loading spinner 
-        component.set("v.Spinner", true); 
-   },
-    
- // this function automatic call by aura:doneWaiting event 
-    hideSpinner : function(component,event,helper){
-     // make Spinner attribute to false for hide loading spinner    
-       component.set("v.Spinner", false);
     }
   
  })
