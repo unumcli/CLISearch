@@ -4,8 +4,15 @@
 }
 .THIS.slds-form--stacked .form_row2{
     border: 1px solid #ccc;
-    margin: .75rem;
+    margin: .75rem 0px .75rem .75rem;
     background: #fff;
+    width: 94%;
+    float: left;
+}
+.THIS.slds-form--stacked .go_btn{
+    float: left;
+    margin: 13px 0px;
+    width: 4%;
 }
 .THIS .form_row1 label{
     max-width:160px;
@@ -33,4 +40,10 @@
 }
 .THIS .form_row2 .slds-select,.THIS .form_row2 .slds-input{
     border:none;
+}
+.THIS .clearsearch{
+    width: 100%;
+    float: left;
+    text-align: right;
+    padding: 0px .75rem;
 }

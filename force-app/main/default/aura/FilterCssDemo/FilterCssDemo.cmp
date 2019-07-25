@@ -29,7 +29,7 @@
             </div>           
         </div>
         <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_11-of-12">
+            <div class="slds-col">
                 <div class="slds-grid slds-gutters form_row2">
                     <div class="slds-col slds-size_2-of-7">
                         <span></span>
@@ -59,10 +59,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slds-col slds-size_1-of-12">
-                <lightning:button label="Go" class="slds-m-top--medium" variant="brand" disabled= "{!v.isButtonActive}" />
-            	<div aura:id="firstsection">
+                <lightning:button label="Go" class="slds-m-top--medium go_btn" variant="brand" disabled= "{!v.isButtonActive}" />
+            	<div aura:id="firstsection" class="clearsearch">
                     <a href="javascript:void(0);" id="clearSearchTag" onclick="{!c.ClearSearch}"><u>Clear Search</u></a>
                 </div>
             </div>

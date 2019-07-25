@@ -49,7 +49,7 @@ public with sharing class EmployeeDetail {
     //Use @AuraEnabled to enable client- and server-side access to the method
     @AuraEnabled
     public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
-        system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
+        system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);      
         String mockRespone = '[{"EmployeeID":"29307","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29307","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
             
         List<EmployeeDetail> employeeDetail;
@@ -60,26 +60,35 @@ public with sharing class EmployeeDetail {
         request.setEndpoint(APIEndPoints.EmployeeDetails);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
-       // request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
-        //request.setHeader('userId','architdutt@gmail.com');
-       // request.setHeader('organisationId','1');
-       // request.setHeader('lastName','sharma');
-       // request.setHeader('ssn','123');
-				
+     		
 	    // Set the body as a JSON object
-		//request.setBody('{"userId":"1"},{"orgId":"orgId"},{"searchString":"searchString"},{"searchBy":"searchBy"}');
-        request.setBody('{"searchBy": "we","userId": "12","orgId": "12","searchString": "we"}');
+        request.setBody('{"searchBy": searchBy,"userId": userID,"orgId": orgId,"searchString": searchString}');
         System.debug('request= ' + request);
         HttpResponse response = http.send(request);             
         
 		if (response.getStatusCode() != 200) {
     	System.debug('The status code returned was not expected: ' +
         response.getStatusCode() + ' ' + response.getStatus());
+            try
+            {
+                employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockRespone,List<EmployeeDetail>.class);
+                System.debug(employeeDetail);
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
 		} 
         else {
-    	System.debug(response.getBody());
-        employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockRespone,List<EmployeeDetail>.class);
-		System.debug(employeeDetail);         
+            try{
+    			System.debug(response.getBody());
+        		employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockRespone,List<EmployeeDetail>.class);
+				System.debug(employeeDetail);
+               }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
        }
         return employeeDetail; 
         

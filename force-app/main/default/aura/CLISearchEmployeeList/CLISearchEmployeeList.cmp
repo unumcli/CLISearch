@@ -5,19 +5,11 @@
     <aura:attribute name="searchBoxEvent" type="String"/>
     <aura:attribute name="ssnDisplayEvent" type="String"/>
     <aura:attribute name="showHideMatchingResults" type="boolean" />
-    <!--  <aura:attribute name="employeeDetails" type="String" /> -->
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>  
-    
     <!--  <aura:registerEvent name="appEvent" type="c:showEmployeeDetailsEvent"/> -->
-    
-    
+        
     <!-- Attributes -->
-    <aura:attribute name="empNames" type="EmployeeList__c[]" default="[{ 'sobjectType': 'EmployeeList__c',
-                                                                      'LastName__c': '',
-                                                                      'FirstName__c' : '',                                      
-                                                                      'SSN__c': '' }]"/>
-    <!-- <aura:attribute name="empCount" type="EmployeeList__c[]" /> -->
-    
+    <aura:attribute name="empNames" type="EmployeeList__c[]" />
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
     
@@ -26,17 +18,13 @@
             <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
         </div>  
         <div style="background-color: LightBlue ; width : 24rem">
-            
             <div class="slds-grid slds-grid_vertical">
                 <div class="slds-col">
-                    <div class="slds-scrollable" style="height:24rem;width:24rem">
-                        
-                        <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">
-                            
+                    <div class="slds-scrollable" style="height:24rem;width:24rem">                        
+                        <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">                            
                             <div class="slds-box">
                                 <span class="c-container">
                                     <lightning:layout >
-                                        
                                         <lightning:layoutItem padding="around-small">
                                             <div class="header-column">
                                                 <span class="slds-avatar slds-avatar_circle">
@@ -44,7 +32,6 @@
                                                 </span>
                                             </div>
                                         </lightning:layoutItem>
-                                        
                                         <lightning:layoutItem padding="around-small">
                                             <ul>
                                                 <div class="header-column">
@@ -60,17 +47,13 @@
                                                 </div>
                                             </ul>                                       
                                         </lightning:layoutItem>
-                                        
                                     </lightning:layout>     
                                 </span>
                             </div>
-                            
                         </aura:iteration> 
-                        
                     </div>
                 </div>
             </div>
         </div>
     </aura:if>
-    
 </aura:component>

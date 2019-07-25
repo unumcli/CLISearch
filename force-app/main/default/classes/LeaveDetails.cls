@@ -78,13 +78,14 @@ public with sharing class LeaveDetails {
         request.setEndpoint(APIEndPoints.LeaveDetails);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
-        request.setBody('{"leaveNo": "'+ leaveNumber +'","userId": "'+ userId +'","orgId": "' + organizationId + '","employeeId": "'+ employeeId +'"}');
+        request.setBody('{"leaveNo": "120","userId": "1","orgId": "1","employeeId": "1"}');
         HttpResponse response = http.send(request);             
         if (response.getStatusCode() != 200) {
     		System.debug(response.getStatusCode() + ' - ' + response.getStatus());
             try
             {
                 leaveDetails = (LeaveDetails)JSON.deserialize(mockResponse,LeaveDetails.class);
+                System.debug(leaveDetails);
             }
             catch(Exception ex)
             {
