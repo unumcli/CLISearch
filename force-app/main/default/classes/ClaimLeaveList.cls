@@ -38,8 +38,9 @@ public with sharing class ClaimLeaveList
     }
 
     @AuraEnabled
-    public static ClaimLeaveList GetClaimLeaveList(string userId, string organizationId, string employeeId)
-    {   
+    public static ClaimLeaveList GetClaimLeaveList(string userId, string organizationId, string employeeId,Integer isClaimOrLeave)
+    {  
+        System.debug(userId + 'organizationId ' + organizationId + 'employeeId ' + employeeId + 'isClaimOrLeave' + isClaimOrLeave);
         string mockResponse = '{"EmployeeDetail":{"EmployeeID":"6430","FirstName":"Snehal","LastName":"T","DateOfBirth":"2019-06-27T08:06:51.195Z","SSN":"12344","MiddleName":"P"},"ClaimLeaveData":[{"ClaimData":{"ClaimNo":"1456789","PolicyDiv":"3424332-343","Coverage":"coverage","ReceivedDate":"2019-06-27T08:06:51.195Z","Disability":"2019-06-27T08:06:51.195Z","CurrentStatus":"string","RTWDate":"string","RTWStatus":"string","ClaimEmpId":"string"},"LeaveData":{"LeaveNo":"342432","ReportGroup":"string","Coverage":"string","LeaveReason":"string","ReceivedDate":"2019-06-27T08:06:51.195Z","LeaveStartDate":"2019-06-27T08:06:51.195Z","CurrentStatus":"string","RTWDate":"string","RTWStatus":"string"},"IsClaim":true}]}';
         ClaimLeaveList claimLeaveList;
         Http http = new Http();
@@ -47,13 +48,14 @@ public with sharing class ClaimLeaveList
         request.setEndpoint(APIEndPoints.ClaimLeaveList);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
-        request.setBody('{"userId": "'+ userId +'","orgId": "' + organizationId + '","employeeId": "'+ employeeId +'"}');
+       // request.setBody('{"userId": "'+ userId +'","orgId": "' + organizationId + '","employeeId": "'+ employeeId +'","isClaimOrLeave": "'+ isClaimOrLeave +'"}');
+        request.setBody('{"userId": "userId","orgId": "organizationId","employeeId": "employeeId","isClaimOrLeave":1}');       
         HttpResponse response = http.send(request);             
         if (response.getStatusCode() != 200) {
     		System.debug(response.getStatusCode() + ' - ' + response.getStatus());
             try
             {
-                ClaimLeaveList = (ClaimLeaveList)JSON.deserialize(mockResponse,ClaimLeaveList.class);
+                claimLeaveList = (ClaimLeaveList)JSON.deserialize(mockResponse,ClaimLeaveList.class);
             }
             catch(Exception ex)
             {
@@ -63,15 +65,15 @@ public with sharing class ClaimLeaveList
         else {
             try
             {
-                System.debug(response.getBody());
-                ClaimLeaveList = (ClaimLeaveList)JSON.deserialize(response.getBody(),ClaimLeaveList.class);
+                claimLeaveList = (ClaimLeaveList)JSON.deserialize(mockResponse,ClaimLeaveList.class);
             }
             catch(Exception ex)
             {
                 System.debug('Invalid JSON Response');
             }
-    		System.debug(ClaimLeaveList);         
+    		System.debug(claimLeaveList);      
+            
        }
-       return ClaimLeaveList;
+       return claimLeaveList;
     }
 }

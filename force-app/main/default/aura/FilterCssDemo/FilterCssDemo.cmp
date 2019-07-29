@@ -10,63 +10,102 @@
     <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> 
     <aura:attribute name="Spinner" type="boolean" default="false"/> 
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
-
-    <form id="searchForm" class="slds-form--stacked">   
-        
-        <div class="slds-grid slds-gutters form_row1">
-            <div class="slds-col">
-            	<lightning:input aura:id="policyno" label="Policy/Party ID Number" name="policypartnumber" required="false" />
-            	
-            	<!--<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	-->
-            </div>
-            <div class="slds-col slds-text-align_right">
-                <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
-                    <option value="Select Organisation">Select Organisation</option>
-                    <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
-                    <option value="AA New Org">AA New Org</option>
-                    <option value="AB New Org">AB New Org</option>
-                </lightning:select>
-            </div>           
+    
+    
+    
+    <article class="slds-card light_bg">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                
+            </header>
         </div>
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col">
-                <div class="slds-grid slds-gutters form_row2">
-                    <div class="slds-col slds-size_2-of-7">
-                        <span></span>
-                        <lightning:select aura:id="searchByValue" label="Search by:" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
-                            <option value="LastName">LastName</option>
-                            <option value="EEID">EEID</option>
-                            <option value="LeaveNumber">Leave Number</option>
-                            <option value="ClaimNumber">Claim Number</option>
-                            <option value="SSN">SSN</option>
+        <div class="slds-card__body slds-card__body_inner">
+        
+            
+            <form id="searchForm" class="slds-form--stacked">   
+        
+                <div class="slds-grid slds-glutters form_row1">
+                    <div class="slds-col slds-size_6-of-12  slds-x-large-size--1-of-2">
+                        <lightning:input aura:id="policyno" label="Policy/Party ID Number" placeholder="Enter Policy/Party ID Number" name="policypartnumber" required="false" />
+                        <!-- Brand variant: Identifies the primary action in a group of buttons -->
+                        
+                        
+                        <button class="slds-button slds-button_brand">
+                        	<span class="slds-icon_container slds-icon-standard-account" title="Next">
+                                <lightning:icon iconName="utility:forward" size="xx-small"/>
+                              <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </button>
+                        
+                        
+                        <!--<lightning:button variant="brand" label="Next" title="Next" onclick="{! c.handleClick }" />-->
+                        <!--<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	-->
+                    </div>
+                    <!--<div class="slds-col slds-size_2-of-12 slds-show_x-large"></div>-->
+                    <div class="slds-col slds-size_6-of-12 slds-x-large-size--1-of-2 slds-text-align_right org">
+                        <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
+                            <option value="Select Organisation">Select Organisation</option>
+                            <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
+                            <option value="AA New Org">AA New Org</option>
+                            <option value="AB New Org">AB New Org</option>
                         </lightning:select>
-                    </div>
-                     
-              
-                    <div class="slds-col slds-size_3-of-7">
-                        <span></span>
-                        <lightning:input aura:id="searchBox" name="enter-search" label="Search" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please Enter value to Search"/>
-                    </div>
-                    
-                    <div class="slds-col slds-size_2-of-7">
-                        <span></span>
-                        <div class="p-l-125">
-                            <lightning:select aura:id="ssnDisplay" label="SSN Display Format:" name="ssnDisplayFormat"  messageWhenValueMissing="Please Enter the SSN Format">
-                                <option value="Show Partial">Show Partial</option>
-                                <option value="Show Full">Show Full</option>
-                                <option value="Show None">Show None</option>
-                            </lightning:select> 
+                    </div>           
+                </div>
+
+                        <div class="slds-grid slds-wrap form_row2">
+                            <div class="slds-col slds-size_3-of-12">
+                                <span></span>
+                                <lightning:select aura:id="searchByValue" label="Search by:" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
+                                    <option value="LastName">Last Name</option>
+                                    <option value="EEID">EEID</option>
+                                    <option value="LeaveNumber">Leave Number</option>
+                                    <option value="ClaimNumber">Claim Number</option>
+                                    <option value="SSN">SSN</option>
+                                </lightning:select>
+                            </div>
+                             
+                      
+                            <div class="slds-col slds-size_5-of-12 m-5-0 search_section">
+                                <span></span>
+                                <span class="slds-icon_container slds-icon-standard-account search_ico" title="Next">
+                                    <lightning:icon iconName="utility:search" size="xx-small"/>
+                                  	<span class="slds-assistive-text">Next</span>
+                                </span>
+                                <lightning:input aura:id="searchBox" name="enter-search" label="" placeholder="Search" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please Enter value to Search"/> 
+                            
+                            </div>
+                            
+                            <div class="slds-col slds-size_4-of-12 p-l-12">
+                                <span></span>
+                                <div class="p-l-125">
+                                    <lightning:select aura:id="ssnDisplay" label="SSN Display Format:" name="ssnDisplayFormat"  messageWhenValueMissing="Please Enter the SSN Format">
+                                        <option value="Show Partial">Show Partial</option>
+                                        <option value="Show Full">Show Full</option>
+                                        <option value="Show None">Show None</option>
+                                    </lightning:select> 
+                                </div>
+                            </div>
+                            <lightning:button label="Go" class="slds-m-top--medium go_btn" variant="brand" disabled= "{!v.isButtonActive}" />
+                            <div aura:id="firstsection" class="clearsearch">
+                                <a href="javascript:void(0);" id="clearSearchTag" onclick="{!c.ClearSearch}"><u>Clear Search</u></a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <lightning:button label="Go" class="slds-m-top--medium go_btn" variant="brand" disabled= "{!v.isButtonActive}" />
-            	<div aura:id="firstsection" class="clearsearch">
-                    <a href="javascript:void(0);" id="clearSearchTag" onclick="{!c.ClearSearch}"><u>Clear Search</u></a>
-                </div>
-            </div>
-        </div>
+                        
+                
+            </form>
         
-    </form>
+        
+        
+        
+        </div>
+        <footer class="slds-card__footer">
+       
+        </footer>
+    </article>
+    
+    
+    
+    
     <!--loading spinner start... style=Brand Medium (blue dots)-->
   <aura:if isTrue="{!v.Spinner}"> 
    <div aura:id="spinnerId" class="slds-spinner_container"> 

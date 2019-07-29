@@ -1,6 +1,7 @@
 ({   
     OnGo:function(component, event, helper) 
     {
+        debugger
         var orgValidity = component.find("selectedOrg").get("v.validity");
        	var searchBoxValidity = component.find("searchBox").get("v.validity");
         if(orgValidity.valid === false || searchBoxValidity.valid === false) 
@@ -66,6 +67,7 @@
        
     ValidationCheck: function (component,event,helper) 
     {
+        debugger
     	var SearchByInput = component.find('searchByValue').get('v.value');
        	var SearchByInputSource = event.getSource();
        	var SearchedValue = event.getSource().get("v.value");// get the right value
@@ -196,7 +198,7 @@
         var clearSearchValues = component.find("searchBox"); 
         clearSearchValues.setCustomValidity(''); 
         clearSearchValues.reportValidity();
-        document.getElementById("searchForm").reset();
+        
         component.set('v.SearchFlag',false);
         component.set('v.OrganisationFlag',false);
         component.set('v.isButtonActive',true);
@@ -204,9 +206,11 @@
         var HideCLISearchEmployeeListEvent = $A.get("e.c:HideCLISearchEmployeeList");
         component.set("v.toggleCLISearchEmployeeList",false);
         var toggleCLISearchEmployeeListEvent = component.get("v.toggleCLISearchEmployeeList");
+        document.getElementById("searchForm").reset();
         HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });
         HideCLISearchEmployeeListEvent.fire();
-        component.set("v.toggleCLISearchEmployeeList",true);           
+        component.set("v.toggleCLISearchEmployeeList",true);
+       // helper.organsationReset(component, event, helper);
     },
     
     onInit: function(component, event, helper){
@@ -238,12 +242,14 @@
     
     //this function automatic call by aura:waiting event  
 	showSpinner: function(component, event, helper) {
+        
     	//make Spinner attribute true for display loading spinner 
         component.set("v.Spinner", true); 
    	},
     
  	//this function automatic call by aura:doneWaiting event 
     hideSpinner : function(component,event,helper){
+        
     	//make Spinner attribute to false for hide loading spinner    
        	component.set("v.Spinner", false);
     }

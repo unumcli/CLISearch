@@ -1,66 +1,77 @@
 public with sharing class ClaimDetails {
-		@AuraEnabled public ClaimData ClaimData {get; set;}
-		@AuraEnabled public ClaimInfo ClaimInfo {get; set;}
-		@AuraEnabled public ClaimStatus ClaimStatus {get; set;}
-		@AuraEnabled public EmployeeDetail EmployeeDetail {get; set;}
-		@AuraEnabled public String PaymentDetails {get; set;}
-		@AuraEnabled public String PolicyNo {get; set;}
-		@AuraEnabled public String ServerTime {get; set;}
-		@AuraEnabled public Boolean isASR {get; set;}
-    
-    public with sharing class ClaimData {
-        @AuraEnabled public Integer ClaimNo {get; set;}
-        @AuraEnabled public String PolicyDiv {get; set;}
-        @AuraEnabled public String Coverage {get; set;}
-        @AuraEnabled public Date ReceivedDate {get; set;}
-        @AuraEnabled public Date Disability {get; set;}
-        @AuraEnabled public Boolean CurrentStatus {get; set;}
-        @AuraEnabled public String RTWDate {get; set;}
-        @AuraEnabled public Boolean RTWStatus {get; set;}
-        @AuraEnabled public String ClaimEmpId {get; set;}
-    }
-    
-    public with sharing class ClaimInfo {
-		@AuraEnabled public String ApprovedThruDate {get; set;}
-		@AuraEnabled public String BenefitStartDate {get; set;}
-		@AuraEnabled public String Choice {get; set;}
-		@AuraEnabled public String ClaimClosedDate {get; set;}
-		@AuraEnabled public String ClaimClosedReason {get; set;}
-		@AuraEnabled public Integer DaysPaid {get; set;}
-		@AuraEnabled public String DiagnosticCode {get; set;}
-		@AuraEnabled public String DiagnosticDescription {get; set;}
-		@AuraEnabled public String DisabilityBenefitsSpecialist {get; set;}
-		@AuraEnabled public String DisabilityDate {get; set;}
-		@AuraEnabled public String Division {get; set;}
-		@AuraEnabled public String EligibilityGroup {get; set;}
-		@AuraEnabled public String MaximumDuartionDate {get; set;}
-		@AuraEnabled public String RTWDateFT {get; set;}
-		@AuraEnabled public String RTWDatePT {get; set;}
-		@AuraEnabled public String RelatedLeaves {get; set;}
-		@AuraEnabled public Double TotalPaidToDate {get; set;}
-		@AuraEnabled public String WorkRelated {get; set;}
+
+	@AuraEnabled public EmployeeDetail EmployeeDetail {get;set;} 
+	@AuraEnabled public ClaimData ClaimData {get;set;} 
+	@AuraEnabled public ClaimStatus ClaimStatus {get;set;} 
+	@AuraEnabled public OtherClaimInfo OtherClaimInfo {get;set;} 
+	@AuraEnabled public List<Payments> Payments {get;set;} 
+
+		
+	public with sharing class OtherClaimInfo {
+		@AuraEnabled public String DisabilityDate {get;set;} 
+		@AuraEnabled public String Division {get;set;} 
+		@AuraEnabled public String BenefitStartDate {get;set;} 
+		@AuraEnabled public String EligibilityGroup {get;set;} 
+		@AuraEnabled public String ApprovedThruDate {get;set;} 
+		@AuraEnabled public String Choice {get;set;} 
+		@AuraEnabled public String MaximumDurationDate {get;set;} 
+		@AuraEnabled public String ReturntoWorkDate {get;set;} 
+		@AuraEnabled public String DiagnosisCode {get;set;} 
+		@AuraEnabled public String ClaimClosedDate {get;set;} 
+		@AuraEnabled public String DiagnosisDescription {get;set;} 
+		@AuraEnabled public String ClaimClosedReason {get;set;} 
+		@AuraEnabled public String WorkRelated {get;set;} 
+		@AuraEnabled public String DisabilityBenefitsSpecialist {get;set;} 
+		@AuraEnabled public String RelatedLeaves {get;set;} 
+		@AuraEnabled public String MonthsPaid {get;set;} 
+		@AuraEnabled public String TotalPaidtoDate {get;set;} 
+		@AuraEnabled public String PaidThroughDate {get;set;} 
+		@AuraEnabled public String SSDIAwardDate {get;set;} 
+		@AuraEnabled public String ApprovalDate {get;set;} 
+        @AuraEnabled public String LifeBenefitsSpecialist {get;set;} 
 	}
-    
-    public with sharing class ClaimStatus {
-		@AuraEnabled public Double LastPaymentAmount {get; set;}
-		@AuraEnabled public String LastPaymentDate {get; set;}
-		@AuraEnabled public String ReceivedDate {get; set;}
-		@AuraEnabled public String StatusReason {get; set;}
+	
+	public with sharing class ClaimData {
+		@AuraEnabled public String EmployeeID {get;set;} 
+		@AuraEnabled public String ClaimNumber {get;set;} 
+		@AuraEnabled public String Coverage {get;set;} 
+		@AuraEnabled public String CurrentStatus {get;set;} 
+		@AuraEnabled public String PolicyNumber {get;set;} 
+		@AuraEnabled public String Division {get;set;} 
+		@AuraEnabled public String ClaimHistory {get;set;} 
 	}
-    
-    public with sharing class EmployeeDetail {
-		@AuraEnabled public String DateOfBirth {get; set;}
-		@AuraEnabled public String EmployeeID {get; set;}
-		@AuraEnabled public String LastName {get; set;}
-		@AuraEnabled public String MiddleName {get; set;}
-		@AuraEnabled public String SSN {get; set;}
+	
+	public with sharing class ClaimStatus {
+		@AuraEnabled public String ClaimNumber {get;set;} 
+		@AuraEnabled public String StatusReason {get;set;} 
+		@AuraEnabled public String ReceivedDate {get;set;} 
+		@AuraEnabled public String LastPaymentAmount {get;set;} 
+		@AuraEnabled public String LastPaymentDate {get;set;} 
+		@AuraEnabled public String BaseCoverage {get;set;} 
+		@AuraEnabled public String SupplementalCoverage {get;set;} 
+		@AuraEnabled public String TotalCoverage {get;set;} 
 	}
-    
-    //Use @AuraEnabled to enable client- and server-side access to the method
-    @AuraEnabled
+	
+	public with sharing class Payments {
+		@AuraEnabled public String PaymentDate {get;set;} 
+		@AuraEnabled public String PaymentType {get;set;} 
+		@AuraEnabled public String PaymentAmount {get;set;} 
+		@AuraEnabled public String PaymentPeriod {get;set;} 
+	}
+	
+	public with sharing class EmployeeDetail {
+		@AuraEnabled public String EmployeeID {get;set;} 
+		@AuraEnabled public String FirstName {get;set;} 
+		@AuraEnabled public String LastName {get;set;} 
+		@AuraEnabled public String DateOfBirth {get;set;} 
+		@AuraEnabled public String SSN {get;set;} 
+		@AuraEnabled public String MiddleName {get;set;} 
+	}
+	
+	@AuraEnabled
     public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String lastname, String ssn) {
         
-        String mockRespone = '{"EmployeeDetail":{"EmployeeID":"17421","LastName":"Smith","DateOfBirth":"2002-10-02","SSN":"454-97-7271","MiddleName":"M"},"ClaimData":{"ClaimNo":11273084,"PolicyDiv":"PHYSICIANS,ICC,CMAC/ONORTONHEALTHCAREINC.","Coverage":"SI-STD","ReceivedDate":"2002-10-02","Disability":"2002-10-02","CurrentStatus":"Closed","RTWDate":"10/12/2015","RTWStatus":""},"PolicyNo":"00604656","ClaimStatus":{"ReceivedDate":"2002-10-02","StatusReason":"RTW-OwnER","LastPaymentAmount":11417.72,"LastPaymentDate":"2002-10-02"},"ClaimInfo":{"DisabilityDate":"2002-10-02","BenefitStartDate":"2002-10-02","ApprovedThruDate":"2002-10-02","MaximumDuartionDate":"2002-10-02","RTWDatePT":"2002-10-02","RTWDateFT":"2002-10-02","ClaimClosedDate":"2002-10-02","ClaimClosedReason":"RTW-OwnER","DisabilityBenefitsSpecialist":"Taslimi,Shannon","Division":"0004-PHYSICIANS,ICC,CMAC/ONORTONHEALTHCARE,INC.","EligibilityGroup":"Allfull-timeandpart-timeemployeeswhoarestatusedtoworkaminimumof32hours(.4FTE)perbi-weeklypay","Choice":"0","DiagnosticCode":"174.9","DiagnosticDescription":"MALIGNANTNEOPLASMOFBREAST(FEMALE),UNSPECIFIED","DaysPaid":53,"TotalPaidToDate":11417.72,"WorkRelated":"N","RelatedLeaves":"5843061"},"PaymentDetails":null,"ServerTime":"2019-06-28","isASR":"False"}';
+        String mockRespone = '{"EmployeeDetail":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T08:38:45.873Z","SSN":"string","MiddleName":"string"},"ClaimData":{"EmployeeID":"string","ClaimNumber":"Number","Coverage":"string","CurrentStatus":"string","PolicyNumber":"","Division":"string","ClaimHistory":"string"},"ClaimStatus":{"ClaimNumber":"","StatusReason":"string","ReceivedDate":"2019-06-27T08:38:45.873Z","LastPaymentAmount":"","LastPaymentDate":"2019-06-27T08:38:45.873Z","BaseCoverage":"","SupplementalCoverage":"","TotalCoverage":""},"OtherClaimInfo":{"DisabilityDate":"2019-06-27T08:38:45.873Z","Division":"string","BenefitStartDate":"2019-06-27T08:38:45.873Z","EligibilityGroup":"string","ApprovedThruDate":"2019-06-27T08:38:45.873Z","Choice":"string","MaximumDurationDate":"2019-06-27T08:38:45.873Z","ReturntoWorkDate":"2019-06-27T08:38:45.873Z","DiagnosticCode":"","ClaimClosedDate":"2019-06-27T08:38:45.873Z","DiagnosticDescription":"string","ClaimClosedReason":"string","WorkRelated":"string","DisabilityBenefitsSpecialist":"string","RelatedLeaves":"string","MonthsPaid":"","TotalPaidtoDate":"2019-06-27T08:38:45.873Z","PaidThroughDate":"2019-06-27T08:38:45.873Z","SSDIAwardDate":"2019-06-27T08:38:45.873Z","ApprovalDate":"2019-06-27T08:38:45.873Z","LifeBenefitsSpecialist":"string"},"Payments":[{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"},{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"}]}';
             
         ClaimDetails claimDetails;
         
@@ -93,6 +104,5 @@ public with sharing class ClaimDetails {
         
     }   
 
-    
-    
+	
 }

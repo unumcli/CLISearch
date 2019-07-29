@@ -1,6 +1,6 @@
 ({
     fetchCLISearchFormEvent : function(component, event, helper) {
-        var selectedOrgValue = event.getParam("selectedOrg"); 
+        var selectedOrgValue = event.getParam("selectedOrg");
         var searchByValues = event.getParam("searchByValue");
         var searchBoxValue = event.getParam("searchBox");
         var ssnDisplayValue = event.getParam("ssnDisplay");
@@ -14,13 +14,13 @@
         component.set("v.showHideMatchingResults", showEmployeeListComponentValue);
         component.set("v.EmployeeDetail", EmployeeDetailValue);
     },
-    
-    showHideCLISearchEmployeeListEvent : function(component, event, helper) 
+   
+    showHideCLISearchEmployeeListEvent : function(component, event, helper)
     {
-        var toggleValue = event.getParam("hideEmployeeListComponent"); 
+        var toggleValue = event.getParam("hideEmployeeListComponent");
         component.set("v.showHideMatchingResults", toggleValue);
     },
-    
+   
     selectedEmployeeDetails : function(component, event, helper) {
         debugger
         component.set("v.showHideMatchingResults",true);
@@ -30,19 +30,19 @@
         var toggleCLISearchClaimLeaveListFlag = component.get("v.CLISearchClaimLeaveListFlag");
         var ClaimLeaveList;
         //GetClaimLeave API Call
-        	var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
-        	actionGetClaimLeave.setParams({ userId : "architdutt@gmail.com", organisationId : 1,employeeId: selectedEmployeeID,IsClaimOrLeave: IsClaimOrLeave });
-        	$A.enqueueAction(actionGetClaimLeave); 
-   	    	actionGetClaimLeave.setCallback(this, function(response) 
+            var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
+            actionGetClaimLeave.setParams({ userId : "architdutt@gmail.com", organisationId : 1,employeeId: selectedEmployeeID,IsClaimOrLeave: IsClaimOrLeave });
+            $A.enqueueAction(actionGetClaimLeave);
+               actionGetClaimLeave.setCallback(this, function(response)
             {
-            	var state = response.getState();
-            	if (state === "SUCCESS") 
+                var state = response.getState();
+                if (state === "SUCCESS")
                 {
-                	console.log("From server: " + response.getReturnValue());
-                        component.set("v.ClaimLeaveList",response.getReturnValue());
+                    console.log("From server: " + response.getReturnValue());
+                    component.set("v.ClaimLeaveList",response.getReturnValue());
                     component.set("v.claimLeaveListEmployeeDetail",response.getReturnValue().EmployeeDetail);
                     component.set("v.claimLeaveListClaimLeaveData",response.getReturnValue().ClaimLeaveData);
-                	console.log("From v.ClaimLeaveList: " + component.get("v.ClaimLeaveList"));
+                    console.log("From v.ClaimLeaveList: " + component.get("v.ClaimLeaveList"));
                     console.log("From v.claimLeaveListEmployeeDetail: " + component.get("v.claimLeaveListEmployeeDetail"));
                     console.log("From v.claimLeaveListClaimLeaveData: " + component.get("v.claimLeaveListClaimLeaveData"));
                     ClaimLeaveList = component.get("v.ClaimLeaveList");
@@ -51,28 +51,28 @@
                     var OrganisationField = component.find("selectedOrg");
                     appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData   });
                     appEvent.fire();
-            	}
-            	else if (state === "INCOMPLETE") 
+                }
+                else if (state === "INCOMPLETE")
                 {
-                	// do something
-            	}
-            	else if (state === "ERROR") 
+                    // do something
+                }
+                else if (state === "ERROR")
                 {
-                	var errors = response.getError();
-                	if (errors) 
+                    var errors = response.getError();
+                    if (errors)
                     {
-                    	if (errors[0] && errors[0].message) 
+                        if (errors[0] && errors[0].message)
                         {
-                        	console.log("Error message: " + errors[0].message);
-                    	}
-                	} 
-                	else 
-                	{
-                    	console.log("Unknown error");
-                	}
-            	}
-        	});
-        
-        
-    } 
+                            console.log("Error message: " + errors[0].message);
+                        }
+                    }
+                    else
+                    {
+                        console.log("Unknown error");
+                    }
+                }
+            });
+       
+       
+    }
 })

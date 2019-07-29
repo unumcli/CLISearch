@@ -5,30 +5,31 @@
     <aura:attribute name="searchBoxEvent" type="String"/>
     <aura:attribute name="ssnDisplayEvent" type="String"/>
     <aura:attribute name="showHideMatchingResults" type="boolean" />
-    
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
     <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" />
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
-    <aura:attribute name="passEmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="claimLeaveListEmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
+    
     
     
     <aura:registerEvent name="LoadEmployeeRecordsEvent" type="c:LoadEmployeeRecordsEvent"/>
-        
+    <!--  <aura:registerEvent name="appEvent" type="c:showEmployeeDetailsEvent"/> -->
+    
     <!-- Attributes -->
     <aura:attribute name="empNames" type="EmployeeList__c[]" />
-    
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
-    
-    <aura:renderIf isTrue="{!v.showHideMatchingResults}">
-    <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
-            <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p> 
-        </div>  
+   
+    <!-- <aura:renderIf isTrue="{!v.showHideMatchingResults}"> -->
+        <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
+            <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong> </p>
+        </div>
         <div style="background-color: LightBlue ; width : 24rem">
             <div class="slds-grid slds-grid_vertical">
                 <div class="slds-col">
-                    <div class="slds-scrollable" style="height:24rem;width:24rem">                        
-                        <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">                            
+                    <div class="slds-scrollable" style="height:24rem;width:24rem">                       
+                        <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">                           
                             <div class="slds-box">
                                 <span class="c-container">
                                     <lightning:layout >
@@ -52,19 +53,19 @@
                                                         </li>
                                                     </div>
                                                 </div>
-                                            </ul>                                       
+                                            </ul>                                      
                                         </lightning:layoutItem>
-                                    </lightning:layout>     
+                                    </lightning:layout>    
                                 </span>
                             </div>
-                        </aura:iteration> 
+                        </aura:iteration>
                     </div>
                 </div>
             </div>
         </div>
-    <aura:set attribute="else">
-      Image will come here 
-    </aura:set>
-  </aura:renderIf>
-   
+        <aura:set attribute="else">
+            Image will come here
+        </aura:set>
+  <!--  </aura:renderIf>  -->
+    
 </aura:component>

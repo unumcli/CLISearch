@@ -1,12 +1,34 @@
 ({
 	fetchEmpData : function(component, event, helper) {
         debugger
-        component.set('v.mycolumns', [
-            {label: 'Last Name', fieldName: 'LastName__c', type: 'text'},
-                {label: 'First Name', fieldName: 'FirstName__c', type: 'text'},
-                {label: 'SSN', fieldName: 'SSN__c', type: 'number'}
+         var selectedEmployeeID = event.getParam("selectedEmployeeID"); 
+        var IsClaimOrLeave = event.getParam("IsClaimOrLeave");
+        var ClaimLeaveList = event.getParam("ClaimLeaveList");
+        var toggleCLISearchClaimLeaveListFlag = event.getParam("toggleCLISearchClaimLeaveListFlag");
+        var claimLeaveListEmployeeDetail = event.getParam("claimLeaveListEmployeeDetail");
+        var claimLeaveListClaimLeaveData = event.getParam("claimLeaveListClaimLeaveData");
+        // set the handler attributes based on event data
+        component.set("v.selectedEmployeeID", selectedEmployeeID);
+        component.set("v.IsClaimOrLeave", IsClaimOrLeave);
+        component.set("v.ClaimLeaveList", ClaimLeaveList);
+        component.set("v.claimLeaveListEmployeeDetail", claimLeaveListEmployeeDetail);
+        component.set("v.claimLeaveListClaimLeaveData", claimLeaveListClaimLeaveData);
+        component.set("v.toggleCLISearchClaimLeaveListFlag", toggleCLISearchClaimLeaveListFlag);
+        
+        
+        
+       /* 
+         component.set('v.mycolumns', [
+            	{label: 'Claim #/Leave #', fieldName: 'ClaimNo', type: 'text'},
+                {label: 'Policy Div/Report Group', fieldName: 'PolicyDiv', type: 'text'},
+                {label: 'Coverage', fieldName: 'Coverage', type: 'text'},
+            	{label: 'Received Date', fieldName: 'ReceivedDate', type: 'text'},
+            	{label: 'Disability/Leave Start Date', fieldName: 'Disability', type: 'text'},
+            	{label: 'Current Status', fieldName: 'CurrentStatus', type: 'text'},
+            	{label: 'RTW Date', fieldName: 'RTWDate', type: 'text'},
+            	{label: 'RTW Status', fieldName: 'RTWStatus', type: 'text'}
             ]);
-        var action = component.get("c.getEmpData");
+       var action = component.get("c.getEmpData");
         //action.setStorable();
         action.setParams({
         });
@@ -15,13 +37,14 @@
             if (state === "SUCCESS") {
                 console.log('Response Time: '+((new Date().getTime())-requestInitiatedTime));
                 component.set("v.totalPages", Math.ceil(response.getReturnValue().length/component.get("v.pageSize")));
-                component.set("v.empNames", response.getReturnValue());
+                component.set("v.ClaimLeaveList", response.getReturnValue());
                 component.set("v.currentPageNumber",1);
                 helper.buildData(component, helper);
             }
         });
         var requestInitiatedTime = new Date().getTime();
-        $A.enqueueAction(action);
+       $A.enqueueAction(action);
+       */
         //helper.fetchEmpDataHelper(component, event, helper);
     },
     onNext : function(component, event, helper) {
