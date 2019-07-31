@@ -1,4 +1,172 @@
-.THIS.slds-spinner_container {  
-  z-index: 10000;
-  position: fixed;   
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+.THIS {
+    font-family: 'Open Sans', sans-serif;
+    font-size:14px;
+}
+
+.THIS.slds-card.light_bg{
+    background:#F6F8FA;
+}
+.THIS .form_row2{
+	margin: 30px 0px 0px;;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+    padding: 0px 15px;
+    position:relative;
+    display:flex;
+    background:#fff;
+    align-items:center;
+}
+.THIS label{
+    font-size:100%;
+}
+.THIS .go_btn{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
+    margin:0px;
+}
+.THIS .slds-card__body{
+    padding:30px .75rem;
+}
+.THIS .form_row1 label{
+    display: inline-block;
+    position: absolute;
+    left:0px;
+    top: 3px;
+}
+.THIS .form_row2 label{
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+    align-items: center;
+    top: 0;
+    padding: 0;
+    display: flex;
+}
+.THIS .form_row2 .search_section label{
+    left:22px;
+}
+.THIS .form_row1 .org label{
+    left:15px;
+}
+.THIS .form_row2 .m-5-0{
+    position:relative;
+    padding:0px 15px;
+}
+.THIS .form_row2 .search_ico{
+    position: absolute;
+    left: 18px;
+    top: 7px;
+    background:transparent;
+}
+.THIS .form_row2 .m-5-0:after{
+    content:'|';
+    position:absolute;
+    font-size:20px;
+    right:0px;
+    color:#ccc;
+    top:0;
+}
+.THIS .p-l-12{
+    padding-left:12px;
+}
+.THIS .p-l-12 select{
+    padding-left:20px;
+}
+.THIS .form_row2 .m-5-0:before{
+    content:'|';
+    position:absolute;
+    font-size:20px;
+    left:0px;
+    color:#ccc;
+    top:0;
+}
+.THIS .form_row1 .slds-form-element__control{
+    display: inline-block;
+    width: 100%;
+    padding-left: 165px;
+    float: left;
+}
+.THIS .form_row1 .slds-col{
+    position:relative;
+}
+.THIS .form_row1 .slds-col button{
+    position: relative;
+    float: right;
+    margin-top: -32px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.THIS .form_row2 .p-l-125 .slds-form-element__control{
+    padding-left:120px;
+}
+.THIS .form_row2 .p-l-125 .slds-select_container{
+    margin-right:35px;
+}
+.THIS .slds-select_container:before, .THIS .slds-select_container:after {
+    /* position: absolute; */
+    /* content: ''; */
+    /* display: block; */
+    /* right: .5rem; */
+    width: 0;
+    height: 0;
+    border-left: none;
+    border-right: none;
+    pointer-events: none;
+    border-bottom:none;
+}
+.THIS .slds-select_container:before, .THIS .slds-select_container:before {
+    border-style: solid;
+    border-width: .15em .15em 0 0;
+    content: '';
+    display: inline-block;
+    height: .5em;
+    left: auto;
+    right:15px;
+    position: absolute;
+    top: .15em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: .5em;
+    border-color:#0A5492;
+    top: 12px;
+    transform: rotate(135deg);
+}
+.THIS .form_row1 .slds-icon-text-default {
+    fill: rgb(255, 255, 255);
+}
+.THIS .form_row1 .slds-icon-standard-account{
+    background:transparent;
+}
+.THIS .form_row2 .slds-form-element__control{
+    display:inline-block;
+    min-width:100%;
+    padding-left:65px;
+}
+.THIS .form_row2 .search_section .slds-form-element__control{
+    padding-left:20px;
+}
+.THIS .form_row2 .slds-select,.THIS .form_row2 .slds-input{
+    border:none;
+}
+.THIS .clearsearch{
+    text-align: right;
+    position:absolute;
+    bottom:-25px;
+    right:0;
+}
+
+.THIS .slds-has-error .slds-form-element__help {
+    position: absolute;
+}
+
+.THIS .slds-select:focus,.THIS .slds-select:active, .THIS .slds-input:focus, .THIS .slds-input:active,.THIS .slds-input:required:focus {
+    outline: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow:none;
 }

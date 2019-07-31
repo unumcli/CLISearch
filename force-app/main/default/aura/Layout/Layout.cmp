@@ -3,14 +3,67 @@
     <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
     <aura:attribute name="blueBackground" type="Boolean" default="false"/>
  	<aura:attribute name="smallLogo" type="Boolean" default="false" />
+<ltng:require styles="{!$Resource.ThemifyFontCss}" />
+    <ltng:require styles="{!$Resource.OpenSansCss}" />
+  <ltng:require styles="{!$Resource.UnumCLICss}" />  
+    
 
     <div>
         <div class="header">
         	<div class="unum-logo">
                 <img src="{!$Resource.Logo}" alt="Unum CLI Reporting" />
             </div>
-            <div class="header-subtitle">Claims &amp; Leave Insights</div>
+            <div class="header-subtitle">Claims &amp; Leave Insights</div>            
         </div>
+
+<div class="slds-builder-header_container">
+<header class="slds-builder-header">
+<div class="slds-builder-header__item">
+<div class="slds-builder-header__item-label slds-media slds-media_center">
+<div class="slds-media__body"><img src="{!$Resource.Logo}" alt="Unum CLI Reporting" /></div>
+</div>
+</div>
+    <div class="slds-builder-header__item slds-has-flexi-truncate">
+        <h1 class="slds-builder-header__item-label">
+            <span class="slds-truncate" title="Page Type">Claims &amp; Leave Insights</span>
+        </h1>
+    </div>    
+<div class="slds-builder-header__item slds-builder-header__utilities">
+<div class="slds-builder-header__utilities-item">
+<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+<div class="slds-media__figure">
+<span class="slds-icon_container slds-icon-utility-back slds-current-color">
+</span>
+</div>
+<div class="slds-media__body">
+<span class="themify-icon-bell"></span> 
+</div>
+</a>
+</div>
+<div class="slds-builder-header__utilities-item">
+<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+<div class="slds-media__figure">
+<span class="slds-icon_container slds-icon-utility-back slds-current-color">
+</span>
+</div>
+<div class="slds-media__body">
+<span class="themify-icon-settings"></span> 
+</div>
+</a>
+</div>    
+<div class="slds-builder-header__utilities-item">
+<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+<div class="slds-media__figure">
+<span class="slds-icon_container slds-icon-utility-help slds-current-color">
+</span>
+</div>
+<div class="slds-media__body">Help</div>
+</a>
+</div>
+</div>
+</header>
+</div>     
+        
         <div class="navigation">
             {!v.navBar}
         </div>

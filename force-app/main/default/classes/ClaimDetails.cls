@@ -1,14 +1,19 @@
 public with sharing class ClaimDetails {
 
-	@AuraEnabled public EmployeeDetail EmployeeDetail {get;set;} 
-	@AuraEnabled public ClaimData ClaimData {get;set;} 
+	@AuraEnabled public Header EmployeeDetail {get;set;} 
 	@AuraEnabled public ClaimStatus ClaimStatus {get;set;} 
-	@AuraEnabled public OtherClaimInfo OtherClaimInfo {get;set;} 
 	@AuraEnabled public List<Payments> Payments {get;set;} 
 
-		
-	public with sharing class OtherClaimInfo {
-		@AuraEnabled public String DisabilityDate {get;set;} 
+	public with sharing class ClaimStatus {
+		@AuraEnabled public String ClaimNumber {get;set;} 
+		@AuraEnabled public String StatusReason {get;set;} 
+		@AuraEnabled public String ReceivedDate {get;set;} 
+		@AuraEnabled public String LastPaymentAmount {get;set;} 
+		@AuraEnabled public String LastPaymentDate {get;set;} 
+		@AuraEnabled public String BaseCoverage {get;set;} 
+		@AuraEnabled public String SupplementalCoverage {get;set;} 
+		@AuraEnabled public String TotalCoverage {get;set;}
+        @AuraEnabled public String DisabilityDate {get;set;} 
 		@AuraEnabled public String Division {get;set;} 
 		@AuraEnabled public String BenefitStartDate {get;set;} 
 		@AuraEnabled public String EligibilityGroup {get;set;} 
@@ -31,27 +36,6 @@ public with sharing class ClaimDetails {
         @AuraEnabled public String LifeBenefitsSpecialist {get;set;} 
 	}
 	
-	public with sharing class ClaimData {
-		@AuraEnabled public String EmployeeID {get;set;} 
-		@AuraEnabled public String ClaimNumber {get;set;} 
-		@AuraEnabled public String Coverage {get;set;} 
-		@AuraEnabled public String CurrentStatus {get;set;} 
-		@AuraEnabled public String PolicyNumber {get;set;} 
-		@AuraEnabled public String Division {get;set;} 
-		@AuraEnabled public String ClaimHistory {get;set;} 
-	}
-	
-	public with sharing class ClaimStatus {
-		@AuraEnabled public String ClaimNumber {get;set;} 
-		@AuraEnabled public String StatusReason {get;set;} 
-		@AuraEnabled public String ReceivedDate {get;set;} 
-		@AuraEnabled public String LastPaymentAmount {get;set;} 
-		@AuraEnabled public String LastPaymentDate {get;set;} 
-		@AuraEnabled public String BaseCoverage {get;set;} 
-		@AuraEnabled public String SupplementalCoverage {get;set;} 
-		@AuraEnabled public String TotalCoverage {get;set;} 
-	}
-	
 	public with sharing class Payments {
 		@AuraEnabled public String PaymentDate {get;set;} 
 		@AuraEnabled public String PaymentType {get;set;} 
@@ -59,19 +43,25 @@ public with sharing class ClaimDetails {
 		@AuraEnabled public String PaymentPeriod {get;set;} 
 	}
 	
-	public with sharing class EmployeeDetail {
+	public with sharing class Header {
 		@AuraEnabled public String EmployeeID {get;set;} 
 		@AuraEnabled public String FirstName {get;set;} 
 		@AuraEnabled public String LastName {get;set;} 
 		@AuraEnabled public String DateOfBirth {get;set;} 
 		@AuraEnabled public String SSN {get;set;} 
 		@AuraEnabled public String MiddleName {get;set;} 
+        @AuraEnabled public String ClaimNumber {get;set;} 
+		@AuraEnabled public String Coverage {get;set;} 
+		@AuraEnabled public String CurrentStatus {get;set;} 
+		@AuraEnabled public String PolicyNumber {get;set;} 
+		@AuraEnabled public String Division {get;set;} 
+		@AuraEnabled public String ClaimHistory {get;set;} 
 	}
 	
 	@AuraEnabled
     public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String lastname, String ssn) {
         
-        String mockRespone = '{"EmployeeDetail":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T08:38:45.873Z","SSN":"string","MiddleName":"string"},"ClaimData":{"EmployeeID":"string","ClaimNumber":"Number","Coverage":"string","CurrentStatus":"string","PolicyNumber":"","Division":"string","ClaimHistory":"string"},"ClaimStatus":{"ClaimNumber":"","StatusReason":"string","ReceivedDate":"2019-06-27T08:38:45.873Z","LastPaymentAmount":"","LastPaymentDate":"2019-06-27T08:38:45.873Z","BaseCoverage":"","SupplementalCoverage":"","TotalCoverage":""},"OtherClaimInfo":{"DisabilityDate":"2019-06-27T08:38:45.873Z","Division":"string","BenefitStartDate":"2019-06-27T08:38:45.873Z","EligibilityGroup":"string","ApprovedThruDate":"2019-06-27T08:38:45.873Z","Choice":"string","MaximumDurationDate":"2019-06-27T08:38:45.873Z","ReturntoWorkDate":"2019-06-27T08:38:45.873Z","DiagnosticCode":"","ClaimClosedDate":"2019-06-27T08:38:45.873Z","DiagnosticDescription":"string","ClaimClosedReason":"string","WorkRelated":"string","DisabilityBenefitsSpecialist":"string","RelatedLeaves":"string","MonthsPaid":"","TotalPaidtoDate":"2019-06-27T08:38:45.873Z","PaidThroughDate":"2019-06-27T08:38:45.873Z","SSDIAwardDate":"2019-06-27T08:38:45.873Z","ApprovalDate":"2019-06-27T08:38:45.873Z","LifeBenefitsSpecialist":"string"},"Payments":[{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"},{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"}]}';
+        String mockRespone = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T08:38:45.873Z","SSN":"string","MiddleName":"string","ClaimNumber":"Number","Coverage":"string","CurrentStatus":"string","PolicyNumber":"","Division":"string","ClaimHistory":"string"},"ClaimStatus":{"ClaimNumber":"","StatusReason":"string","ReceivedDate":"2019-06-27T08:38:45.873Z","LastPaymentAmount":"","LastPaymentDate":"2019-06-27T08:38:45.873Z","BaseCoverage":"","SupplementalCoverage":"","TotalCoverage":"","DisabilityDate":"2019-06-27T08:38:45.873Z","Division":"string","BenefitStartDate":"2019-06-27T08:38:45.873Z","EligibilityGroup":"string","ApprovedThruDate":"2019-06-27T08:38:45.873Z","Choice":"string","MaximumDurationDate":"2019-06-27T08:38:45.873Z","ReturntoWorkDate":"2019-06-27T08:38:45.873Z","DiagnosticCode":"","ClaimClosedDate":"2019-06-27T08:38:45.873Z","DiagnosticDescription":"string","ClaimClosedReason":"string","WorkRelated":"string","DisabilityBenefitsSpecialist":"string","RelatedLeaves":"string","MonthsPaid":"","TotalPaidtoDate":"2019-06-27T08:38:45.873Z","PaidThroughDate":"2019-06-27T08:38:45.873Z","SSDIAwardDate":"2019-06-27T08:38:45.873Z","ApprovalDate":"2019-06-27T08:38:45.873Z","LifeBenefitsSpecialist":"string"},"Payments":[{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"},{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"}]}';
             
         ClaimDetails claimDetails;
         

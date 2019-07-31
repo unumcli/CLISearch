@@ -24,3 +24,10 @@
     font-size: 28px;
     color:#fff;
 }
+.THIS .slds-builder-header {
+    background-color: #0a5492;
+    padding: 15px 0px;
+}
+.THIS .slds-builder-header .slds-media__body img{
+    height:50px;
+}
