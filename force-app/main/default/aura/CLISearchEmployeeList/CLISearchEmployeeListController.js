@@ -6,6 +6,7 @@
         var ssnDisplayValue = event.getParam("ssnDisplay");
         var showEmployeeListComponentValue = event.getParam("showEmployeeListComponent");
         var EmployeeDetailValue = event.getParam("EmployeeDetail");
+        var employeeCount = event.getParam("empCount");
         // set the handler attributes based on event data
         component.set("v.selectedOrgEvent", selectedOrgValue);
         component.set("v.searchByValueEvent", searchByValues);
@@ -13,6 +14,8 @@
         component.set("v.ssnDisplayEvent", ssnDisplayValue);
         component.set("v.showHideMatchingResults", showEmployeeListComponentValue);
         component.set("v.EmployeeDetail", EmployeeDetailValue);
+        component.set("v.empCountEvent", employeeCount);
+       
     },
     
     showHideCLISearchEmployeeListEvent : function(component, event, helper) 
@@ -39,7 +42,7 @@
             	if (state === "SUCCESS") 
                 {
                 	console.log("From server: " + response.getReturnValue());
-                        component.set("v.ClaimLeaveList",response.getReturnValue());
+                    component.set("v.ClaimLeaveList",response.getReturnValue());
                     component.set("v.claimLeaveListEmployeeDetail",response.getReturnValue().EmployeeDetail);
                     component.set("v.claimLeaveListClaimLeaveData",response.getReturnValue().ClaimLeaveData);
                 	console.log("From v.ClaimLeaveList: " + component.get("v.ClaimLeaveList"));
@@ -49,7 +52,7 @@
                     //Passing the selectedEmployeeDetails Details
                     var appEvent = $A.get("e.c:LoadEmployeeRecordsEvent");
                     var OrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData   });
+                    appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
                     appEvent.fire();
             	}
             	else if (state === "INCOMPLETE") 

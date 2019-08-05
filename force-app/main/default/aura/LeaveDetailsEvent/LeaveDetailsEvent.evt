@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">
+<aura:attribute name="IsClaimOrLeave" type="Integer"/>
+<aura:attribute name="LeaveDetails" type="LeaveDetails"/>
+<aura:attribute name="LeaveDetailsHeader" type="LeaveDetails.Header"/>
+<aura:attribute name="LeaveDetailsLeaveSummary" type="LeaveDetails.LeaveSummary"/>
+</aura:event>

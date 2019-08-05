@@ -5,12 +5,14 @@
     <aura:attribute name="searchBoxEvent" type="String"/>
     <aura:attribute name="ssnDisplayEvent" type="String"/>
     <aura:attribute name="showHideMatchingResults" type="boolean" />
+    <aura:attribute name="empCountEvent" type="Integer"/>
     
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
     <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" />
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
     <aura:attribute name="passEmployeeDetail" type="EmployeeDetail"/>
     
+
     <aura:registerEvent name="LoadEmployeeRecordsEvent" type="c:LoadEmployeeRecordsEvent"/>
     
     <!-- Attributes -->
@@ -18,12 +20,14 @@
     
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+    <aura:handler event="c:LeaveDetailsEvent" action="{!c.showLeaveDetails}"/>
+
     
     <aura:renderIf isTrue="{!v.showHideMatchingResults}">
         <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large ">
-            <p><strong><lightning:formattedText value="{empCount}" /></strong> Matching Results For <b>"Last Name: </b><strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong>" </p> 
+            <p><strong><lightning:formattedNumber value="{!v.empCountEvent}" /></strong> Matching Results For <b>"Last Name: </b><strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong>" </p> 
         </div>  
-        <div style="background-color: LightBlue ; width : 24rem">
+        <div style="background-color: LightWhite">
             <div class="slds-grid slds-grid_vertical">
                 <div class="slds-col">
                     <div class="slds-scrollable" style="height:24rem;width:24rem">                        
@@ -33,8 +37,8 @@
                                     <lightning:layout >
                                         <lightning:layoutItem padding="around-small">
                                             <div class="header-column" >
-                                                <span class="slds-avatar slds-avatar_circle"  style="background-color: Grey">
-                                                    <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name">AB</abbr>
+                                                <span class="slds-avatar slds-avatar_circle">
+                                                    <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AB</abbr>
                                                 </span>
                                             </div>
                                         </lightning:layoutItem>

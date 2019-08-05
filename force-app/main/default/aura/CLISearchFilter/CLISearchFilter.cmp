@@ -1,6 +1,7 @@
 <aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 	<aura:registerEvent name="FormDataEvent" type="c:FormDataEvent"/>
     <aura:registerEvent name="HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
+    
     <!-- <aura:handler name="init" action="{!c.onInit}" value="{!this}"/>  -->
     <aura:attribute name="toggleCLISearchEmployeeList" type="Boolean" default="true"/>
     <aura:attribute name="OrganisationFlag" type="Boolean" default="false"/>
@@ -10,6 +11,7 @@
     <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>  
     <aura:attribute name="Spinner" type="boolean" default="false"/> 
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="empCount" type="Integer"/> 
 
     <article class="slds-card light_bg">
         <div class="slds-card__header slds-grid">

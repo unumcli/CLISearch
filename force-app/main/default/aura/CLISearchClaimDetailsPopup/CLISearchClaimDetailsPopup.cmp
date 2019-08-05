@@ -1,39 +1,257 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	<aura:attribute name="toogleClaimsModal" type="boolean" />
+<aura:component controller="ClaimDetails" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="ClaimDetails" type="ClaimDetails" />
+    <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList" />
+    <aura:attribute name="IsClaimOrLeave" type="Integer"/>
+    <!-- <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/> -->
+    <aura:attribute name="claimDetailsEmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="claimDetailsClaimDetailsPayments" type="ClaimDetails.Payments[]"/>
+    <aura:attribute name="claimDetailsClaimDetailsClaimStatus" type="ClaimDetails.ClaimStatus"/>
+    <aura:attribute name="toogleClaimsModal" type="boolean" />
+    <aura:attribute name="toggleCLISearchClaimDetailsFlag" type="Boolean"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.openClaimPopup}"/>
+    <aura:handler event="c:ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"/>
     
     <aura:renderIf isTrue="{!v.toogleClaimsModal}">
-     <div style="height:640px">
-		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-			<div class="slds-modal__container">
-				<header class="slds-modal__header">
-				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                    <lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseClaimPopup}"/> 
-			<span class="slds-assistive-text">Close</span>
-				</button>
-<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Claim Record</h2>
-<p class="slds-m-top_x-small"> LastName , FirstName , MiddleName
-    SSN:	Coverage:	Claim Number:	Current Status:		
-    Employee ID:	Claim History:		Policy #:		Division:	
-<a href="javascript:void(0);">View Employee Details</a>.</p>
-</header>
-<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-<p>Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi. Mollit officia cillum Lorem ullamco minim nostrud elit officia tempor esse quis. Cillum sunt ad dolore
-quis aute consequat ipsum magna exercitation reprehenderit magna. Tempor cupidatat consequat elit dolor adipisicing.</p>
-<p>Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia. Lorem aliqua enim laboris do dolor eiusmod officia. Mollit incididunt nisi consectetur esse laborum eiusmod pariatur proident. Eiusmod et adipisicing culpa deserunt nostrud
-ad veniam nulla aute est. Labore esse esse cupidatat amet velit id elit consequat minim ullamco mollit enim excepteur ea.</p>
-</div>
-<footer class="slds-modal__footer">
-<button class="slds-button slds-button_neutral">Cancel</button>
-<button class="slds-button slds-button_brand">Save</button>
-</footer>
-</div>
-</section>
-<div class="slds-backdrop slds-backdrop_open"></div>
-</div>
-    <aura:set attribute="else">
-      False
-    </aura:set>
-  </aura:renderIf>
-   
+        <div style="height:640px">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                            <lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseClaimPopup}"/> 
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-align_absolute-left">Claim Record</h2><br/>
+                        
+                        
+                        <div class="slds-border_top"> <br/>
+                            <div class="slds-box slds-box_xx-small slds-grid slds-gutters">
+                                <lightning:layout >
+                                    <lightning:layoutItem padding="around-small">
+                                        <div class="header-column slds-border_right" >
+                                            <span class="slds-avatar slds-avatar_circle">
+                                                <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AB</abbr>
+                                            </span>
+                                            <span>
+                                                Lastname , Firstname <br/><br/>
+                                            </span>
+                                        </div>    
+                                    </lightning:layoutItem>
+                                </lightning:layout> 
+                                <lightning:layout >
+                                    <lightning:layoutItem padding="around-small">
+                                        <div class="header-column" >
+                                            <span>
+                                                SSN:			Employee ID:			Claim Number#:			Coverage:			<br/>			
+                                                Policy Number:			Divison:
+                                            </span>
+                                        </div>    
+                                    </lightning:layoutItem>
+                                </lightning:layout> 
+                            </div>  
+                        </div>
+                    </header> 
+                    <div class="slds-tabs_default">
+                        <ul class="slds-tabs_default__nav" role="tablist">
+                            <li class="slds-tabs_default__item slds-is-active" title="Leave Summary" role="presentation">
+                                <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1 Leave Summary" id="tab-default-1__Leave Summary">Claim Status</a>   
+                            </li>
+                            <li class="slds-tabs_default__item slds-is-active" title="Item One" role="presentation">
+                                <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Payments</a>
+                            </li>  
+                        </ul>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <table class="slds-table slds-table_cell-buffer slds-table slds-table_col">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Claim History:-</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Benifit Start Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Diagnostic Code(ICD)</div>
+                                    </th>
+                                </tr>  
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Claim Number</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Eligibility Group</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Diagnostic Description</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Status Reason</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Received Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Approved Thru Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Claim Closed Date</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Last Payment Amount</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Choice</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Claim Closed Reason</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Last Payment Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Maximum Duration Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Work Related</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Disability Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Retrun to Work Date(PT)</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Disability Benefits Specalist</div>
+                                    </th>
+                                </tr>     
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">Divison</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">Retrun to Work Date(FT)</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Related Leaves</div>
+                                    </th>
+                                </tr>     
+                            </thead>
+                        <!--    <tbody>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.BenefitStartDate}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.DiagnosisCode}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.ClaimNumber}</div>
+                                    </td>
+                                    <td data-label="Received Date">
+                                        <div class="slds-truncate" title="Received Date">{!ClaimDetails.ClaimStatus.EligibilityGroup}</div>
+                                    </td>
+                                    <td data-label="Disability/Leave Start Date">
+                                        <div class="slds-truncate" title="Disability/Leave Start Date">{!ClaimDetails.ClaimStatus.DiagnosisDescription}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Current Status">
+                                        <div class="slds-truncate" title="Current Status">{!ClaimDetails.ClaimStatus.StatusReason}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="RTW Date">
+                                        <div class="slds-truncate" title="RTW Date">
+                                            {!ClaimDetails.ClaimStatus.ReceivedDate}
+                                        </div>
+                                    </td>
+                                    <td data-label="RTW Status">
+                                        <div class="slds-truncate" title="RTW Status">
+                                            {!ClaimDetails.ClaimStatus.ApprovedThruDate}
+                                        </div>
+                                    </td>
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.ClaimClosedDate}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.LastPaymentAmount}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.Choice}</div>
+                                    </td>
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.ClaimClosedReason}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.LastPaymentDate}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.MaximumDurationDate}</div>
+                                    </td>
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.WorkRelated}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.DisabilityDate}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.ReturntoWorkDate}</div>
+                                    </td>
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.DisabilityBenefitsSpecialist}</div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.Division}</div>
+                                    </td>
+                                    <td data-label="Policy Div/Report Group">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimDetails.ClaimStatus.ReturntoWorkDate}</div>
+                                    </td>
+                                    <td data-label="Coverage">
+                                        <div class="slds-truncate" title="Coverage">{!ClaimDetails.ClaimStatus.RelatedLeaves}</div>
+                                    </td>
+                                </tr>      
+                            </tbody> -->
+                            
+                        </table>
+                    </div>
+                    
+                    
+                    <!-- <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral">Cancel</button>
+                        <button class="slds-button slds-button_brand">Save</button>
+                    </footer> -->
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+        <aura:set attribute="else">
+            False
+        </aura:set>
+    </aura:renderIf>    
 </aura:component>

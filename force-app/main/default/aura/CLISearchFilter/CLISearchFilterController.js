@@ -20,6 +20,7 @@
         	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
         	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
         	var EmployeeDetail;
+            var empCount;
         	//SearchByLastName API Call
         	var actionSearchByLastName = component.get("c.SearchByLastName");
         	actionSearchByLastName.setParams({ userId : "architdutt@gmail.com", organisationId : 1,lastame: searchBoxValue,ssn: "123456789" });
@@ -31,12 +32,13 @@
                 {
                 	console.log("From server: " + response.getReturnValue());
                 	component.set("v.EmployeeDetail",response.getReturnValue());    
-                	console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail"));
-                    EmployeeDetail = component.get("v.EmployeeDetail");
+                    console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail").length);
+                    empCount = component.get("v.EmployeeDetail").length;
+                    EmployeeDetail = (component.get("v.EmployeeDetail"));
                     //Passing the CLISearchAPI Response
                     var appEvent = $A.get("e.c:FormDataEvent");
                     var OrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail });
+                    appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
                     appEvent.fire();
                 	// You would typically fire a event here to trigger 
                 	// client-side notification that the server-side 

@@ -16,7 +16,6 @@
         component.set("v.toggleCLISearchClaimLeaveListFlag", toggleCLISearchClaimLeaveListFlag);
         
         
-        
        /* 
          component.set('v.mycolumns', [
             	{label: 'Claim #/Leave #', fieldName: 'ClaimNo', type: 'text'},
@@ -76,4 +75,120 @@ debugger
         component.set("v.currentPageNumber", component.get("v.totalPages"));
         helper.buildData(component, helper);
     },
+    
+        selectedClaimDetails : function(component, event, helper) {
+        debugger
+        component.set("v.toogleClaimsModal",true);
+        component.set("v.CLISearchClaimDetailsPopupFlag",true);
+      //  var selectedEmployeeID = event.currentTarget.getAttribute('data-empDetail-EmployeeID');
+        var toggleCLISearchClaimDetailsFlag = component.get("v.CLISearchClaimDetailsPopupFlag");
+   
+        var IsClaimOrLeave = event.currentTarget.getAttribute('data-isClaim');
+        var ClaimDetails;
+        //GetClaimLeave API Call
+        debugger;
+            var actionGetEmployeeClaimDetail = component.get("c.GetEmployeeClaimDetail");
+            actionGetEmployeeClaimDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1",employeeId: "1",IsClaimOrLeave: "1" });
+            $A.enqueueAction(actionGetEmployeeClaimDetail);
+               actionGetEmployeeClaimDetail.setCallback(this, function(response)
+            {
+                var state = response.getState();
+                if (state === "SUCCESS")
+                {
+                    console.log("From server: " + response.getReturnValue());
+                    component.set("v.ClaimDetails",response.getReturnValue());
+                    component.set("v.claimDetailsEmployeeDetail",response.getReturnValue().EmployeeDetail);
+                    component.set("v.claimDetailsClaimStatus",response.getReturnValue().ClaimStatus);
+                    component.set("v.claimDetailsPayments",response.getReturnValue().Payments);
+                    console.log("From v.ClaimDetails: " + component.get("v.ClaimDetails"));
+                    console.log("From v.claimDetailsEmployeeDetail: " + component.get("v.claimDetailsEmployeeDetail"));
+                    console.log("From v.claimDetailsClaimStatus: " + component.get("v.claimDetailsClaimStatus"));
+                    console.log("From v.claimDetailsPayments: " + component.get("v.claimDetailsPayments"));
+                    ClaimDetails = component.get("v.ClaimDetails");
+                    //Passing the selectedEmployeeDetails Details
+                    var appEvent = $A.get("e.c:ClaimDetailsEvent");
+                    // var OrganisationField = component.find("selectedOrg");
+                    appEvent.setParams({ "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimDetailsFlag": toggleCLISearchClaimDetailsFlag, "ClaimDetails": ClaimDetails,"claimDetailsEmployeeDetail": ClaimDetails.EmployeeDetail, "claimDetailsClaimStatus": ClaimDetails.ClaimStatus,"claimDetailsPayments": ClaimDetails.Payments});
+                    appEvent.fire();
+                }
+                else if (state === "INCOMPLETE")
+                {
+                    // do something
+                }
+                else if (state === "ERROR")
+                {
+                    var errors = response.getError();
+                    if (errors)
+                    {
+                        if (errors[0] && errors[0].message)
+                        {
+                            console.log("Error message: " + errors[0].message);
+                        }
+                    }
+                    else
+                    {
+                        console.log("Unknown error");
+                    }
+                }
+            });
+    },
+     selectedLeaveDetails : function(component, event, helper) {
+        debugger
+       component.set("v.toogleLeavesModal",true);
+       component.set("v.CLISearchLeaveDetailsPopupFlag",true);
+      var selectedEmployeeID = event.currentTarget.getAttribute('data-empDetail-EmployeeID');
+       
+        var toggleCLISearchLeaveDetailsPopupFlag = component.get("v.CLISearchLeaveDetailsPopupFlag");
+   
+        var IsClaimOrLeave = event.currentTarget.getAttribute('data-empDetail-IsClaimOrLeave');
+        var LeaveDetails;
+        //GetClaimLeave API Call
+            var actionGetEmployeeLeaveDetail = component.get("c.GetLeaveDetails");
+            actionGetEmployeeLeaveDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1",employeeId: "1",IsClaimOrLeave: "1" });
+            $A.enqueueAction(actionGetEmployeeLeaveDetail);
+               actionGetEmployeeLeaveDetail.setCallback(this, function(response)
+            {
+                debugger
+                var state = response.getState();
+                if (state === "SUCCESS")
+                {
+                    console.log("From server: " + response.getReturnValue());
+                    component.set("v.LeaveDetails",response.getReturnValue());
+                    component.set("v.LeaveDetailsHeader",response.getReturnValue().Header);
+                    component.set("v.LeaveDetailsLeaveSummary",response.getReturnValue().LeaveSummary);
+                    
+                    console.log("From v.LeaveDetails: " + component.get("v.LeaveDetails"));
+                    console.log("From v.LeaveDetailsHeader: " + component.get("v.LeaveDetailsHeader"));
+                    console.log("From v.LeaveDetailsLeaveSummary: " + component.get("v.LeaveDetailsLeaveSummary"));
+                    
+                    LeaveDetails = component.get("v.LeaveDetails");
+                    //Passing the selectedEmployeeDetails Details
+                    var appEvent = $A.get("e.c:LeaveDetailsEvent");
+                    // var OrganisationField = component.find("selectedOrg");
+                    appEvent.setParams({ "IsClaimOrLeave" : IsClaimOrLeave ,"toggleCLISearchLeaveDetailsPopupFlag": toggleCLISearchLeaveDetailsPopupFlag, "LeaveDetails": LeaveDetails,"LeaveDetailsHeader": LeaveDetails.Header, "LeaveDetailsLeaveSummary": LeaveDetails.LeaveSummary});
+                    appEvent.fire();
+                }
+                else if (state === "INCOMPLETE")
+                {
+                    // do something
+                }
+                else if (state === "ERROR")
+                {
+                    var errors = response.getError();
+                    if (errors)
+                    {
+                        if (errors[0] && errors[0].message)
+                        {
+                            console.log("Error message: " + errors[0].message);
+                        }
+                    }
+                    else
+                    {
+                        console.log("Unknown error");
+                    }
+                }
+            });
+    }
+    
+    
 })

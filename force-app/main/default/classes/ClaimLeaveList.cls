@@ -36,6 +36,43 @@ public with sharing class ClaimLeaveList
         @AuraEnabled public String RTWDate {get; set;}
         @AuraEnabled public String RTWStatus {get; set;}
     }
+    
+    @AuraEnabled
+    public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String employeeId, String ClaimNo) {
+        
+        String mockRespone = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T08:38:45.873Z","SSN":"string","MiddleName":"string","ClaimNumber":"Number","Coverage":"string","CurrentStatus":"string","PolicyNumber":"","Division":"string","ClaimHistory":"string"},"ClaimStatus":{"ClaimNumber":"","StatusReason":"string","ReceivedDate":"2019-06-27T08:38:45.873Z","LastPaymentAmount":"","LastPaymentDate":"2019-06-27T08:38:45.873Z","BaseCoverage":"","SupplementalCoverage":"","TotalCoverage":"","DisabilityDate":"2019-06-27T08:38:45.873Z","Division":"string","BenefitStartDate":"2019-06-27T08:38:45.873Z","EligibilityGroup":"string","ApprovedThruDate":"2019-06-27T08:38:45.873Z","Choice":"string","MaximumDurationDate":"2019-06-27T08:38:45.873Z","ReturntoWorkDate":"2019-06-27T08:38:45.873Z","DiagnosticCode":"","ClaimClosedDate":"2019-06-27T08:38:45.873Z","DiagnosticDescription":"string","ClaimClosedReason":"string","WorkRelated":"string","DisabilityBenefitsSpecialist":"string","RelatedLeaves":"string","MonthsPaid":"","TotalPaidtoDate":"2019-06-27T08:38:45.873Z","PaidThroughDate":"2019-06-27T08:38:45.873Z","SSDIAwardDate":"2019-06-27T08:38:45.873Z","ApprovalDate":"2019-06-27T08:38:45.873Z","LifeBenefitsSpecialist":"string"},"Payments":[{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"},{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"}]}';
+            
+        ClaimDetails claimDetails;
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(APIEndPoints.ClaimDetails);
+        request.setMethod('POST');
+        request.setHeader('Content-Type','application/json');
+       //request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
+				
+	    // Set the body as a JSON object
+        request.setBody('{"claimNo": "1234","userId": "12","orgId": "12","employeeId": "123"}');
+        System.debug('request= ' + request);
+        HttpResponse response = http.send(request);             
+        
+		if (response.getStatusCode() != 200) {
+    	System.debug('The status code returned was not expected: ' +
+        response.getStatusCode() + ' ' + response.getStatus());
+		} 
+        else {
+    	System.debug(response.getBody());
+            try{
+        claimDetails = (ClaimDetails)JSON.deserialize(mockRespone,ClaimDetails.class);
+		System.debug(claimDetails);  
+            }catch(Exception ex){
+                System.debug('exception'+ ex.getMessage());
+            }
+       }
+        return claimDetails; 
+        
+    }  
+
 
     @AuraEnabled
     public static ClaimLeaveList GetClaimLeaveList(string userId, string organizationId, string employeeId,Integer isClaimOrLeave)

@@ -14,9 +14,16 @@
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
     
+    <aura:attribute name="LeaveDetails" type="LeaveDetails"/>
+    <aura:attribute name="CLISearchClaimDetailsPopupFlag" type="Boolean"/>
     
     <!-- Handling the LoadEmployeeRecordsEvent to get the ClaimLeaveList Response to render the datatable -->
     <aura:handler event="c:LoadEmployeeRecordsEvent" action="{!c.fetchEmpData}"/>
+    
+    
+    <aura:registerEvent name="LeaveDetailsEvent" type="c:LeaveDetailsEvent"/>
+    <aura:registerEvent name="ClaimDetailsEvent" type="c:ClaimDetailsEvent"/>
+    
      
   <!--  <aura:handler name="init" value="{!this}" action="{!c.fetchEmpData}"/> -->
   <!--  <div style="background-color: LightBlue ; width : 24rem">
@@ -48,7 +55,7 @@
                 </div>
             </div>
         </div>  -->
-    <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
+    
       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 		<thead>
 			<tr class="slds-line-height_reset">
@@ -79,10 +86,12 @@
 			</tr>
 		</thead>
 			<tbody>
+                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
+                    if claim then
 				<tr class="slds-hint-parent">
 					<th data-label="Claim #/Leave #" scope="row">
 						<div class="slds-truncate" title="Claim #/Leave #">
-							<a href="javascript:void(0);" tabindex="-1">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
+							<a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
 						</div>
 					</th>
 					<td data-label="Policy Div/Report Group">
@@ -111,9 +120,46 @@
 						</div>
 					</td>
 				</tr>
+                    
+                </aura:iteration>
+                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
+                    if leave then
+				<tr class="slds-hint-parent">
+					<th data-label="Claim #/Leave #" scope="row">
+						<div class="slds-truncate" title="Claim #/Leave #">
+							<a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedLeaveDetails}">{!ClaimLeaveData.LeaveData.LeaveNo}</a>
+						</div>
+					</th>
+					<td data-label="Policy Div/Report Group">
+						<div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
+					</td>
+					<td data-label="Coverage">
+						<div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
+					</td>
+					<td data-label="Received Date">
+						<div class="slds-truncate" title="Received Date">{!ClaimLeaveData.ClaimData.ReceivedDate}</div>
+					</td>
+					<td data-label="Disability/Leave Start Date">
+						<div class="slds-truncate" title="Disability/Leave Start Date">{!ClaimLeaveData.ClaimData.Disability}</div>
+					</td>
+					<td data-label="Current Status">
+						<div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
+					</td>
+					<td data-label="RTW Date">
+						<div class="slds-truncate" title="RTW Date">
+							{!ClaimLeaveData.ClaimData.RTWDate}
+						</div>
+					</td>
+                    <td data-label="RTW Status">
+						<div class="slds-truncate" title="RTW Status">
+							{!ClaimLeaveData.ClaimData.RTWStatus}
+						</div>
+					</td>
+				</tr>
+                </aura:iteration>
 </tbody>
 </table>
-</aura:iteration> 
+ 
    <!--   <lightning:card title="Datatable With Pagination">
     <lightning:layout multipleRows="true" horizontalAlign="center">
   <lightning:datatable 

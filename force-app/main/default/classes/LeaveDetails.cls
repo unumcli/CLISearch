@@ -23,8 +23,7 @@ public with sharing class LeaveDetails
 		@AuraEnabled public String ServerTime {get;set;} 
 		@AuraEnabled public Boolean isASR {get;set;} 
 	}
-	
-	public with sharing class IntermittentAbsence {
+		public with sharing class IntermittentAbsence {
 		@AuraEnabled public String BeginDate {get;set;} 
 		@AuraEnabled public String EndDate {get;set;} 
 		@AuraEnabled public String TimeAbsent {get;set;} 
@@ -112,5 +111,5 @@ public with sharing class LeaveDetails
             }
        }
        return leaveDetails;
-    }
+    } 
 }

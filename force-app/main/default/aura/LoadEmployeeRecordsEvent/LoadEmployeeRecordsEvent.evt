@@ -5,5 +5,5 @@
     <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/>
     <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
-    
+    <aura:attribute name="toogleClaimsModal" type="Boolean"/>
 </aura:event>

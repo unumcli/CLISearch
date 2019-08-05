@@ -2,7 +2,7 @@
     iterateEmployeeListMethod : function (component, event, helper){
         debugger
                 component.set('v.empNames', response.getReturnValue());
-                component.set('v.empCount', response.getReturnValue());
+               // component.set('v.empCount', response.getReturnValue());
             
     }
    /* iterateEmployeeListMethod : function (component, event, helper){

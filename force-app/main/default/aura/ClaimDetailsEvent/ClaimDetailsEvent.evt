@@ -1,0 +1,10 @@
+<aura:event type="APPLICATION" description="Event template">
+    
+    <aura:attribute name="IsClaimOrLeave" type="Integer"/>
+    <aura:attribute name="ClaimDetails" type="ClaimDetails"/>
+   <!-- <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/> -->
+    <aura:attribute name="claimDetailsEmployeeDetail" type="ClaimDetails.EmployeeDetail"/>
+    <aura:attribute name="claimDetailsClaimStatus" type="ClaimDetails.ClaimStatus"/>
+    <aura:attribute name="claimDetailsPayments" type="ClaimDetails.Payments[]"/>
+    
+</aura:event>
