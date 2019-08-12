@@ -1,3 +1,43 @@
 .THIS .selected{
     color:orange;
 }
+.THIS .slds-truncate{
+    font-size:100%;
+}
+.THIS .slds-table thead th{
+    background-color:#ccc;
+}
+.THIS .slds-table_col-bordered th+th{
+    border-left: 1px solid #aaa;
+}
+.THIS .slds-table_col-bordered tr:nth-child(even){
+    background-color:#f9f9f9;
+}
+.THIS .table-container{
+    max-width:100%;
+    overflow-x:auto;
+}
+.THIS .user-details {
+    background: #ccc;
+    margin: 0px 0px 15px;
+    padding: 15px;
+    border-radius: 5px;
+}
+.THIS .user-details p {
+    margin: 8px 0px;
+}
+.THIS .icon16{
+    font-size:16px;
+}
+.THIS .m-r-5{
+    margin-right:5px;
+}
+.THIS .d-flex{
+    display:flex;
+}
+.THIS .p5_0{
+    padding:5px 0px;
+}
+.THIS .align-items-center{
+    align-items:center;
+}

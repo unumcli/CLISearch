@@ -74,42 +74,5 @@ public with sharing class LeaveDetails
 		@AuraEnabled public String StatusReason {get;set;} 
 	}
 
-    public static LeaveDetails GetLeaveDetails(string leaveNumber, string userId, string organizationId, string employeeId)
-	{
-        LeaveDetails leaveDetails;
-        string mockResponse = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T09:10:24.912Z","SSN":"string","MiddleName":"string","LeaveNo":"","ReportGroup":"string","LeaveReason":"string","Historical":"string","LeaveStatus":"string","LeaveHistory":"string"},"LeaveSummary":{"LeaveNo":0,"ReceivedDate":"2019-06-27T09:10:24.912Z","LastDayWorked":"2019-06-27T09:10:24.912Z","LeaveStartDate":"2019-06-27T09:10:24.912Z","LeaveEndDate":"2019-06-27T09:10:24.912Z","RTWDate":"string","LeaveSpecialist":"string","LeaveStatus":"string","LeaveReason":"string","OfficeLocation":"string","RTWStatus":"string","RelatedSTDClaims":"string","ServerTime":"2019-06-27T09:10:24.912Z","isASR":true},"LeavePeriod":[{"LeavePeriod":"","Type":"string","HoursOff":"","Dates":"2019-06-27T09:10:24.912Z","Classification":"string","Status":"string","StatusReason":"string"}],"IntermittentAbsence":[{"BeginDate/Time":"2019-06-27T09:10:24.912Z","EndDate/Time":"2019-06-27T09:10:24.912Z","TimeAbsent":"string","ReportedDate":"2019-06-27T09:10:24.912Z","LeavePeriod":"","PeriodStatus":"string"}],"Protection":[{"LeavePeriod":"","Dates":"2019-06-27T09:10:24.912Z","ProtectionDescription":"string","Status":"string","StatusReason":"string"}],"AvailableTime":[{"ProtectionDescription":"string","HoursTaken":"","HoursAvailable":""}]}';
-        Http http = new Http();
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(APIEndPoints.LeaveDetails);
-        request.setMethod('POST');
-        request.setHeader('Content-Type','application/json');
-        request.setBody('{"leaveNo": "120","userId": "1","orgId": "1","employeeId": "1"}');
-        HttpResponse response = http.send(request);    
-        System.debug(response.getStatusCode());
-        if (response.getStatusCode() == 200) {
-    		try
-            {
-                System.debug(response.getStatusCode() + ' - ' + response.getStatus());
-                leaveDetails = (LeaveDetails)JSON.deserialize(response.getBody(),LeaveDetails.class);
-                System.debug(leaveDetails);
-            }
-            catch(Exception ex)
-            {
-                System.debug(ex.getMessage());
-            }
-		} 
-        else {
-            try
-            {
-                System.debug(response.getStatusCode() + ' - ' + response.getStatus());
-                leaveDetails = (LeaveDetails)JSON.deserialize(mockResponse,LeaveDetails.class);
-                System.debug(leaveDetails);         
-            }
-            catch(Exception ex)
-            {
-                System.debug('Invalid JSON Response');
-            }
-       }
-       return leaveDetails;
-    } 
+    
 }

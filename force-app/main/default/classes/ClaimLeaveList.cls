@@ -44,35 +44,42 @@ public with sharing class ClaimLeaveList
             
         ClaimDetails claimDetails;
         
-        Http http = new Http();
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(APIEndPoints.ClaimDetails);
-        request.setMethod('POST');
-        request.setHeader('Content-Type','application/json');
-       //request.setHeader('ms2-authorization','bearer 7ba46bf7-cccf-45dc-be54-6f796dd04c71');
-				
-	    // Set the body as a JSON object
-        request.setBody('{"claimNo": "1234","userId": "12","orgId": "12","employeeId": "123"}');
-        System.debug('request= ' + request);
-        HttpResponse response = http.send(request);             
-        
-		if (response.getStatusCode() != 200) {
-    	System.debug('The status code returned was not expected: ' +
-        response.getStatusCode() + ' ' + response.getStatus());
-		} 
-        else {
-    	System.debug(response.getBody());
-            try{
-        claimDetails = (ClaimDetails)JSON.deserialize(mockRespone,ClaimDetails.class);
-		System.debug(claimDetails);  
-            }catch(Exception ex){
-                System.debug('exception'+ ex.getMessage());
-            }
-       }
-        return claimDetails; 
-        
+        try{
+            claimDetails = (ClaimDetails)JSON.deserialize(mockRespone,ClaimDetails.class);
+            System.debug(claimDetails.Header); 
+            System.debug(claimDetails.ClaimStatus);  
+            System.debug(claimDetails.Payments);  
+        }
+        catch(Exception ex){
+            System.debug('exception'+ ex.getMessage());
+        }
+        return claimDetails;   
     }  
+    
+    @AuraEnabled
+    public static LeaveDetails GetLeaveDetails(string leaveNumber, string userId, string organizationId, string employeeId)
+	{
 
+        String mockResponse = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T09:10:24.912Z","SSN":"string","MiddleName":"string","LeaveNo":"","ReportGroup":"string","LeaveReason":"string","Historical":"string","LeaveStatus":"string","LeaveHistory":"string"},"LeaveSummary":{"LeaveNo":0,"ReceivedDate":"2019-06-27T09:10:24.912Z","LastDayWorked":"2019-06-27T09:10:24.912Z","LeaveStartDate":"2019-06-27T09:10:24.912Z","LeaveEndDate":"2019-06-27T09:10:24.912Z","RTWDate":"string","LeaveSpecialist":"string","LeaveStatus":"string","LeaveReason":"string","OfficeLocation":"string","RTWStatus":"string","RelatedSTDClaims":"string","ServerTime":"2019-06-27T09:10:24.912Z","isASR":true},"LeavePeriod":[{"LeavePeriod":"","Type":"string","HoursOff":"","Dates":"2019-06-27T09:10:24.912Z","Classification":"string","Status":"string","StatusReason":"string"}],"IntermittentAbsence":[{"BeginDate/Time":"2019-06-27T09:10:24.912Z","EndDate/Time":"2019-06-27T09:10:24.912Z","TimeAbsent":"string","ReportedDate":"2019-06-27T09:10:24.912Z","LeavePeriod":"","PeriodStatus":"string"}],"Protection":[{"LeavePeriod":"","Dates":"2019-06-27T09:10:24.912Z","ProtectionDescription":"string","Status":"string","StatusReason":"string"}],"AvailableTime":[{"ProtectionDescription":"string","HoursTaken":"","HoursAvailable":""}]}';
+        
+        LeaveDetails leaveDetails;
+        
+         try{
+            leaveDetails = (LeaveDetails)JSON.deserialize(mockResponse,LeaveDetails.class);
+            System.debug(leaveDetails.Header);
+            System.debug(leaveDetails.LeaveSummary);
+            System.debug(leaveDetails.LeavePeriod);
+            System.debug(leaveDetails.IntermittentAbsence);
+            System.debug(leaveDetails.Protection);
+            System.debug(leaveDetails.AvailableTime);
+             
+        }
+        catch(Exception ex){
+            System.debug('exception'+ ex.getMessage());
+        }
+        return leaveDetails;
+       
+    } 
 
     @AuraEnabled
     public static ClaimLeaveList GetClaimLeaveList(string userId, string organizationId, string employeeId,Integer isClaimOrLeave)

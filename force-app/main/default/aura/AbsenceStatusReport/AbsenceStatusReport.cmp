@@ -1,3 +1,15 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
 	Absence Status Report
+    
+    <aura:attribute name="workbook" access="private" type="Object" default="WorkBook" />
+    <aura:attribute name="activeSheet" access="private" type="Object" default="ActiveSheet" />
+    <aura:attribute name="var1" access="public" type="String" default="value1" />
+     <aura:attribute name="leaveNo" type="Integer"/>
+    
+    <ltng:require scripts="{!$Resource.TableauEmbedAPI}" afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+    <lightning:button variant="brand" label="Submit" onclick="{!c.filterSingleValue}" />
+    
+    <div id="vizContainer" ></div>
+
 </aura:component>

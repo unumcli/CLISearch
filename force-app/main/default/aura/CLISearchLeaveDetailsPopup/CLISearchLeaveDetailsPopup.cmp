@@ -1,140 +1,319 @@
-<aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	<aura:attribute name="toogleLeavesModal" type="boolean" />
-    <aura:handler name="init" value="{!this}" action="{!c.openLeavePopup}"/>
+<aura:component controller="LeaveDetails" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     
-    <aura:handler event="c:LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/>
+    <aura:attribute name="LeaveDetailsHeader" type="LeaveDetails.Header"/>
+    <aura:attribute name="LeaveDetailsLeaveSummary" type="LeaveDetails.LeaveSummary"/>
+    <aura:attribute name="LeaveDetailsLeavePeriod" type="LeaveDetails.LeavePeriod[]"/>
+    <aura:attribute name="LeaveDetailsIntermittentAbsence" type="LeaveDetails.IntermittentAbsence[]"/>  
+    <aura:attribute name="LeaveDetailsProtection" type="LeaveDetails.Protection[]"/>
+    <aura:attribute name="LeaveDetailsAvailableTime" type="LeaveDetails.AvailableTime[]"/> 
+    <ltng:require styles="{!$Resource.ThemifyFontCss}" />
     
-    <aura:attribute name="toggleCLISearchLeaveDetailsPopupFlag" type="boolean" />
+    <aura:attribute name="toogleLeavesModal" type="Boolean" />
+    
+    <aura:handler event="c:LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/> 
     
     <aura:renderIf isTrue="{!v.toogleLeavesModal}">
-     <div style="height:640px">
-		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-			<div class="slds-modal__container">
-				<header class="slds-modal__header">
-				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                    <lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseLeavePopup}"/> 
-			<span class="slds-assistive-text">Close</span>
-				</button>
- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Leave Record</b></h2> 
-   <!-- <div class="slds-border_bottom"></div> -->
-                    <div class="slds-box">
-<div class="slds-grid slds-wrap">
-    <div class="slds-col slds-size_2-of-12 slds-border_right">
-        <span class="slds-avatar slds-avatar_circle">
-            <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">NA</abbr> 
-       </span>
         
-        
-  </div>
-  <div class="slds-col slds-size_10-of-12 ">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open overflow-y-scroll">
+                <div class="slds-modal__container leave_popup popup">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close" title="Close">
+                            <!--<lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseLeavePopup}"/>-->
+                            <span class="themify-icon-close" onclick="{!c.CloseLeavePopup}"></span>
+                            <!--<span class="slds-assistive-text">Close</span>-->
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-align_left"><b>Leave Record</b></h2> 
+                        <!-- <div class="slds-border_bottom"></div> -->
+                        <div class="slds-box bg-light-blue slds-border_none">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-12">
+                                    <span class="slds-avatar slds-avatar_circle">
+                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">NA</abbr> 
+                                    </span>
+                                    
+                                    
+                                </div>
+                                <div class="slds-col slds-size_10-of-12 slds-border_left slds-p-left_x-small">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>SSN:</b>{!v.LeaveDetailsHeader.SSN}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>Leave Status:</b>{!v.LeaveDetailsHeader.LeaveStatus}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>Employee ID:</b>{!v.LeaveDetailsHeader.EmployeeID}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>Report Group:</b>{!v.LeaveDetailsHeader.ReportGroup}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>Leave Number:</b>{!v.LeaveSummary.LeaveNo}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_2-of-4 slds-text-align_left">
+                                            <h3><b>Leave Reason:</b>{!v.LeaveSummary.LeaveReason}</h3>
+                                        </div>
+                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
+                                            <h3><b>History:</b>{!v.LeaveDetailsHeader.LeaveHistory}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </header>
+                    
+                   
+                    <lightning:tabset>
+                        <lightning:tab label="Leave Summary">
+                            <div class="slds-modal__content slds-p-around_medium common_tab" id="modal-content-id-1">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3 ">
+                                        <div class="header-column">
+                                            <h3><b>Leave History:</b> {!v.LeaveDetailsHeader.LeaveHistory}</h3>
+                                        </div>  
+                                        <div class="header-column">
+                                            <h3><b>Leave#:</b> {!v.LeaveDetailsHeader.LeaveNo}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Leave Status:</b> {!v.LeaveDetailsLeaveSummary.LeaveStatus}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Received Date: </b> {!v.LeaveDetailsLeaveSummary.ReceivedDate}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Leave Reason:</b> {!v.LeaveDetailsLeaveSummary.LeaveReason}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3 ">
+                                        <div class="header-column">
+                                            <h3><b>Last Day Worked:</b> {!v.LeaveDetailsLeaveSummary.LastDayWorked}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Leave Start Date:</b> {!v.LeaveDetailsLeaveSummary.LeaveStartDate}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Leave End Date:</b> {!v.LeaveDetailsLeaveSummary.LeaveEndDate}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Report Group:</b> {}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Office Location:</b> {!v.LeaveDetailsLeaveSummary.OfficeLocation}</h3>
+                                        </div>	
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-3 ">
+                                        <div class="header-column">
+                                            <h3><b>Return To Work Date:</b> {!v.LeaveDetailsLeaveSummary.RTWDate}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Leave Specialist:</b> {!v.LeaveDetailsLeaveSummary.LeaveSpecialist}</h3>
+                                        </div>
+                                        <div class="header-column">
+                                            <h3><b>Related STD Claims:</b> {!v.LeaveDetailsLeaveSummary.RelatedSTDClaims}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning:tab>
+                        <lightning:tab label="Leave Period" title="2nd tab extended title">
+                           <div class="slds-p-around_medium">
+                               <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left"  >
+                                   <thead>
+                                       <tr class="slds-line-height_reset">
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Leave Period</div>
+                                           </th>              
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Type</div>
+                                           </th> 
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Hours Off</div>
+                                           </th> 
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Dates</div>
+                                           </th> 
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Classification</div>
+                                           </th> 
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Status</div>
+                                           </th> 
+                                           <th class="" scope="col">
+                                               <div class="slds-truncate" title="">Status Reason</div>
+                                           </th> 
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <aura:iteration items="{!v.LeaveDetailsLeavePeriod}" var="LeavePeriodData"> 
+                                           <tr class="slds-hint-parent">
+                                               <td data-label="Leave Period" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.LeavePeriod}</div>
+                                               </td>
+                                               <td data-label="Type" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.Type_Z}</div>
+                                               </td>
+                                               <td data-label="Hours" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.HoursOff}</div>
+                                               </td>
+                                               <td data-label="Dates" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.Dates}</div>
+                                               </td>
+                                               <td data-label="Classification" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.Classification}</div>
+                                               </td>
+                                               <td data-label="Status" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.Status}</div>
+                                               </td>
+                                               <td data-label="Status Reason" >
+                                                   <div class="slds-truncate" title="">{!LeavePeriodData.StatusReason}</div>
+                                               </td>  
+                                           </tr>
+                                       </aura:iteration> 
+                                   </tbody>
+                                </table>
+                        	</div>
+                        </lightning:tab>
+                        <lightning:tab label="Intermittent Absence">
+                            <div class="slds-p-around_medium">
+                                 <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"  >
+                                     <thead>
+                                         <tr class="slds-line-height_reset">
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">Begin Date/Time</div>
+                                             </th>              
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">End Date/Time</div>
+                                             </th> 
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">Time Absent</div>
+                                             </th> 
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">Reported Date</div>
+                                             </th> 
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">Leave Period</div>
+                                             </th> 
+                                             <th class="" scope="col">
+                                                 <div class="slds-truncate" title="">Period Status</div>
+                                             </th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+                                         <aura:iteration items="{!v.LeaveDetailsIntermittentAbsence}" var="IntermittentAbsenceData" >  
+                                             <tr class="slds-hint-parent">
+                                                 <td data-label="Leave Period" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.BeginDate}</div>
+                                                 </td>
+                                                 <td data-label="Type" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.EndDate}</div>
+                                                 </td>
+                                                 <td data-label="Hours" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.TimeAbsent}</div>
+                                                 </td>
+                                                 <td data-label="Dates" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.ReportedDate}</div>
+                                                 </td>
+                                                 <td data-label="Status" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.LeavePeriod}</div>
+                                                 </td>
+                                                 <td data-label="Status Reason" >
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.PeriodStatus}</div>
+                                                 </td>
+                                             </tr>
+                                         </aura:iteration>
+                                     </tbody>
+                                </table>
+                            </div>
+                        </lightning:tab>
+                        <lightning:tab label="Protection">
+                            <div class="slds-p-around_medium">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered " >
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Leave Period</div>
+                                            </th>              
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Dates</div>
+                                            </th> 
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Protection Description</div>
+                                            </th> 
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Status</div>
+                                            </th> 
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Status Reason</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.LeaveDetailsProtection}" var="ProtectionData" >  
+                                            <tr class="slds-hint-parent">
+                                                <td data-label="Leave Period" >
+                                                    <div class="slds-truncate" title="">{!ProtectionData.LeavePeriod}</div>
+                                                </td>
+                                                <td data-label="Type" >
+                                                    <div class="slds-truncate" title="">{!ProtectionData.Dates}</div>
+                                                </td>
+                                                <td data-label="Hours" >
+                                                    <div class="slds-truncate" title="">{!ProtectionData.ProtectionDescription}</div>
+                                                </td>
+                                                <td data-label="Dates" >
+                                                    <div class="slds-truncate" title="">{!ProtectionData.Status}</div>
+                                                </td>
+                                                <td data-label="Classification" >
+                                                    <div class="slds-truncate" title="">{!ProtectionData.StatusReason}</div>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </lightning:tab>
+                        <lightning:tab label="Available Time">
+                            <div class="slds-p-around_medium">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" >
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Protection Description</div>
+                                            </th>              
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Hours Taken</div>
+                                            </th> 
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="">Hours Available</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.LeaveDetailsAvailableTime}" var="AvailableTimeData" >  
+                                            <tr class="slds-hint-parent">
+                                                <td data-label="Leave Period" >
+                                                    <div class="slds-truncate" title="">{!AvailableTimeData.ProtectionDescription}</div>
+                                                </td>
+                                                <td data-label="Type" >
+                                                    <div class="slds-truncate" title="">{!AvailableTimeData.HoursTaken}</div>
+                                                </td>
+                                                <td data-label="Hours" >
+                                                    <div class="slds-truncate" title="">{!AvailableTimeData.HoursAvailable}</div>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </lightning:tab>
+                    </lightning:tabset>
+              
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        <aura:set attribute="else">
+            False
+        </aura:set>
+    </aura:renderIf>
     
-      <span>  SSN:	Employee ID:	Leave Number#:	Leave Reason#:	Leave Status:	Report Group:	
-   </span> 
-      
-  </div>
-</div>
-</div>             
-</header>
- 
-  <div class="slds-tabs_default">
-  <ul class="slds-tabs_default__nav" role="tablist">
-   <li class="slds-tabs_default__item slds-is-active" title="Item One" role="presentation">
-      <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Leave Summary</a>
-    </li>
-      <li class="slds-tabs_default__item slds-is-active" title="Item Two" role="presentation">
-      <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-2" id="tab-default-2__item">Leave Period</a>
-    </li>
-      <li class="slds-tabs_default__item slds-is-active" title="Item Three" role="presentation">
-      <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-3" id="tab-default-3__item">Intermittent Absence</a>
-    </li>
-      <li class="slds-tabs_default__item slds-is-active" title="Item Four" role="presentation">
-      <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-4" id="tab-default-4__item">Protection</a>
-    </li>
-      <li class="slds-tabs_default__item slds-is-active" title="Item Five" role="presentation">
-      <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-5" id="tab-default-5__item">Available Time</a>
-    </li>
-      
-      </ul>
-   </div> 
-                
-                
-  
-                
-                
-
-              
-            
-   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <table class="slds-table slds-table_cell-buffer slds-table slds-table_col">
-                            <thead>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Claim #/Leave #">Leave History:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">Last Day Worked:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Coverage">Office Location:</div>
-                                    </th>
-                                </tr>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Claim #/Leave #">Leave#:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">Leave Start Date:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Coverage">Return To Work Date:</div>
-                                    </th>
-                                </tr>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Claim #/Leave #">Leave Status:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">Leave End Date</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Coverage">Leave Specialist</div>
-                                    </th>
-                                </tr>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Claim #/Leave #">Received Date:</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">Report Group</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Coverage">Related Std Claims</div>
-                                    </th>
-                                </tr>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Claim #/Leave #">Leave Reason:</div>
-                                    </th>
-                                 </tr>
-                            </thead>
-    					</table>
-                     </div>  -->
-                
-           
-              
-             
-                
-<footer class="slds-modal__footer">
-<button class="slds-button slds-button_neutral">Cancel</button>
-<button class="slds-button slds-button_brand">Save</button>
-</footer>
-</div>
-</section>
-<div class="slds-backdrop slds-backdrop_open"></div>
-</div>
-    <aura:set attribute="else">
-      False
-    </aura:set>
-  </aura:renderIf>
-   
 </aura:component>

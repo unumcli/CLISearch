@@ -1,7 +1,7 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
 	<c:CLISearchFilter />
-    <c:CLISearchEmployeeList />  
-   <c:CLISearchClaimLeaveList /> 
-<!--	<c:CLISearchClaimDetailsPopup /> -->
-<!--	<c:CLISearchLeaveDetailsPopup /> -->
+    <c:CLISearchEmployeeList />
+<!--   <c:CLISearchClaimLeaveList /> -->
+	<c:CLISearchClaimDetailsPopup /> 
+	<c:CLISearchLeaveDetailsPopup /> 
 </aura:component>

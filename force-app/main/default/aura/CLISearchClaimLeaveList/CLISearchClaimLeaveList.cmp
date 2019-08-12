@@ -10,12 +10,12 @@
     <aura:attribute name="IsClaimOrLeave" type="Integer"/>
    <!-- <aura:attribute name="data" type="ClaimLeaveList[]"/> -->
     <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/>
-    <aura:attribute name="claimLeaveListEmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail[]"/>
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
     
-    <aura:attribute name="LeaveDetails" type="LeaveDetails"/>
-    <aura:attribute name="CLISearchClaimDetailsPopupFlag" type="Boolean"/>
+    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
+    
     
     <!-- Handling the LoadEmployeeRecordsEvent to get the ClaimLeaveList Response to render the datatable -->
     <aura:handler event="c:LoadEmployeeRecordsEvent" action="{!c.fetchEmpData}"/>
@@ -56,6 +56,31 @@
             </div>
         </div>  -->
     
+        <div class="user-details slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-12 d-flex align-items-center">
+                <span class="slds-avatar slds-avatar_circle m-r-5">
+                    <abbr class="slds-avatar__initials slds-icon-standard-user" title="person name">AB</abbr>
+                </span>
+                First Name
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <p><b>SSN:</b></p>
+                <p><b>Open Leave#:</b></p>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <p><b>Employee ID:</b></p>
+                <p><b>Open Claim#:</b></p>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <p><b>Date of Birth:</b></p>
+                <p>&nbsp;</p>
+            </div>
+            <div class="slds-col slds-size_1-of-12 icon16">
+                <div class="p5_0"><span class="themify-icon-download"></span></div>
+                <div class="p5_0"><span class="themify-icon-printer"></span></div>
+            </div>
+        </div>
+      <div class="table-container">
       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 		<thead>
 			<tr class="slds-line-height_reset">
@@ -87,7 +112,7 @@
 		</thead>
 			<tbody>
                 <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
-                    if claim then
+                    <!-- if claim then -->
 				<tr class="slds-hint-parent">
 					<th data-label="Claim #/Leave #" scope="row">
 						<div class="slds-truncate" title="Claim #/Leave #">
@@ -123,7 +148,7 @@
                     
                 </aura:iteration>
                 <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
-                    if leave then
+                  <!--  if leave then-->
 				<tr class="slds-hint-parent">
 					<th data-label="Claim #/Leave #" scope="row">
 						<div class="slds-truncate" title="Claim #/Leave #">
@@ -159,6 +184,7 @@
                 </aura:iteration>
 </tbody>
 </table>
+        </div>
  
    <!--   <lightning:card title="Datatable With Pagination">
     <lightning:layout multipleRows="true" horizontalAlign="center">

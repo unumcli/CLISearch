@@ -1,5 +1,6 @@
 ({
     fetchCLISearchFormEvent : function(component, event, helper) {
+        debugger
         var selectedOrgValue = event.getParam("selectedOrg"); 
         var searchByValues = event.getParam("searchByValue");
         var searchBoxValue = event.getParam("searchBox");
@@ -26,12 +27,18 @@
     
     selectedEmployeeDetails : function(component, event, helper) {
         debugger
+        
+        $(document).ready(function(){
+            $(this).parent('employee_box').addClass('active');
+        });
         component.set("v.showHideMatchingResults",true);
         component.set("v.CLISearchClaimLeaveListFlag",true);
+        
         var selectedEmployeeID = event.currentTarget.getAttribute('data-empDetail-EmployeeID');
         var IsClaimOrLeave = event.currentTarget.getAttribute('data-empDetail-IsClaimOrLeave');
         var toggleCLISearchClaimLeaveListFlag = component.get("v.CLISearchClaimLeaveListFlag");
         var ClaimLeaveList;
+        
         //GetClaimLeave API Call
         	var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
         	actionGetClaimLeave.setParams({ userId : "architdutt@gmail.com", organisationId : 1,employeeId: selectedEmployeeID,IsClaimOrLeave: IsClaimOrLeave });
@@ -43,12 +50,13 @@
                 {
                 	console.log("From server: " + response.getReturnValue());
                     component.set("v.ClaimLeaveList",response.getReturnValue());
-                    component.set("v.claimLeaveListEmployeeDetail",response.getReturnValue().EmployeeDetail);
+                    component.set("v.passEmployeeDetail",response.getReturnValue().EmployeeDetail);
                     component.set("v.claimLeaveListClaimLeaveData",response.getReturnValue().ClaimLeaveData);
                 	console.log("From v.ClaimLeaveList: " + component.get("v.ClaimLeaveList"));
                     console.log("From v.claimLeaveListEmployeeDetail: " + component.get("v.claimLeaveListEmployeeDetail"));
                     console.log("From v.claimLeaveListClaimLeaveData: " + component.get("v.claimLeaveListClaimLeaveData"));
                     ClaimLeaveList = component.get("v.ClaimLeaveList");
+                   
                     //Passing the selectedEmployeeDetails Details
                     var appEvent = $A.get("e.c:LoadEmployeeRecordsEvent");
                     var OrganisationField = component.find("selectedOrg");
@@ -75,5 +83,9 @@
                 	}
             	}
         	});
-    } 
+    },
+    loadJquery : function(component, event, helper) {
+        
+        
+    }
 })

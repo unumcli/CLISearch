@@ -2,29 +2,36 @@
 	CloseLeavePopup : function(component, event, helper) {
 		debugger
         component.set("v.toogleLeavesModal",false);
-	},
-    
-    openLeavePopup : function(component, event, helper) {
-		debugger
-        component.set("v.toogleLeavesModal",true);
+        $(document).ready(function(){
+            $('html,body').animate({ScrollTop:0},500).css({'overflow-y':'auto'}); ; 
+            $('.overflow-y-scroll').css({'overflow-y':'hidden'}); 
+        });
 	},
     
     fetchLeaveDetails : function(component, event, helper) {
         debugger
-       // var selectedEmployeeID = event.getParam("selectedEmployeeID"); 
-        var toggleCLISearchLeaveDetailsPopupFlag = event.getParam("toggleCLISearchLeaveDetailsPopupFlag");
-        var IsClaimOrLeave = event.getParam("IsClaimOrLeave");
-        var LeaveDetails = event.getParam("ClaimLeaveList");
+        
+         $(document).ready(function(){
+                $('html,body').animate({ScrollTop:0},500).css({'overflow-y':'hidden'});
+                $('.overflow-y-scroll').css({'overflow-y':'scroll'}); 
+            });
+        
         var LeaveDetailsHeader = event.getParam("LeaveDetailsHeader");
         var LeaveDetailsLeaveSummary = event.getParam("LeaveDetailsLeaveSummary");
+        var LeaveDetailsLeavePeriod = event.getParam("LeaveDetailsLeavePeriod");
+        var LeaveDetailsIntermittentAbsence = event.getParam("LeaveDetailsIntermittentAbsence");
+        var LeaveDetailsProtection = event.getParam("LeaveDetailsProtection");
+        var LeaveDetailsAvailableTime = event.getParam("LeaveDetailsAvailableTime");
         
-        // set the handler attributes based on event data
-        
-       // component.set("v.selectedEmployeeID", selectedEmployeeID);
-        component.set("v.IsClaimOrLeave", IsClaimOrLeave);
-        component.set("v.LeaveDetails", ClaimLeaveList);
         component.set("v.LeaveDetailsHeader", LeaveDetailsHeader);
         component.set("v.LeaveDetailsLeaveSummary", LeaveDetailsLeaveSummary);
-        component.set("v.toggleCLISearchLeaveDetailsPopupFlag", toggleCLISearchLeaveDetailsPopupFlag);
+        component.set("v.LeaveDetailsLeavePeriod", LeaveDetailsLeavePeriod);
+        component.set("v.LeaveDetailsIntermittentAbsence", LeaveDetailsIntermittentAbsence);
+        component.set("v.LeaveDetailsProtection", LeaveDetailsProtection);
+        component.set("v.LeaveDetailsAvailableTime", LeaveDetailsAvailableTime);
+        
+       
+        component.set("v.toogleLeavesModal",true);
     }
+        
 })

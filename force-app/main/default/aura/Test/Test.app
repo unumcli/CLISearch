@@ -1,4 +1,3 @@
 <aura:application extends="force:slds">
- <!--	<c:CLISearchClaimLeaveList/> -->
-    <c:CLISearchClaimDetailsPopup/>
+    <c:AbsenceStatusReport/>
 </aura:application>

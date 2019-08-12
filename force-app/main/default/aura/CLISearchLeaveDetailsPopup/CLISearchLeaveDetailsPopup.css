@@ -1,0 +1,50 @@
+.THIS .common_tab .header-column {
+    padding:10px 0px;
+}
+.THIS .common_tab{    
+    min-height: 230px;
+}
+.THIS .popup{
+    width: 80%;    
+    max-width: none;    
+    background: #fff;    
+    height: auto;   
+    min-height: 475px;    
+    padding-top: 0px;
+    display:block;
+    margin: 65px auto;
+}
+.THIS .overflow-y-scroll{
+    overflow-y:scroll;
+}
+.THIS .popup table th{
+    background:#ccc;
+    border-color:#b1b1b1;
+}
+.THIS .popup table{
+    border:1px solid #ccc;
+}
+.THIS .popup .slds-modal__close {
+    background-color: transparent;
+    z-index: 1;
+    font-size:20px;
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: 15px;;
+    right: 15px;
+}
+.THIS .bg-light-blue{
+    background:#F6F8FA;
+}
+.THIS .slds-border_none{
+    border:none;
+}
+.THIS .slds-modal__container h2{
+    padding: 0px 0px 15px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+.THIS .slds-modal__header{
+    border-bottom:none;
+}

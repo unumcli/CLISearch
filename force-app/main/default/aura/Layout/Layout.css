@@ -27,7 +27,23 @@
 .THIS .slds-builder-header {
     background-color: #0a5492;
     padding: 15px 0px;
+    min-height: 65px;
 }
-.THIS .slds-builder-header .slds-media__body img{
-    height:50px;
-}
+.THIS .slds-builder-header .slds-media__body img{height:50px;}
+.THIS .slds-builder-header .slds-builder-header__utilities-item span{font-size:24px;}
+.THIS .profile-btn{background-color:transparent;border:0;}
+.THIS .slds-builder-header .slds-builder-header__utilities-item .profile-btn{margin:0px 15px;cursor:pointer;}
+.THIS .slds-builder-header .slds-builder-header__utilities-item .profile-btn .slds-avatar__initials{cursor:pointer;}
+.THIS .slds-builder-header .slds-builder-header__utilities-item .profile-btn span{font-size:16px;}
+.THIS .slds-builder-header__utilities-item.slds-builder-header__utilities-item{border-left:0px;}
+.THIS .slds-builder-header__item + .slds-builder-header__item{border-left:0px;}
+.THIS h1.slds-builder-header__item-label{border-left:1px solid #fff;font-size:20px;}
+.THIS .slds-text-heading--label{letter-spacing:normal; text-transform:normal;}
+.THIS .breadcrumb{padding:7px 10px;}
+.THIS .breadcrumb li:last-child{padding-left:7px;}
+.THIS .siteforceContentArea .comm-layout-column:not(:empty){padding-top:0px;}
+.THIS .slds-builder-header .slds-builder-header__utilities-item .slds-dropdown__item span{font-size:16px;}
+.THIS .profile-menu{margin-right:15px;}
+.THIS .slds-button_icon-more{background: transparent;border-radius: 50%;height: 34px;width: 34px;color:#fff;border: 1px solid #fff;}
+.THIS .slds-button_icon-more .slds-button_icon.slds-button__icon_x-small{display:none;}
+.THIS .slds-button_icon-more:hover{background:#fff;}

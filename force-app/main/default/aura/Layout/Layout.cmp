@@ -9,14 +9,8 @@
     
 
     <div>
-        <div class="header">
-        	<div class="unum-logo">
-                <img src="{!$Resource.Logo}" alt="Unum CLI Reporting" />
-            </div>
-            <div class="header-subtitle">Claims &amp; Leave Insights</div>            
-        </div>
 
-<div class="slds-builder-header_container">
+<div class="">
 <header class="slds-builder-header">
 <div class="slds-builder-header__item">
 <div class="slds-builder-header__item-label slds-media slds-media_center">
@@ -31,10 +25,6 @@
 <div class="slds-builder-header__item slds-builder-header__utilities">
 <div class="slds-builder-header__utilities-item">
 <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
-<div class="slds-media__figure">
-<span class="slds-icon_container slds-icon-utility-back slds-current-color">
-</span>
-</div>
 <div class="slds-media__body">
 <span class="themify-icon-bell"></span> 
 </div>
@@ -42,30 +32,33 @@
 </div>
 <div class="slds-builder-header__utilities-item">
 <a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
-<div class="slds-media__figure">
-<span class="slds-icon_container slds-icon-utility-back slds-current-color">
-</span>
-</div>
 <div class="slds-media__body">
 <span class="themify-icon-settings"></span> 
 </div>
 </a>
-</div>    
+</div> 
 <div class="slds-builder-header__utilities-item">
-<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
-<div class="slds-media__figure">
-<span class="slds-icon_container slds-icon-utility-help slds-current-color">
-</span>
+    <lightning:buttonMenu class="profile-menu" alternativeText="Toggle menu" iconName="utility:user" menuAlignment="right">
+        <lightning:menuItem label="Logout" value="menuitem1" iconName="utility:logout" />
+    </lightning:buttonMenu>
+  
+</div>    
 </div>
-<div class="slds-media__body">Help</div>
-</a>
-</div>
-</div>
-</header>
+</header>  
 </div>     
         
         <div class="navigation">
             {!v.navBar}
+        </div>
+        <div class="breadcrumb">
+            <nav role="navigation" aria-label="Breadcrumbs">
+                <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                    <li class="slds-breadcrumb__item">
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="slds-breadcrumb__item"> Search</li>
+                </ol>
+            </nav>          
         </div>
         <div class="mainContentArea">
             {!v.body}

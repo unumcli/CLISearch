@@ -12,35 +12,103 @@
     <aura:attribute name="Spinner" type="boolean" default="false"/> 
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
     <aura:attribute name="empCount" type="Integer"/> 
+    <ltng:require styles="{!$Resource.ThemifyFontCss}" />
 
-    <article class="slds-card light_bg">
-        <div class="slds-card__header slds-grid">
+    <article class="slds-card light_bg slds-border_none">
+        <!--<div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
             </header>
-        </div>
-        <div class="slds-card__body slds-card__body_inner">
+        </div>-->
+        <div class="slds-card__body slds-card__body_inner slds-var-p-around_small">
     <form id="searchForm" class="slds-form--stacked">          
         <div class="slds-grid slds-gutters form_row1">
-            <div class="slds-col slds-size_6-of-12  slds-x-large-size--1-of-2">
+            <div class="slds-col slds-size_1-of-3  slds-x-large-size--1-of-2">
             	<lightning:input aura:id="policyno" label="Policy/Party ID Number" name="policypartnumber" placeholder="Enter Policy/Party ID Number" required="false" />
             
              <button class="slds-button slds-button_brand">
-                        	<span class="slds-icon_container slds-icon-standard-account" title="Next">
-                                <lightning:icon iconName="utility:forward" size="xx-small"/>
-                              <span class="slds-assistive-text">Next</span>
-                            </span>
+                        	<span class="themify-icon-arrow-right search_ico"></span>
                         </button>
             </div>
           <!--  	<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	-->
            
-            <div class="slds-col slds-size_6-of-12 slds-x-large-size--1-of-2 slds-text-align_right org">
+            <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 slds-text-align_right org">
                 <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
                     <option value="Select Organisation">Select Organisation</option>
                     <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
                     <option value="AA New Org">AA New Org</option>
                     <option value="AB New Org">AB New Org</option>
                 </lightning:select>
-            </div>           
+            </div>
+            
+            <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 org">
+                
+                
+                
+                <div class="slds-form-element">
+                <label class="slds-form-element__label" for="combobox-unique-id-25"> Related Organization</label>
+                <div class="slds-form-element__control">
+                <div class="slds-combobox_container slds-size_small">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-select_container" role="none">
+                <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-unique-id-25" aria-controls="listbox-unique-id" autoComplete="off" role="textbox" placeholder="Select an Option" readonly="" value="2 Options Selected"
+                />
+                    
+                </div>
+                <div id="listbox-unique-id" role="listbox" class="slds-dropdown slds-dropdown_fluid">
+                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                <li role="presentation" class="slds-listbox__item">
+                <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
+                    <span class="themify-icon-check grey_icon"></span>
+                <span class="slds-media__body slds-p-left_xx-small">
+                <span class="slds-truncate" title="Option A">
+                <span class="slds-assistive-text">Current Selection:</span> Option A</span>
+                </span>
+                </div>
+                </li>
+                <li role="presentation" class="slds-listbox__item">
+                <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
+                    <span class="themify-icon-check grey_icon"></span>
+                <span class="slds-media__body slds-p-left_xx-small">
+                <span class="slds-truncate" title="Option B">
+                <span class="slds-assistive-text">Current Selection:</span> Option B</span>
+                </span>
+                </div>
+                </li>
+                <li role="presentation" class="slds-listbox__item">
+                <div id="listbox-option-unique-id-03" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                    <span class="themify-icon-check grey_icon"></span>
+                <span class="slds-media__body slds-p-left_xx-small">
+                <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+                </span>
+                </div>
+                </li>
+                </ul>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <!--<lightning:select aura:id="relatedOrg" label="Related Organization" name="relatedOrganisation" required="true">
+                    <option value="Select Organisation">Select Organisation</option>
+                    <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
+                    <option value="AA New Org">AA New Org</option>
+                    <option value="AB New Org">AB New Org</option>
+                </lightning:select>-->
+            </div>
+			
+            
+            
         </div>
         
         <div class="slds-grid slds-wrap form_row2"> 
@@ -56,10 +124,7 @@
             </div>
     		<div class="slds-col slds-size_5-of-12 m-5-0 search_section">
     			<span></span>
-                <span class="slds-icon_container slds-icon-standard-account search_ico" title="Next">
-                    <lightning:icon iconName="utility:search" size="xx-small"/>
-                    <span class="slds-assistive-text">Next</span>
-                </span>
+                <span class="themify-icon-search search_ico"></span>
                     <lightning:input aura:id="searchBox" name="enter-search" label="" placeholder="Search" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please Enter value to Search"/>
   			</div>
      		<div class="slds-col slds-size_4-of-12 p-l-12">
