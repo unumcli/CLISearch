@@ -1,23 +1,23 @@
 <aura:component controller="ClaimLeaveList" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
-    
+      
+    <!-- Attributes -->
     <aura:attribute name="selectedOrgEvent" type="String"/>
     <aura:attribute name="searchByValueEvent" type="String"/>
     <aura:attribute name="searchBoxEvent" type="String"/>
     <aura:attribute name="ssnDisplayEvent" type="String"/>
-    <aura:attribute name="showHideMatchingResults" type="boolean" />
+    <aura:attribute name="showHideMatchingResults" type="boolean"/>
+    <aura:attribute name="enableActiveClass" type="boolean" default="true"/>
     <aura:attribute name="empCountEvent" type="Integer"/>
     
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
-    <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" />
+    <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" default="false"/>
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
     <aura:attribute name="passEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
-    
+    <!-- Attributes -->
 
     <aura:registerEvent name="LoadEmployeeRecordsEvent" type="c:LoadEmployeeRecordsEvent"/>
-    
-    <!-- Attributes -->
-    <aura:attribute name="empNames" type="EmployeeList__c[]" />
-    
+  
+    <!-- Events -->
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
     
@@ -38,16 +38,16 @@
                     <div class="slds-col">
                         <div class="slds-scrollable empListContainer">                        
                             <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">                            
-                                <div class="slds-box border-bottom employee_box">
+                                <div data-empDetail-EmployeeID="{!empDetail.EmployeeID}" data-empDetail-IsClaimOrLeave="{!empDetail.IsClaimOrLeave}" onclick="{!c.selectedEmployeeDetails}" class="slds-box border-bottom employee_box">
                                     <span class="c-container">
                                         <lightning:layout >
                                             <lightning:layoutItem padding="around-small" class="slds-glutters width100 slds-p-left_none slds-p-right_none">
                                                 <div class="header-column slds-col slds-size_12-of-12" >
                                                     <span class="slds-avatar slds-avatar_circle">
-                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AB</abbr>
+                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">{!empDetail.Abbr}</abbr>
                                                     </span>
                                                     <span class="p15">
-                                                            <a href="javascript:void(0);" class="EmpName" data-empDetail-EmployeeID="{!empDetail.EmployeeID}" data-empDetail-IsClaimOrLeave="{!empDetail.IsClaimOrLeave}" onclick="{!c.selectedEmployeeDetails}" >{!empDetail.LastName} , {!empDetail.FirstName} </a>
+                                                            <a href="javascript:void(0);" class="EmpName" >{!empDetail.LastName} , {!empDetail.FirstName} </a>
                                                     </span>
                                                 </div>
                                                 <ul class=" slds-col slds-size_12-of-12">
@@ -75,16 +75,19 @@
                 </div>
             </div>
             <div class="slds-col slds-size_9-of-12 slds-p-left_x-small">
-               <aura:renderIf isTrue="{!v.showHideMatchingResults}"> 
+               <aura:renderIf isTrue="{!v.CLISearchClaimLeaveListFlag}"> 
                    
                    <c:CLISearchClaimLeaveList/>
-                 </aura:renderIf>
                    <aura:set attribute="else">                    
-                    {Image will come here}
+                    
+                        <div class="table_empty_state">
+        					<img src="{!$Resource.Table_empty_state}"/>
+                            <p>No Search Results Available</p>
+            				<small>Select the search filters to get results</small>
+        				</div>
                 	</aura:set>
-                
-        	</div>
-            
+                 </aura:renderIf>    
+        	</div>            
         </div>
     </aura:renderIf>
     

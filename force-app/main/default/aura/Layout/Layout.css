@@ -43,7 +43,9 @@
 .THIS .breadcrumb li:last-child{padding-left:7px;}
 .THIS .siteforceContentArea .comm-layout-column:not(:empty){padding-top:0px;}
 .THIS .slds-builder-header .slds-builder-header__utilities-item .slds-dropdown__item span{font-size:16px;}
-.THIS .profile-menu{margin-right:15px;}
+.THIS .profile-menu{margin-right:15px;margin-left: 10px;}
 .THIS .slds-button_icon-more{background: transparent;border-radius: 50%;height: 34px;width: 34px;color:#fff;border: 1px solid #fff;}
 .THIS .slds-button_icon-more .slds-button_icon.slds-button__icon_x-small{display:none;}
 .THIS .slds-button_icon-more:hover{background:#fff;}
+.THIS .slds-builder-header__item-action:focus{outline:2px dotted #5fbde3;}
+.THIS .slds-button:focus, .THIS a:focus{outline:2px dotted #5fbde3;}

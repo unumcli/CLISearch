@@ -16,6 +16,10 @@
 .THIS .employee_box{
     position:relative;
     padding:0px 15px;
+    cursor:pointer;
+}
+.THIS .employee_box a:hover{
+    text-decoration:none;
 }
 .THIS .employee_box:hover, .THIS .employee_box.active{
     background: #525252;
@@ -98,4 +102,24 @@
 }
 .THIS .align-items-center{
     align-items:center;
+}
+.THIS .table_empty_state {
+	width:100%;
+    float:left;
+    text-align:center;
+}
+.THIS .table_empty_state img{
+    margin:auto;
+    max-width:100%;
+}
+.THIS .table_empty_state p, .THIS .table_empty_state small{
+    display:block;
+    text-align:center;
+    color:#666777;
+}
+.THIS .table_empty_state p{
+    font-size:20px;
+}
+.THIS .table_empty_state small{
+    font-size:16px;
 }

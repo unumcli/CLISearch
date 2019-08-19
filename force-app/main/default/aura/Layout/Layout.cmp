@@ -24,21 +24,21 @@
     </div>    
 <div class="slds-builder-header__item slds-builder-header__utilities">
 <div class="slds-builder-header__utilities-item">
-<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+<a href="javascript:void(0);" aria-label="Notificaton" class="slds-builder-header__item-action slds-media slds-media_center">
 <div class="slds-media__body">
 <span class="themify-icon-bell"></span> 
 </div>
 </a>
 </div>
 <div class="slds-builder-header__utilities-item">
-<a href="javascript:void(0);" class="slds-builder-header__item-action slds-media slds-media_center">
+<a href="javascript:void(0);" aria-label="Setting" class="slds-builder-header__item-action slds-media slds-media_center">
 <div class="slds-media__body">
 <span class="themify-icon-settings"></span> 
 </div>
 </a>
 </div> 
 <div class="slds-builder-header__utilities-item">
-    <lightning:buttonMenu class="profile-menu" alternativeText="Toggle menu" iconName="utility:user" menuAlignment="right">
+    <lightning:buttonMenu class="profile-menu" alternativeText="Profile Menu" iconName="utility:user" menuAlignment="right">
         <lightning:menuItem label="Logout" value="menuitem1" iconName="utility:logout" />
     </lightning:buttonMenu>
   

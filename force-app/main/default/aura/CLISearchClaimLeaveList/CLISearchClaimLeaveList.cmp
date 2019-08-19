@@ -55,24 +55,25 @@
                 </div>
             </div>
         </div>  -->
-    
+    <aura:iteration items="{!v.claimLeaveListEmployeeDetail}" var="EmployeeDetail">
         <div class="user-details slds-grid slds-gutters">
             <div class="slds-col slds-size_2-of-12 d-flex align-items-center">
                 <span class="slds-avatar slds-avatar_circle m-r-5">
                     <abbr class="slds-avatar__initials slds-icon-standard-user" title="person name">AB</abbr>
                 </span>
-                First Name
+                {!EmployeeDetail.FirstName}
             </div>
             <div class="slds-col slds-size_3-of-12">
-                <p><b>SSN:</b></p>
-                <p><b>Open Leave#:</b></p>
+                <p><b>SSN:{!EmployeeDetail.SSN}</b></p>
+                <p><b>Open Leave#:{!EmployeeDetail.OpenLeaveNumber}</b></p>
             </div>
             <div class="slds-col slds-size_3-of-12">
-                <p><b>Employee ID:</b></p>
-                <p><b>Open Claim#:</b></p>
+                <p><b>Employee ID:{!EmployeeDetail.EmployeeID}</b></p>
+                <p><b>Open Claim#:{!EmployeeDetail.OpenClaimNumber}</b></p>
             </div>
             <div class="slds-col slds-size_3-of-12">
-                <p><b>Date of Birth:</b></p>
+              <!--  <p><b>Date of Birth:{!EmployeeDetail.DateOfBirth}</b></p> -->
+                <p><b>Date of Birth:</b><lightning:formattedDateTime value="{!EmployeeDetail.DateOfBirth}" year="2-digit" month="long" day="2-digit" weekday="long"/></p>
                 <p>&nbsp;</p>
             </div>
             <div class="slds-col slds-size_1-of-12 icon16">
@@ -80,6 +81,7 @@
                 <div class="p5_0"><span class="themify-icon-printer"></span></div>
             </div>
         </div>
+        </aura:iteration>
       <div class="table-container">
       <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 		<thead>

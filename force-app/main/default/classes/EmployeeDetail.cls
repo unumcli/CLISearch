@@ -12,6 +12,7 @@ public with sharing class EmployeeDetail {
     	@AuraEnabled public String OpenLeaveNumber {get;set;}
     	@AuraEnabled public String Coverage {get;set;}
     	@AuraEnabled public String LeaveReason {get;set;}
+        @AuraEnabled public String Abbr {get;set;}
     	
     //	@AuraEnabled public List<EmployeeDetail> listEmployeeDetail {get;set;}
     
@@ -55,7 +56,7 @@ public with sharing class EmployeeDetail {
     @AuraEnabled
     public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
         system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);      
-        String mockRespone = '[{"EmployeeID":"29301","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29302","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
+        String mockRespone = '[{"EmployeeID":"29301","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29302","FirstName": "John","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
             
         List<EmployeeDetail> employeeDetail;
         
@@ -77,7 +78,7 @@ public with sharing class EmployeeDetail {
             try
             {
                 employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockRespone,List<EmployeeDetail>.class);
-                System.debug(employeeDetail);
+                System.debug(employeeDetail);                
             }
             catch(Exception ex)
             {

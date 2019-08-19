@@ -312,7 +312,7 @@
             </section>
             <div class="slds-backdrop slds-backdrop_open"></div>
         <aura:set attribute="else">
-            False
+         <!--   False  -->
         </aura:set>
     </aura:renderIf>
     

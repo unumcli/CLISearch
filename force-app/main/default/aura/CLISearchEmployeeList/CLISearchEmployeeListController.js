@@ -16,24 +16,28 @@
         component.set("v.showHideMatchingResults", showEmployeeListComponentValue);
         component.set("v.EmployeeDetail", EmployeeDetailValue);
         component.set("v.empCountEvent", employeeCount);
-       
+        component.set("v.CLISearchClaimLeaveListFlag",false);
+        component.set("v.enableActiveClass",true);
     },
     
     showHideCLISearchEmployeeListEvent : function(component, event, helper) 
     {
+        debugger
         var toggleValue = event.getParam("hideEmployeeListComponent"); 
         component.set("v.showHideMatchingResults", toggleValue);
     },
     
     selectedEmployeeDetails : function(component, event, helper) {
         debugger
-        
-        $(document).ready(function(){
-            $(this).parent('employee_box').addClass('active');
-        });
+        var lastSelectedEmployee = document.querySelectorAll('.employee_box');
+       	lastSelectedEmployee.forEach(e => { e.classList.remove('active'); })
+        //lastSelectedEmployee.classList.remove('active');
+        event.currentTarget.classList.add("active");       
         component.set("v.showHideMatchingResults",true);
         component.set("v.CLISearchClaimLeaveListFlag",true);
-        
+        component.set("v.enableActiveClass",false);
+        var a = component.get('c.loadJquery');
+        $A.enqueueAction(a);
         var selectedEmployeeID = event.currentTarget.getAttribute('data-empDetail-EmployeeID');
         var IsClaimOrLeave = event.currentTarget.getAttribute('data-empDetail-IsClaimOrLeave');
         var toggleCLISearchClaimLeaveListFlag = component.get("v.CLISearchClaimLeaveListFlag");
@@ -85,7 +89,9 @@
         	});
     },
     loadJquery : function(component, event, helper) {
-        
-        
+        debugger
+       $(document).ready(function(){
+          $(this).addClass("active");
+       });
     }
 })

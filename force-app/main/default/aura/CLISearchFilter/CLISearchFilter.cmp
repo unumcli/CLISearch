@@ -6,6 +6,7 @@
     <aura:attribute name="toggleCLISearchEmployeeList" type="Boolean" default="true"/>
     <aura:attribute name="OrganisationFlag" type="Boolean" default="false"/>
     <aura:attribute name="SearchFlag" type="Boolean" default="false"/>
+    <aura:attribute name="NoSearchResultsFlag" type="Boolean" default="true"/>
     <aura:attribute name="isButtonActive" type="Boolean" default="true" /> 
   	<aura:handler event="aura:waiting" action="{!c.showSpinner}"/>  
     <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>  
@@ -146,19 +147,42 @@
             </div>
     </form>
         </div>
+        </article>
+    <aura:if isTrue="{!v.NoSearchResultsFlag}">
+    	<div class="home_empty_state">
+        	<img src="{!$Resource.Home_empty_state}"/>
+            	<p>No Search Results Available</p>
+            		<small>Select the search filters to get results</small>
+        </div>
+<!--    <aura:set attribute="else">
+      False 
+    </aura:set>
+-->
+  </aura:if> 
+        
         <footer class="slds-card__footer">
             
         </footer>
-    </article>
+    
     
     <!--loading spinner start... style=Brand Medium (blue dots)-->
   	<aura:if isTrue="{!v.Spinner}"> 
    		<div aura:id="spinnerId" class="slds-spinner_container"> 
-       		<div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert"> 
+       		
+			
        		<span class="slds-assistive-text">Loading</span> 
-       		<div class="slds-spinner__dot-a"></div> 
-          		<div class="slds-spinner__dot-b"></div>
-        	</div> 
+       		<!--<div class="slds-spinner__dot-a"></div> 
+          		<div class="slds-spinner__dot-b"></div>-->
+            <div class="spinner_container">
+                <div style="width:100%; text-align:center;">
+                    <img src="{!$Resource.loader_img}"/>
+                    <div class="ellipsis_container">
+                    	<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                   	</div> 
+                </div>
+        	</div>
+			
+            <!--<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>-->
     	</div>
    	</aura:if> 
   	<!-- Loading spinner end --> 

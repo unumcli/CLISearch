@@ -13,7 +13,7 @@
         	searchBoxField.reportValidity();
         }
         else
-        {
+        {            
         	var OrganisationName = component.find("selectedOrg").get("v.value");
         	var searchBy = component.find("searchByValue").get("v.value");
         	var searchBoxValue = component.find("searchBox").get("v.value");
@@ -30,11 +30,23 @@
             	var state = response.getState();
             	if (state === "SUCCESS") 
                 {
+                    component.set("v.NoSearchResultsFlag",false);
                 	console.log("From server: " + response.getReturnValue());
                 	component.set("v.EmployeeDetail",response.getReturnValue());    
                     console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail").length);
                     empCount = component.get("v.EmployeeDetail").length;
                     EmployeeDetail = (component.get("v.EmployeeDetail"));
+                    
+                    //for(int i=0;i<=EmployeeDetail.length;i++){
+                        
+                    //}
+                    EmployeeDetail.forEach(e => { 
+                        var First = e.FirstName.charAt(0);
+                        var Last = e.LastName.charAt(0);
+                        e.Abbr = First + "" + Last;
+                        console.log(e.Abbr); 
+                       })
+                    
                     //Passing the CLISearchAPI Response
                     var appEvent = $A.get("e.c:FormDataEvent");
                     var OrganisationField = component.find("selectedOrg");
@@ -200,7 +212,7 @@
         var clearSearchValues = component.find("searchBox"); 
         clearSearchValues.setCustomValidity(''); 
         clearSearchValues.reportValidity();
-        
+        component.set("v.NoSearchResultsFlag",true);
         component.set('v.SearchFlag',false);
         component.set('v.OrganisationFlag',false);
         component.set('v.isButtonActive',true);
@@ -212,7 +224,7 @@
         HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });
         HideCLISearchEmployeeListEvent.fire();
         component.set("v.toggleCLISearchEmployeeList",true);
-       // helper.organsationReset(component, event, helper);
+        //helper.organsationReset(component, event, helper);
     },
     
     onInit: function(component, event, helper){
