@@ -15,6 +15,34 @@
     <aura:attribute name="empCount" type="Integer"/> 
     <ltng:require styles="{!$Resource.ThemifyFontCss}" />
 
+    <!--Multiselect Related Organisation List -->
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="mslabel" type="String" default="Related Organisation:" />
+    <!-- max selected item display -->
+    <aura:attribute name="maxSelectedShow" type="Integer" default="=2" />
+    <!-- Option list to show in drop down -->
+    <aura:attribute name="msoptions" type="List" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showFilterInput" type="Boolean" default="true" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showRefreshButton" type="Boolean" default="true" />
+    <!-- Show filter input box -->
+    <aura:attribute name="showClearButton" type="Boolean" default="true" />
+    <!-- Selected options label -->
+    <aura:attribute name="msname" type="String" default="Select a value.." /> 
+    
+     <!-- Selected option list -->
+    <aura:attribute name="selectedOptions" type="List" />
+    <!-- Selected options label -->
+    <aura:attribute name="selectedLabel" type="String" default="Select a value.." />
+    <!-- Selected options label -->
+    <aura:attribute name="initializationCompleted" type="Boolean" default="false" />
+    
+    <!-- Render handler to execute on component initialization -->
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+
     <article class="slds-card light_bg slds-border_none">
         <!--<div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -27,7 +55,7 @@
             	<lightning:input aura:id="policyno" label="Policy/Party ID Number" name="policypartnumber" placeholder="Enter Policy/Party ID Number" required="false" />
             
              <button class="slds-button slds-button_brand">
-                        	<span class="themify-icon-arrow-right search_ico"></span>
+                        	<span class="themify-icon-arrow-right search_ico" aria-label="next button"></span>
                         </button>
             </div>
           <!--  	<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	-->
@@ -41,76 +69,69 @@
                 </lightning:select>
             </div>
             
-            <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 org">
-                
-                
-                
-                <div class="slds-form-element">
-                <label class="slds-form-element__label" for="combobox-unique-id-25"> Related Organization</label>
-                <div class="slds-form-element__control">
-                <div class="slds-combobox_container slds-size_small">
-                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
-                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-select_container" role="none">
-                <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-unique-id-25" aria-controls="listbox-unique-id" autoComplete="off" role="textbox" placeholder="Select an Option" readonly="" value="2 Options Selected"
-                />
-                    
+           <!--  <c:MultiSelect mslabel="Related Organization" msoptions="{!v.options}" /> -->
+               <!-- DROPDOWN Component Code Starts HERE-->
+    <div class="slds-form-element">
+        <aura:if isTrue="{! !empty(v.mslabel)}">
+        	<label class="slds-form-element__label">{!v.mslabel} </label>
+        </aura:if>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container slds-size_small">
+                <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
+                     aria-expanded="false" aria-haspopup="listbox" role="listbox" >
+                    <!-- MAIN BUTTON CODE -->
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input class="slds-combobox__input ms-input" id="ms-input" aria-controls="ms-dropdown-items" 
+                                role="textbox" type="text" placeholder="{!v.selectedLabel}" value="" readonly="true"/>
+                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Click to open dropdown">
+                            <lightning:icon iconName="utility:down" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                        </span>
+                    </div>
+                     <!-- MAIN BUTTON CODE ENDS -->
+                    <!-- Drop down list -->
+                    <div id="ms-dropdown-items" role="listbox">
+                        <!-- Creating unordered list -->
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ms-dropdown" role="presentation">
+                            
+                            <!-- showing filter input -->
+                            <aura:if isTrue="{!v.showFilterInput}">
+                                <input class="slds-listbox__item ms-filter-input" id="ms-filter-input" aria-controls="ms-dropdown-items" 
+                                role="textbox" type="text" placeholder="Filter values.." value="" oninput="{!c.onInputChange}"/>
+                            </aura:if>
+                            <!-- showing clear button -->
+                            <aura:if isTrue="{!v.showClearButton}">
+                                <lightning:buttonIcon iconName="utility:clear" alternativeText="Clear current filters" onclick="{!c.onClearClick}"/>
+                            </aura:if>
+                            <!-- showing refresh button -->
+                            <aura:if isTrue="{!v.showRefreshButton}">
+                                <lightning:buttonIcon iconName="utility:refresh" alternativeText="Clear all selections and rebuild picklist" onclick="{!c.onRefreshClick}"/>
+                            </aura:if>
+                            
+                            <!-- Generating list item by iterating over options --> 
+                            <aura:iteration items="{!v.options}" var="item">
+                                <li role="presentation" class="{!'slds-listbox__item ms-list-item '+ (item.selected ? 'slds-is-selected' : '')}"
+                                    id="ms-list-item" data-id="{!item.Id}" data-name="{!item.Name}">
+                                    <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                        <!-- Icon for each list item -->
+                                        <span class="slds-media__figure">
+                                            <lightning:icon iconName="utility:check" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                        </span>
+                                        <!-- Body of each list item -->
+                                        <span class="slds-media__body">
+                                            <span class="slds-truncate" title="{!item.Name}">{!item.Name}</span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
                 </div>
-                <div id="listbox-unique-id" role="listbox" class="slds-dropdown slds-dropdown_fluid">
-                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                <li role="presentation" class="slds-listbox__item">
-                <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
-                    <span class="themify-icon-check grey_icon"></span>
-                <span class="slds-media__body slds-p-left_xx-small">
-                <span class="slds-truncate" title="Option A">
-                <span class="slds-assistive-text">Current Selection:</span> Option A</span>
-                </span>
-                </div>
-                </li>
-                <li role="presentation" class="slds-listbox__item">
-                <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
-                    <span class="themify-icon-check grey_icon"></span>
-                <span class="slds-media__body slds-p-left_xx-small">
-                <span class="slds-truncate" title="Option B">
-                <span class="slds-assistive-text">Current Selection:</span> Option B</span>
-                </span>
-                </div>
-                </li>
-                <li role="presentation" class="slds-listbox__item">
-                <div id="listbox-option-unique-id-03" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
-                    <span class="themify-icon-check grey_icon"></span>
-                <span class="slds-media__body slds-p-left_xx-small">
-                <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-                </span>
-                </div>
-                </li>
-                </ul>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <!--<lightning:select aura:id="relatedOrg" label="Related Organization" name="relatedOrganisation" required="true">
-                    <option value="Select Organisation">Select Organisation</option>
-                    <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
-                    <option value="AA New Org">AA New Org</option>
-                    <option value="AB New Org">AB New Org</option>
-                </lightning:select>-->
             </div>
-			
-            
-            
         </div>
+    </div>
+    <!-- DROPDOWN Component Code Ends HERE-->
+            
+        </div> 
         
         <div class="slds-grid slds-wrap form_row2"> 
            <div class="slds-col slds-size_3-of-12">
@@ -125,9 +146,11 @@
             </div>
     		<div class="slds-col slds-size_5-of-12 m-5-0 search_section">
     			<span></span>
-                <span class="themify-icon-search search_ico"></span>
+                
+                <span class="themify-icon-search search_ico" aria-label="Search"></span>
                     <lightning:input aura:id="searchBox" name="enter-search" label="" placeholder="Search" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please Enter value to Search"/>
-  			</div>
+  			<label class="sr-only">Search</label>
+            </div>
      		<div class="slds-col slds-size_4-of-12 p-l-12">
     			<span></span>
                 <div class="p-l-125">
@@ -150,7 +173,7 @@
         </article>
     <aura:if isTrue="{!v.NoSearchResultsFlag}">
     	<div class="home_empty_state">
-        	<img src="{!$Resource.Home_empty_state}"/>
+        	<img src="{!$Resource.Home_empty_state}" alt=""/>
             	<p>No Search Results Available</p>
             		<small>Select the search filters to get results</small>
         </div>
@@ -175,7 +198,7 @@
           		<div class="slds-spinner__dot-b"></div>-->
             <div class="spinner_container">
                 <div style="width:100%; text-align:center;">
-                    <img src="{!$Resource.loader_img}"/>
+                    <img src="{!$Resource.loader_img}" alt=""/>
                     <div class="ellipsis_container">
                     	<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                    	</div> 

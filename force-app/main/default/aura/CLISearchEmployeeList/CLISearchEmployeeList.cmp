@@ -20,8 +20,9 @@
     <!-- Events -->
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+    <aura:registerEvent name="DateFormat" type="c:DateFormat"/>
     
-     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
+    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
 
     
     <aura:renderIf isTrue="{!v.showHideMatchingResults}">
@@ -47,7 +48,7 @@
                                                         <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">{!empDetail.Abbr}</abbr>
                                                     </span>
                                                     <span class="p15">
-                                                            <a href="javascript:void(0);" class="EmpName" >{!empDetail.LastName} , {!empDetail.FirstName} </a>
+                                                            <a href="javascript:void(0);" class="EmpName" >{!empDetail.LastName} , {!empDetail.FirstName}&nbsp;{!empDetail.MiddleName}</a>
                                                     </span>
                                                 </div>
                                                 <ul class=" slds-col slds-size_12-of-12">
@@ -81,7 +82,7 @@
                    <aura:set attribute="else">                    
                     
                         <div class="table_empty_state">
-        					<img src="{!$Resource.Table_empty_state}"/>
+        					<img src="{!$Resource.Table_empty_state}" alt=""/>
                             <p>No Search Results Available</p>
             				<small>Select the search filters to get results</small>
         				</div>

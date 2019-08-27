@@ -40,15 +40,15 @@
 
                                                     <span class="slds-avatar slds-avatar_circle">
                                                         <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AS</abbr> 
-                                                    	{!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}
+                                                    <!--	{!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName} -->
                                                     </span>
 
-                                                <!--<ul>
+                                               
                                                     <div class="header-column">
-                                                        {!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}
+                                                        {!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}&nbsp;{!v.claimDetailsEmployeeDetail.MiddleName}
                                                         <br/>
                                                     </div>
-                                                </ul> -->
+                                                
                                             </lightning:layoutItem>
                                             <lightning:layoutItem padding="around-small" class="slds-col slds-size_10-of-12 slds-border_left slds-p-left_x-small">
                                               
@@ -66,10 +66,10 @@
                                                                 <b>Coverage:</b> {!v.claimDetailsEmployeeDetail.Coverage}
                                                         </div>
                                                         <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>PolicyNumber:</b>{!v.claimDetailsEmployeeDetail.PolicyNumber}
+                                                                <b>PolicyNumber:</b>{!v.claimDetailsEmployeeDetail.PolicyNo}
                                                         </div>
                                                         <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>Division:</b>{!v.claimDetailsEmployeeDetail.Division}
+                                                                <b>Division:</b>{!v.claimDetailsEmployeeDetail.PolicyDiv}
                                                         </div>
                                                 	</div>
                                             </lightning:layoutItem>
@@ -88,7 +88,7 @@
                                 <div class="slds-grid slds-wrap">
                                     <div class="slds-col slds-size_1-of-3 ">
                                         <div class="header-column">
-                                            <h2><b>Claim History:-</b> {!v.claimDetailsClaimStatus.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}</h2> 
+                                            <h2><b>Claim History:-</b> {!v.claimDetailsEmployeeDetail.ClaimHistory}</h2> 
                                         </div>
                                         <div class="header-column">
                                             <h2><b>Benifit Start Date:</b> {!v.claimDetailsClaimStatus.BenefitStartDate}</h2> 

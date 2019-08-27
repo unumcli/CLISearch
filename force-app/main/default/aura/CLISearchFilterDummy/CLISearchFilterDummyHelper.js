@@ -1,5 +1,9 @@
 ({
-	closeAllDropDown: function() {
+    /**
+     * This function will close all multi-select drop down on the page
+     * @author - Manish Choudhari
+     * */
+    closeAllDropDown: function() {
         
         //Close drop down by removing slds class
         Array.from(document.querySelectorAll('#ms-picklist-dropdown')).forEach(function(node){
@@ -147,7 +151,7 @@
                                 "Name":ddOption.closest("li").getAttribute('data-name')};
             //Get all selected options
             var selectedOptions = component.get("v.selectedOptions");
-            //Boolean to indicate if value is already present
+            //Boolean to indicate if value is alredy present
             var alreadySelected = false;
             //Looping through all selected option to check if clicked value is already present
             selectedOptions.forEach((option,index) => {
@@ -169,27 +173,5 @@
         //Set picklist label
         this.setPickListName(component, selectedOptions);
     },
-                    
-    organsationReset : function(component, event, helper) {
-       debugger
-        var OrganisationName = component.find("selectedOrg").get("v.value");
-        var searchBoxValue = component.find("searchBox").get("v.value");
-        if(OrganisationName==='Select Organisation'){
-        	component.set('v.OrganisationFlag',false);
-        	component.set('v.isButtonActive',true);
-        }
-        else
-        {
-        	component.set('v.OrganisationFlag',true); 
-            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
-            {
-            	component.set('v.isButtonActive',false);  
-            }
-            else 
-            {
-                component.set('v.isButtonActive',true);
-            }
-        }
-		 
-	}
+               
 })

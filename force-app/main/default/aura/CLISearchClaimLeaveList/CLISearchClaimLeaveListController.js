@@ -82,6 +82,7 @@ debugger
         debugger;
             
             var actionGetEmployeeClaimDetail = component.get("c.GetEmployeeClaimDetail");
+            actionGetEmployeeClaimDetail.setStorable();
             actionGetEmployeeClaimDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1",employeeId: "1",IsClaimOrLeave: "1" });
             $A.enqueueAction(actionGetEmployeeClaimDetail);
                actionGetEmployeeClaimDetail.setCallback(this, function(response)
@@ -119,6 +120,7 @@ debugger
         debugger
         //GetClaimLeave API Call
             var actionGetEmployeeLeaveDetail = component.get("c.GetLeaveDetails");
+         actionGetEmployeeLeaveDetail.setStorable();
             actionGetEmployeeLeaveDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1",employeeId: "1",IsClaimOrLeave: "1" });
             $A.enqueueAction(actionGetEmployeeLeaveDetail);
                actionGetEmployeeLeaveDetail.setCallback(this, function(response)
@@ -156,7 +158,13 @@ debugger
             });
     },
     loadJquery : function(component, event, helper) {
-    console.log('loadJquery');
+    	console.log('loadJquery');
+    },
+    setDateFormat : function(component, event, helper) {
+    debugger
+        component.set("v.DefaultDateFormat",event.getParam("FormattedDateTime"));
+        
     }
+    
     
 })

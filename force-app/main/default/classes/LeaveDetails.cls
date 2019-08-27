@@ -24,8 +24,8 @@ public with sharing class LeaveDetails
 		@AuraEnabled public Boolean isASR {get;set;} 
 	}
 		public with sharing class IntermittentAbsence {
-		@AuraEnabled public String BeginDate {get;set;} 
-		@AuraEnabled public String EndDate {get;set;} 
+		@AuraEnabled public String BeginDateTime {get;set;} 
+		@AuraEnabled public String EndDateTime {get;set;} 
 		@AuraEnabled public String TimeAbsent {get;set;} 
 		@AuraEnabled public String ReportedDate {get;set;} 
 		@AuraEnabled public String LeavePeriod {get;set;} 

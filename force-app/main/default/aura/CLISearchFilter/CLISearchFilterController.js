@@ -1,4 +1,77 @@
 ({   
+   doInit:function(component, event, helper) {
+        debugger
+        const options=[{'Id':1,'Name':'Organization-A'},
+                       {'Id':2,'Name':'Organization-B'},
+                       {'Id':3,'Name':'Organization-C'},
+                       {'Id':4,'Name':'Organization-D'},
+                       {'Id':5,'Name':'Organization-E'},
+                       {'Id':6,'Name':'Organization-F'},
+                       {'Id':7,'Name':'Organization-G'},
+                       {'Id':8,'Name':'Organization-H'},
+                       {'Id':9,'Name':'Organization-I'},];
+        component.set("v.options", options);
+     
+	},
+                       
+        onRender : function(component, event, helper) {
+        debugger
+        if(!component.get("v.initializationCompleted")){
+            //Attaching document listener to detect clicks
+            component.getElement().addEventListener("click", function(event){
+                //handle click component
+                helper.handleClick(component, event, 'component');
+            });
+            //Document listner to detect click outside multi select component
+            document.addEventListener("click", function(event){
+                helper.handleClick(component, event, 'document');
+            });
+            //Marking initializationCompleted property true
+            component.set("v.initializationCompleted", true);
+            //Set picklist name
+            helper.setPickListName(component, component.get("v.selectedOptions"));
+        }
+        
+    },
+        
+    /**
+     * This function will be called when input box value change
+     * @author - Manish Choudhari
+     * */
+    onInputChange : function(component, event, helper) {
+                       debugger
+        //get input box's value
+        var inputText = event.target.value;
+        //Filter options
+        helper.filterDropDownValues(component, inputText);
+    },
+    
+    /**
+     * This function will be called when refresh button is clicked
+     * This will clear all selections from picklist and rebuild a fresh picklist
+     * */
+    onRefreshClick : function(component, event, helper) {
+                       debugger
+        //clear selected options
+        component.set("v.selectedOptions", []);
+        //Clear check mark from drop down items
+        helper.rebuildPicklist(component);
+        //Set picklist name
+        helper.setPickListName(component, component.get("v.selectedOptions"));
+    },
+    
+    /**
+     * This function will be called when clear button is clicked
+     * This will clear any current filters in place
+     * */
+    onClearClick : function(component, event, helper) {
+        debugger
+        //clear filter input box
+        component.getElement().querySelector('#ms-filter-input').value = '';
+        //reset filter
+        helper.resetAllFilters(component);
+    },
+    
     OnGo:function(component, event, helper) 
     {
         debugger
@@ -23,7 +96,7 @@
             var empCount;
         	//SearchByLastName API Call
         	var actionSearchByLastName = component.get("c.SearchByLastName");
-        	actionSearchByLastName.setParams({ userId : "architdutt@gmail.com", organisationId : 1,lastame: searchBoxValue,ssn: "123456789" });
+        	actionSearchByLastName.setParams({ userId : "architdutt@gmail.com", orgId : 1,searchString: searchBoxValue,searchBy: searchBy });
         	$A.enqueueAction(actionSearchByLastName); 
    	    	actionSearchByLastName.setCallback(this, function(response) 
             {
@@ -43,7 +116,7 @@
                     EmployeeDetail.forEach(e => { 
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
-                        e.Abbr = First + "" + Last;
+                        e.Abbr = Last + "" + First;
                         console.log(e.Abbr); 
                        })
                     
@@ -224,6 +297,7 @@
         HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });
         HideCLISearchEmployeeListEvent.fire();
         component.set("v.toggleCLISearchEmployeeList",true);
+        //document.getElementsByName("selectedOrganisation").click();
         //helper.organsationReset(component, event, helper);
     },
     

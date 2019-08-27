@@ -13,16 +13,18 @@
     <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail[]"/>
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
+    <aura:attribute name="DefaultDateFormat" type="String"/>
     
     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
-    
-    
-    <!-- Handling the LoadEmployeeRecordsEvent to get the ClaimLeaveList Response to render the datatable -->
-    <aura:handler event="c:LoadEmployeeRecordsEvent" action="{!c.fetchEmpData}"/>
-    
-    
+    <!-- Events -->
     <aura:registerEvent name="LeaveDetailsEvent" type="c:LeaveDetailsEvent"/>
     <aura:registerEvent name="ClaimDetailsEvent" type="c:ClaimDetailsEvent"/>
+    <!-- Events -->
+    <!-- Handling the LoadEmployeeRecordsEvent to get the ClaimLeaveList Response to render the datatable -->
+    <aura:handler event="c:LoadEmployeeRecordsEvent" action="{!c.fetchEmpData}"/>
+    <!-- Handling the DateFormat Event to set the DateFormat across all the Date type fields -->
+    <aura:handler event="c:DateFormat" action="{!c.setDateFormat}"/>
+    
     
      
   <!--  <aura:handler name="init" value="{!this}" action="{!c.fetchEmpData}"/> -->
@@ -61,19 +63,19 @@
                 <span class="slds-avatar slds-avatar_circle m-r-5">
                     <abbr class="slds-avatar__initials slds-icon-standard-user" title="person name">AB</abbr>
                 </span>
-                {!EmployeeDetail.FirstName}
+                {!EmployeeDetail.LastName} , {!EmployeeDetail.FirstName}&nbsp;{!EmployeeDetail.MiddleName}
             </div>
             <div class="slds-col slds-size_3-of-12">
-                <p><b>SSN:{!EmployeeDetail.SSN}</b></p>
-                <p><b>Open Leave#:{!EmployeeDetail.OpenLeaveNumber}</b></p>
+                <p><b>SSN:</b>{!EmployeeDetail.SSN}</p>
+                <p><b>Open Leave#:</b>{!EmployeeDetail.OpenLeaveNumber}</p>
             </div>
             <div class="slds-col slds-size_3-of-12">
-                <p><b>Employee ID:{!EmployeeDetail.EmployeeID}</b></p>
-                <p><b>Open Claim#:{!EmployeeDetail.OpenClaimNumber}</b></p>
+                <p><b>Employee ID:</b>{!EmployeeDetail.EmployeeID}</p>
+                <p><b>Open Claim#:</b>{!EmployeeDetail.OpenClaimNumber}</p>
             </div>
             <div class="slds-col slds-size_3-of-12">
               <!--  <p><b>Date of Birth:{!EmployeeDetail.DateOfBirth}</b></p> -->
-                <p><b>Date of Birth:</b><lightning:formattedDateTime value="{!EmployeeDetail.DateOfBirth}" year="2-digit" month="long" day="2-digit" weekday="long"/></p>
+                <p><b>Date of Birth:</b><lightning:formattedDateTime value="{!EmployeeDetail.DateOfBirth}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></p>
                 <p>&nbsp;</p>
             </div>
             <div class="slds-col slds-size_1-of-12 icon16">
@@ -128,10 +130,10 @@
 						<div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
 					</td>
 					<td data-label="Received Date">
-						<div class="slds-truncate" title="Received Date">{!ClaimLeaveData.ClaimData.ReceivedDate}</div>
+						<div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
 					</td>
 					<td data-label="Disability/Leave Start Date">
-						<div class="slds-truncate" title="Disability/Leave Start Date">{!ClaimLeaveData.ClaimData.Disability}</div>
+						<div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
 					</td>
 					<td data-label="Current Status">
 						<div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
@@ -164,10 +166,10 @@
 						<div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
 					</td>
 					<td data-label="Received Date">
-						<div class="slds-truncate" title="Received Date">{!ClaimLeaveData.ClaimData.ReceivedDate}</div>
+						<div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
 					</td>
 					<td data-label="Disability/Leave Start Date">
-						<div class="slds-truncate" title="Disability/Leave Start Date">{!ClaimLeaveData.ClaimData.Disability}</div>
+						<div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="numeric" month="numeric" day="numeric"/></div>
 					</td>
 					<td data-label="Current Status">
 						<div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>

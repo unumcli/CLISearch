@@ -203,10 +203,10 @@
                                          <aura:iteration items="{!v.LeaveDetailsIntermittentAbsence}" var="IntermittentAbsenceData" >  
                                              <tr class="slds-hint-parent">
                                                  <td data-label="Leave Period" >
-                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.BeginDate}</div>
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.BeginDateTime}</div>
                                                  </td>
                                                  <td data-label="Type" >
-                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.EndDate}</div>
+                                                     <div class="slds-truncate" title="">{!IntermittentAbsenceData.EndDateTime}</div>
                                                  </td>
                                                  <td data-label="Hours" >
                                                      <div class="slds-truncate" title="">{!IntermittentAbsenceData.TimeAbsent}</div>

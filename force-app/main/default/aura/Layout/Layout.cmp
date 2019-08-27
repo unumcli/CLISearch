@@ -12,14 +12,14 @@
 
 <div class="">
 <header class="slds-builder-header">
-<div class="slds-builder-header__item">
-<div class="slds-builder-header__item-label slds-media slds-media_center">
-<div class="slds-media__body"><img src="{!$Resource.Logo}" alt="Unum CLI Reporting" /></div>
-</div>
+<div class="slds-builder-header__item unum_logo">
+    <div class="slds-builder-header__item-label slds-media slds-media_center">
+        <div class="slds-media__body"><img src="{!$Resource.Logo}" alt="Unum CLI Reporting" /></div>
+    </div>
 </div>
     <div class="slds-builder-header__item slds-has-flexi-truncate">
         <h1 class="slds-builder-header__item-label">
-            <span class="slds-truncate" title="Page Type">Claims &amp; Leave Insights</span>
+            <span class="slds-truncate pagename" title="Page Type">Claims &amp; Leave Insights</span>
         </h1>
     </div>    
 <div class="slds-builder-header__item slds-builder-header__utilities">
@@ -38,10 +38,9 @@
 </a>
 </div> 
 <div class="slds-builder-header__utilities-item">
-    <lightning:buttonMenu class="profile-menu" alternativeText="Profile Menu" iconName="utility:user" menuAlignment="right">
+    <lightning:buttonMenu class="profile-menu slds-builder-header__item-action" alternativeText="Profile Menu" iconName="utility:user" menuAlignment="right">
         <lightning:menuItem label="Logout" value="menuitem1" iconName="utility:logout" />
-    </lightning:buttonMenu>
-  
+    </lightning:buttonMenu>  
 </div>    
 </div>
 </header>  

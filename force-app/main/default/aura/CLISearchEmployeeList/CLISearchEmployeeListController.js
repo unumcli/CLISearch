@@ -39,13 +39,21 @@
         var a = component.get('c.loadJquery');
         $A.enqueueAction(a);
         var selectedEmployeeID = event.currentTarget.getAttribute('data-empDetail-EmployeeID');
-        var IsClaimOrLeave = event.currentTarget.getAttribute('data-empDetail-IsClaimOrLeave');
+        var IsClaimOrLeave = parseInt(event.currentTarget.getAttribute('data-empDetail-IsClaimOrLeave'));
         var toggleCLISearchClaimLeaveListFlag = component.get("v.CLISearchClaimLeaveListFlag");
         var ClaimLeaveList;
+                                           
+                                           
+        //Passing the date format across the application 
+        var appEvent = $A.get("e.c:DateFormat");
+        var formattedDateTime = "numeric";
+        appEvent.setParams({"FormattedDateTime": formattedDateTime});
+        appEvent.fire();
         
         //GetClaimLeave API Call
         	var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
-        	actionGetClaimLeave.setParams({ userId : "architdutt@gmail.com", organisationId : 1,employeeId: selectedEmployeeID,IsClaimOrLeave: IsClaimOrLeave });
+            actionGetClaimLeave.setStorable();
+        	actionGetClaimLeave.setParams({ userId : "architdutt@gmail.com", organisationId : "1",employeeId: selectedEmployeeID,IsClaimOrLeave: IsClaimOrLeave });
         	$A.enqueueAction(actionGetClaimLeave); 
    	    	actionGetClaimLeave.setCallback(this, function(response) 
             {
