@@ -1,7 +1,6 @@
 <aura:application extends="force:slds">
     <c:CLISearchFilter /> 
-    <c:CLISearchEmployeeList />
-  	
+    <c:CLISearchEmployeeList /> 
     <c:CLISearchClaimDetailsPopup />  
-    <c:CLISearchLeaveDetailsPopup />  
+   	<c:CLISearchLeaveDetailsPopup /> 
 </aura:application>

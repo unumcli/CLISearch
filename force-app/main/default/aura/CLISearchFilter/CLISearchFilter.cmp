@@ -1,5 +1,6 @@
 <aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	<aura:registerEvent name="FormDataEvent" type="c:FormDataEvent"/>
+    <aura:registerEvent name="FormDataEvent" type="c:FormDataEvent"/> 
+    <!-- FilterDataEvent-->
     <aura:registerEvent name="HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
     
     <!-- <aura:handler name="init" action="{!c.onInit}" value="{!this}"/>  -->
@@ -17,11 +18,11 @@
 
     <!--Multiselect Related Organisation List -->
     <aura:attribute name="options" type="List" />
-    <aura:attribute name="mslabel" type="String" default="Related Organisation:" />
+    <aura:attribute name="relatedOrganisation" type="String" default="Related Organisation:" />
     <!-- max selected item display -->
     <aura:attribute name="maxSelectedShow" type="Integer" default="=2" />
     <!-- Option list to show in drop down -->
-    <aura:attribute name="msoptions" type="List" />
+    <aura:attribute name="optionsList" type="List" />
     <!-- Show filter input box -->
     <aura:attribute name="showFilterInput" type="Boolean" default="true" />
     <!-- Show filter input box -->
@@ -29,7 +30,7 @@
     <!-- Show filter input box -->
     <aura:attribute name="showClearButton" type="Boolean" default="true" />
     <!-- Selected options label -->
-    <aura:attribute name="msname" type="String" default="Select a value.." /> 
+    <aura:attribute name="selectedValue" type="String" default="Select a value.." /> 
     
      <!-- Selected option list -->
     <aura:attribute name="selectedOptions" type="List" />
@@ -39,8 +40,8 @@
     <aura:attribute name="initializationCompleted" type="Boolean" default="false" />
     
     <!-- Render handler to execute on component initialization -->
-    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />	
     
 
     <article class="slds-card light_bg slds-border_none">
@@ -50,17 +51,17 @@
         </div>-->
         <div class="slds-card__body slds-card__body_inner slds-var-p-around_small">
     <form id="searchForm" class="slds-form--stacked">          
-        <div class="slds-grid slds-gutters form_row1">
+        <div class="slds-grid slds-wrap form_row1">
             <div class="slds-col slds-size_1-of-3  slds-x-large-size--1-of-2">
             	<lightning:input aura:id="policyno" label="Policy/Party ID Number" name="policypartnumber" placeholder="Enter Policy/Party ID Number" required="false" />
             
              <button class="slds-button slds-button_brand">
-                        	<span class="themify-icon-arrow-right search_ico" aria-label="next button"></span>
-                        </button>
+                   <span class="themify-icon-arrow-right search_ico" aria-label="next button"></span>
+              </button>
             </div>
           <!--  	<lightning:button aura:id="policynobutton" label="Find Organization" name="btnSearchPolicy" />	-->
            
-            <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 slds-text-align_right org">
+            <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 slds-text-align_right org m-5-0">
                 <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
                     <option value="Select Organisation">Select Organisation</option>
                     <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
@@ -69,14 +70,17 @@
                 </lightning:select>
             </div>
             
+     
+           
            <!--  <c:MultiSelect mslabel="Related Organization" msoptions="{!v.options}" /> -->
                <!-- DROPDOWN Component Code Starts HERE-->
+  <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 rel_org m-5-0">
     <div class="slds-form-element">
-        <aura:if isTrue="{! !empty(v.mslabel)}">
-        	<label class="slds-form-element__label">{!v.mslabel} </label>
+        <aura:if isTrue="{! !empty(v.relatedOrganisation)}">
+        	<label class="slds-form-element__label">{!v.relatedOrganisation} </label>
         </aura:if>
         <div class="slds-form-element__control">
-            <div class="slds-combobox_container slds-size_small">
+            <div class="slds-combobox_container multi-select">
                 <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
                      aria-expanded="false" aria-haspopup="listbox" role="listbox" >
                     <!-- MAIN BUTTON CODE -->
@@ -129,12 +133,13 @@
             </div>
         </div>
     </div>
+ </div> 
     <!-- DROPDOWN Component Code Ends HERE-->
-            
+           
         </div> 
         
         <div class="slds-grid slds-wrap form_row2"> 
-           <div class="slds-col slds-size_3-of-12">
+           <div class="slds-col slds-size_4-of-12">
     			<span></span>
                 <lightning:select aura:id="searchByValue" label="Search by:" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
                     <option value="LastName">Last Name</option>
@@ -144,7 +149,7 @@
                     <option value="SSN">SSN</option>
                 </lightning:select>
             </div>
-    		<div class="slds-col slds-size_5-of-12 m-5-0 search_section">
+    		<div class="slds-col slds-size_4-of-12 m-5-0 search_section">
     			<span></span>
                 
                 <span class="themify-icon-search search_ico" aria-label="Search"></span>

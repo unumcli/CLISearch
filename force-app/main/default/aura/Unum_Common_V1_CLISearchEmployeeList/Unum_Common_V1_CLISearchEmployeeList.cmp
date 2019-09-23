@@ -1,0 +1,93 @@
+<aura:component controller="ClaimLeaveList" implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+      
+    <!-- Attributes -->
+    <aura:attribute name="selectedOrgEvent" type="String"/>
+    <aura:attribute name="searchByValueEvent" type="String"/>
+    <aura:attribute name="searchBoxEvent" type="String"/>
+    <aura:attribute name="ssnDisplayEvent" type="String"/>
+    <aura:attribute name="showHideMatchingResults" type="boolean"/>
+    <aura:attribute name="enableActiveClass" type="boolean" default="true"/>
+    <aura:attribute name="empCountEvent" type="Integer"/>
+    
+    <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" default="false"/>
+    <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
+    <aura:attribute name="passEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
+    <!-- Attributes -->
+
+    <aura:registerEvent name="Unum_CLISearch_LoadEmployeeRecordsEvent" type="c:Unum_CLISearch_LoadEmployeeRecordsEvent"/>
+  	<aura:registerEvent name="Unum_CLISearch_DateFormat" type="c:Unum_CLISearch_DateFormat"/>
+    <!-- Events -->
+    <aura:handler event="c:Unum_CLISearch_FilterDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
+    <aura:handler event="c:Unum_CLISearch_HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+   
+    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
+
+    <aura:renderIf isTrue="{!v.showHideMatchingResults}">
+        
+        <div class="slds-grid slds-glutters slds-p-top_none  slds-p-bottom_none">    
+            <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large slds-grid slds-wrap slds-col slds-size_12-of-12">
+                    <p><strong><lightning:formattedNumber value="{!v.empCountEvent}" /></strong> Matching Results For <b>"<lightning:formattedText value="{!v.searchByValueEvent}" />: </b><strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong>" </p> 
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-glutters slds-p-top_none">
+            <div style="background-color: LightWhite" class="slds-col slds-size_3-of-12">
+                <div class="slds-grid slds-grid_vertical">
+                    <div class="slds-col">
+                        <div class="slds-scrollable empListContainer">                        
+                            <aura:iteration items="{!v.EmployeeDetail}" var="empDetail">                            
+                                <div data-empDetail-EmployeeID="{!empDetail.EmployeeID}" data-empDetail-IsClaimOrLeave="{!empDetail.IsClaimOrLeave}" onclick="{!c.selectedEmployeeDetails}" class="slds-box border-bottom employee_box">
+                                    <span class="c-container">
+                                        <lightning:layout >
+                                            <lightning:layoutItem padding="around-small" class="slds-glutters width100 slds-p-left_none slds-p-right_none">
+                                                <div class="header-column slds-col slds-size_12-of-12" >
+                                                    <span class="slds-avatar slds-avatar_circle">
+                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">{!empDetail.Abbr}</abbr>
+                                                    </span>
+                                                    <span class="p15">
+                                                            <a href="javascript:void(0);" class="EmpName" >{!empDetail.LastName} , {!empDetail.FirstName}&nbsp;{!empDetail.MiddleName}</a>
+                                                    </span>
+                                                </div>
+                                                <ul class=" slds-col slds-size_12-of-12">
+                                                    <div class="header-column">
+                                                        <div class="search-result-id-text">
+                                                            <!--<li class="slds-item EmpSubList slds-var-p-around_small slds-p-left_none slds-p-bottom_none">
+                                                                SSN: <a href="javascript:void(0);" onclick="{!c.selectedEmployeeDetails}">{!empDetail.SSN}  </a>		  
+                                                            </li>-->
+                                                            <li class="slds-item EmpSubList slds-var-p-around_small slds-p-left_none slds-p-bottom_none">
+                                                                Open Leave#: <a href="javascript:void(0);" onclick="{!c.selectedEmployeeDetails}">{!empDetail.OpenLeave}  </a>
+                                                            </li>
+                                                            <li class="slds-item EmpSubList slds-var-p-around_small slds-p-left_none slds-p-bottom_none">
+                                                                Open Claim#: <a href="javascript:void(0);" onclick="{!c.selectedEmployeeDetails}">{!empDetail.OpenClaim}  </a>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </ul>                                       
+                                            </lightning:layoutItem>
+                                        </lightning:layout>     
+                                    </span>
+                                </div>
+                            </aura:iteration> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_9-of-12 slds-p-left_x-small">
+               <aura:renderIf isTrue="{!v.CLISearchClaimLeaveListFlag}"> 
+                   
+                   <c:Unum_Common_V1_CLISearchClaimLeaveList/>
+                   <aura:set attribute="else">                    
+                    
+                        <div class="table_empty_state">
+        					<img src="{!$Resource.Table_empty_state}" alt=""/>
+                            <p>No Search Results Available</p>
+            				<small>Select the search filters to get results</small>
+        				</div>
+                	</aura:set>
+                 </aura:renderIf>    
+        	</div>            
+        </div>
+    </aura:renderIf>
+    
+</aura:component>

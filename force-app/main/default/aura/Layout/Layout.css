@@ -65,4 +65,5 @@
 .THIS .slds-button_icon-more .slds-button_icon.slds-button__icon_x-small{display:none;}
 .THIS .slds-button_icon-more:hover{background:#fff;}
 .THIS .slds-builder-header__item-action:focus, .THIS .slds-builder-header__item-action:hover{background: #0a497d; outline:0; color:#fff; text-decoration:none;}
-.THIS .slds-button:focus, .THIS a:focus{outline:2px dotted #5fbde3;}
+.THIS .slds-button:focus{outline:2px dotted #5fbde3;}
+.THIS .slds-button:focus, .THIS a:focus{outline:0px; background: #0a497d;}

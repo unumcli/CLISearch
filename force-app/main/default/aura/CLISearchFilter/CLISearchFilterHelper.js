@@ -1,18 +1,66 @@
 ({
-	closeAllDropDown: function() {
+	   doInit:function(component, event, helper) {
+        
+        const options=[{'Id':1,'Name':'Norton'},
+                       {'Id':2,'Name':'Organization B'},
+                       {'Id':3,'Name':'Organization-C'},
+                       {'Id':4,'Name':'Organization-D'},
+                       {'Id':5,'Name':'Organization-E'},
+                       {'Id':6,'Name':'Organization-F'},
+                       {'Id':7,'Name':'Organization-G'},
+                       {'Id':8,'Name':'Organization-H'},
+                       {'Id':9,'Name':'Organization-I'},];
+        component.set("v.options", options);
+       /*                
+        //GetAuthorization API Call
+        	var actionGetAuthorization = component.get("c.GetAuthorization");
+        	actionGetAuthorization.setParams({ forgerock_auth : "auth_token", emailId : "architdutt@gmail.com",searchString: "isInternal" });
+        	$A.enqueueAction(actionGetAuthorization); 
+   	    	actionGetAuthorization.setCallback(this, function(response) 
+            {
+            	var state = response.getState();
+            	if (state === "SUCCESS") 
+                {                  
+                	console.log("From server: " + response.getReturnValue());
+                	component.set("v.options",response.getReturnValue());                       
+            	}
+            	else if (state === "INCOMPLETE") 
+                {
+                	// do something
+            	}
+            	else if (state === "ERROR") 
+                {
+                	var errors = response.getError();
+                	if (errors) 
+                    {
+                    	if (errors[0] && errors[0].message) 
+                        {
+                        	console.log("Error message: " + errors[0].message);
+                    	}
+                	} 
+                	else 
+                	{
+                    	console.log("Unknown error");
+                	}
+            	}
+        	});               
+     */
+	},   
+    
+    closeAllDropDown: function() {
         
         //Close drop down by removing slds class
         Array.from(document.querySelectorAll('#ms-picklist-dropdown')).forEach(function(node){
             node.classList.remove('slds-is-open');
         });
-    },
+    },   
     
     
 	/**
      * This function will be called on drop down button click
      * It will be used to show or hide the drop down
-     * @author - Manish Choudhari
      * */
+    
     onDropDownClick: function(dropDownDiv) {
         
         //Getting classlist from component
@@ -27,14 +75,317 @@
             this.closeAllDropDown();
         }
         
+    },     
+                       
+    /**
+     * This function will be called when refresh button is clicked
+     * This will clear all selections from picklist and rebuild a fresh picklist
+     * */
+    
+    onRefreshClick : function(component, event, helper) {
+         
+        //clear selected options
+        component.set("v.selectedOptions", []);
+        //Clear check mark from drop down items
+        helper.rebuildPicklist(component);
+        //Set picklist name
+        helper.setPickListName(component, component.get("v.selectedOptions"));
     },
     
     /**
-     * This function will handle clicks on within and outside the component
-     * @author - Manish Choudhari
+     * This function will be called when clear button is clicked
+     * This will clear any current filters in place
      * */
-    handleClick: function(component, event, where) {
+    
+    onClearClick : function(component, event, helper) {
         
+        //clear filter input box
+        component.getElement().querySelector('#ms-filter-input').value = '';
+        //reset filter
+        helper.resetAllFilters(component);
+    },
+    
+    
+    OnGo:function(component, event, helper) 
+    {
+        
+        var orgValidity = component.find("selectedOrg").get("v.validity");
+       	var searchBoxValidity = component.find("searchBox").get("v.validity");
+        if(orgValidity.valid === false || searchBoxValidity.valid === false) 
+        {
+        	component.set('v.isButtonActive',true);
+        	var OrganisationField = component.find("selectedOrg");    
+        	OrganisationField.showHelpMessageIfInvalid();
+        	var searchBoxField = component.find("searchBox");    
+        	searchBoxField.reportValidity();
+        }
+        else
+        {            
+        	var OrganisationName = component.find("selectedOrg").get("v.value");
+        	var searchBy = component.find("searchByValue").get("v.value");
+        	var searchBoxValue = component.find("searchBox").get("v.value");
+        	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
+        	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
+        	var EmployeeDetail;
+            var empCount;
+        	//SearchByLastName API Call
+        	var actionSearchByLastName = component.get("c.SearchByLastName");
+        	actionSearchByLastName.setParams({ userId : "architdutt@gmail.com", orgId : 1,searchString: searchBoxValue,searchBy: searchBy });
+        	$A.enqueueAction(actionSearchByLastName); 
+   	    	actionSearchByLastName.setCallback(this, function(response) 
+            {
+                debugger
+            	var state = response.getState();
+            	if (state === "SUCCESS") 
+                {
+                    component.set("v.NoSearchResultsFlag",false);
+                	console.log("From server: " + response.getReturnValue());
+                	component.set("v.EmployeeDetail",response.getReturnValue());    
+                    console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail").length);
+                    empCount = component.get("v.EmployeeDetail").length;
+                    EmployeeDetail = (component.get("v.EmployeeDetail"));
+                    
+                    //for(int i=0;i<=EmployeeDetail.length;i++){
+                        
+                    //}
+                    var hexaCode="['#f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']";
+                    debugger
+                    EmployeeDetail.forEach(e => {
+                        
+                        var First = e.FirstName.charAt(0);
+                        var Last = e.LastName.charAt(0);
+                        e.AvatarColor = hexaCode[0]; 
+                        e.Abbr = Last + "" + First;
+                        console.log(e.Abbr); 
+                       })
+                    
+                    //Passing the CLISearchAPI Response
+                    var appEvent = $A.get("e.c:FormDataEvent");
+                    var OrganisationField = component.find("selectedOrg");
+                    appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    appEvent.fire();
+                	// You would typically fire a event here to trigger 
+                	// client-side notification that the server-side 
+                	// action is complete
+            	}
+            	else if (state === "INCOMPLETE") 
+                {
+                	// do something
+            	}
+            	else if (state === "ERROR") 
+                {
+                	var errors = response.getError();
+                	if (errors) 
+                    {
+                    	if (errors[0] && errors[0].message) 
+                        {
+                        	console.log("Error message: " + errors[0].message);
+                    	}
+                	} 
+                	else 
+                	{
+                    	console.log("Unknown error");
+                	}
+            	}
+        	});
+      	}
+    },
+    
+    ValidationCheck: function (component,event,helper) 
+    {
+        
+    	var SearchByInput = component.find('searchByValue').get('v.value');
+       	var SearchByInputSource = event.getSource();
+       	var SearchedValue = event.getSource().get("v.value");// get the right value
+      
+        if(SearchedValue === "") 
+        {
+            component.set('v.SearchFlag',false);
+            component.set('v.isButtonActive',true);
+        }
+        else 
+        {
+        	component.set('v.SearchFlag',true);
+            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
+            {
+              	component.set('v.isButtonActive',false);  
+            }
+            else 
+            {
+                component.set('v.isButtonActive',true);
+            }
+        }
+        if(component.get('v.SearchFlag') && component.get('v.SearchFlag'))  
+        	var SearchByInput = component.find('searchByValue').get('v.value');
+        if(SearchByInput==="LastName") 
+        {
+        	var SearchBoxInput = component.find('searchBox').get('v.value');
+			var patternLastname = new RegExp("^[A-Za-z]+$");
+        	var res = patternLastname.test(SearchBoxInput);
+  		 	if(res == true)
+        	{
+        		SearchByInputSource.setCustomValidity(''); //do not get any message
+        		SearchByInputSource.reportValidity();
+        	}
+            else if(SearchBoxInput == "") 
+            {
+                SearchByInputSource.setCustomValidity(''); //do not get any message
+        		SearchByInputSource.reportValidity();
+            }
+        	else  
+        	{
+             	SearchByInputSource.setCustomValidity('Lastname can have only alphabets'); //do not get any message
+             	SearchByInputSource.reportValidity();
+        	}            
+        }
+        else if(SearchByInput==="EEID") 
+        {
+        	var SearchBoxInput = component.find('searchBox').get('v.value');
+			var patternemp = new RegExp("^[0-9]*$");
+        	var res = patternemp.test(SearchBoxInput);
+        	if(res == true) 
+        	{
+            	SearchByInputSource.setCustomValidity(''); //do not get any message
+    			SearchByInputSource.reportValidity();
+        	}
+        	else 
+            {
+            	SearchByInputSource.setCustomValidity('Employee Id must be numeric'); //do not get any message
+    			SearchByInputSource.reportValidity();
+        	}  
+        }
+        else if(SearchByInput==="LeaveNumber") 
+        {
+        	var SearchBoxInput = component.find('searchBox').get('v.value'); 
+		   	var patterncl = new RegExp("^[0-9]*$");
+       	   	var res = patterncl.test(SearchBoxInput);
+        	if(res == false) 
+         	{
+            	SearchByInputSource.setCustomValidity('Leave number must be numeric'); //do not get any message
+             	SearchByInputSource.reportValidity();
+        	}
+        	else
+            {
+            	SearchByInputSource.setCustomValidity(''); //do not get any message
+    			SearchByInputSource.reportValidity();                
+            }
+        }
+        else if(SearchByInput === "ClaimNumber") {          
+           	var SearchBoxInput = component.find('searchBox').get('v.value'); 
+		   	var patterncl = new RegExp("^[0-9]*$");
+       	   	var res = patterncl.test(SearchBoxInput);
+        	if(res == false) 
+         	{
+             	SearchByInputSource.setCustomValidity('Claim number must be numeric'); //do not get any message
+             	SearchByInputSource.reportValidity();
+        	}
+        	else
+            {
+            	SearchByInputSource.setCustomValidity(''); //do not get any message
+    			SearchByInputSource.reportValidity();                
+            }
+		}
+        else if(SearchByInput === "SSN") 
+        {
+            var SearchBoxInput = component.find('searchBox').get('v.value');
+            var patternssn = new RegExp("^[0-9]{9}$");
+            var res = patternssn.test(SearchBoxInput);
+        	if(res==true)
+       		{
+          		console.log("valid ssn");
+                SearchByInputSource.setCustomValidity(''); //do not get any message
+    			SearchByInputSource.reportValidity();
+       	 	}
+            else if(SearchBoxInput=="") 
+            {                
+                SearchByInputSource.setCustomValidity(''); //do not get any message
+                SearchByInputSource.reportValidity();
+            }
+            else 
+            {
+                SearchByInputSource.setCustomValidity('SSN must have 9 digits and must be numeric'); //do not get any message
+                SearchByInputSource.reportValidity();   
+            } 
+        }
+    },
+    
+    clearSearchInput: function (component, event, helper) {
+        debugger;
+        component.find("searchBox").set("v.value","");
+        var searchBoxValues = component.find("searchBox");
+        searchBoxValues.setCustomValidity(''); 
+        searchBoxValues.reportValidity();
+        component.set('v.SearchFlag',false);
+        component.set('v.isButtonActive',true);
+    },
+    
+    ClearSearch: function(component, event, helper){
+		
+        var clearSearchValues = component.find("searchBox"); 
+        clearSearchValues.setCustomValidity(''); 
+        clearSearchValues.reportValidity();
+        component.set("v.NoSearchResultsFlag",true);
+        component.set('v.SearchFlag',false);
+        component.set('v.OrganisationFlag',false);
+        component.set('v.isButtonActive',true);
+        component.find("searchByValue").set("v.value","LastName");
+        var HideCLISearchEmployeeListEvent = $A.get("e.c:HideCLISearchEmployeeList");
+        component.set("v.toggleCLISearchEmployeeList",false);
+        var toggleCLISearchEmployeeListEvent = component.get("v.toggleCLISearchEmployeeList");
+        document.getElementById("searchForm").reset();
+        HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });
+        HideCLISearchEmployeeListEvent.fire();
+        component.set("v.toggleCLISearchEmployeeList",true);
+        //document.getElementsByName("selectedOrganisation").click();
+        //helper.organsationReset(component, event, helper);
+    },
+    
+    onInit: function(component, event, helper){
+        
+        component.find("searchByValue").set("v.value","LastName");
+    },
+    
+    onOrgansationChange: function(component, event, helper){
+        
+        var OrganisationName = component.find("selectedOrg").get("v.value");
+        var searchBoxValue = component.find("searchBox").get("v.value");
+        if(OrganisationName==='Select Organisation'){
+        	component.set('v.OrganisationFlag',false);
+        	component.set('v.isButtonActive',true);
+        }
+        else
+        {
+        	component.set('v.OrganisationFlag',true); 
+            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
+            {
+            	component.set('v.isButtonActive',false);  
+            }
+            else 
+            {
+                component.set('v.isButtonActive',true);
+            }
+        }
+    },
+    
+    showSpinner: function(component, event, helper) {
+        
+    	//make Spinner attribute true for display loading spinner 
+        component.set("v.Spinner", true); 
+   	},
+    
+ 	//this function automatic call by aura:doneWaiting event 
+    hideSpinner : function(component,event,helper){
+        
+    	//make Spinner attribute to false for hide loading spinner    
+       	component.set("v.Spinner", false);
+    },
+    
+                 
+    /**
+     * This function will handle clicks on within and outside the component
+     * */
+    
+    handleClick: function(component, event, where) {       
         //getting target element of mouse click
         var tempElement = event.target;
         
@@ -76,8 +427,8 @@
     
     /**
      * This function will be used to filter options based on input box value
-     * @author - Manish Choudhari
      * */
+    
     rebuildPicklist: function(component) {
         
         var allSelectElements = component.getElement().querySelectorAll("li");
@@ -86,10 +437,11 @@
         });
     },
     
+    
     /**
      * This function will be used to filter options based on input box value
-     * @author - Manish Choudhari
      * */
+    
     filterDropDownValues: function(component, inputText) {
         
         var allSelectElements = component.getElement().querySelectorAll("li");
@@ -107,22 +459,23 @@
     
     /**
      * This function clear the filters
-     * @author - Manish Choudhari
      * */
+    
     resetAllFilters : function(component) {
+        
         this.filterDropDownValues(component, '');
     },
     
     /**
      * This function will set text on picklist
-     * @author - Manish Choudhari
      * */
+    
     setPickListName : function(component, selectedOptions) {
        
 			const maxSelectionShow = component.get("v.maxSelectedShow");
             //Set drop-down name based on selected value
             if(selectedOptions.length < 1){
-                component.set("v.selectedLabel", component.get("v.msname"));
+                component.set("v.selectedLabel", component.get("v.selectedValue"));
             } else if(selectedOptions.length > maxSelectionShow){
                 component.set("v.selectedLabel", selectedOptions.length+' Options Selected');
             } else{
@@ -138,8 +491,8 @@
      * This function will be called when an option is clicked from the drop down
      * It will be used to check or uncheck drop down items and adding them to selected option list
      * Also to set selected item value in input box
-     * @author - Manish Choudhari
      * */
+    
     onOptionClick: function(component, ddOption) {
         
             //get clicked option id-name pair
@@ -165,13 +518,14 @@
                 selectedOptions.push(clickedValue);
                 //Add check mark for the list item
                  ddOption.closest("li").classList.add('slds-is-selected');
+                //css for check mark will come here
             }
         //Set picklist label
         this.setPickListName(component, selectedOptions);
     },
-                    
+                 
     organsationReset : function(component, event, helper) {
-       debugger
+       
         var OrganisationName = component.find("selectedOrg").get("v.value");
         var searchBoxValue = component.find("searchBox").get("v.value");
         if(OrganisationName==='Select Organisation'){

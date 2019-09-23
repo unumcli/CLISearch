@@ -1,0 +1,125 @@
+.THIS .width100{
+    width:100%;
+}
+.THIS .EmpName{
+    font-size:16px;
+}
+.THIS .EmpSubList{
+    color:#666777;
+}
+.THIS .p15{
+    padding:15px;
+}
+.THIS .p015{
+    padding:0px 15px;
+}
+.THIS .employee_box{
+    position:relative;
+    padding:0px 15px;
+    cursor:pointer;
+}
+.THIS .employee_box a:hover{
+    text-decoration:none;
+}
+.THIS .employee_box:hover, .THIS .employee_box.active{
+    background: #525252;
+}
+.THIS .employee_box:hover:before, .THIS .employee_box.active:before{
+    position:absolute;
+    width:3px;
+    height:100%;
+    content:'';
+    left:0;
+    background:#34becd;
+}
+
+.THIS .employee_box:hover .slds-avatar__initials, .THIS .employee_box.active .slds-avatar__initials{
+    background-color: #34becd !important;
+    color:#fff !important;
+}
+.THIS .employee_box:hover a ,  .THIS .employee_box.active a{
+    color:#fff;
+}
+.THIS .employee_box:hover .EmpSubList, .THIS .employee_box.active .EmpSubList{
+    color:#efefef;
+}
+.THIS .border-bottom{
+    border:none;
+    border-bottom:1px solid #ccc;
+    border-radius:0px;
+}
+.THIS .border-bottom:last-child{
+    border-bottom:none;
+}
+.THIS .empListContainer{
+    height: auto;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0px 0px;
+}
+
+/* table side css */
+.THIS .selected{
+    color:orange;
+}
+.THIS .slds-truncate{
+    font-size:100%;
+}
+.THIS .slds-table thead th{
+    background-color:#ccc;
+}
+.THIS .slds-table_col-bordered th+th{
+    border-left: 1px solid #aaa;
+}
+.THIS .slds-table_col-bordered tr:nth-child(even){
+    background-color:#f9f9f9;
+}
+.THIS .table-container{
+    max-width:100%;
+    overflow-x:auto;
+}
+.THIS .user-details {
+    background: #F6F8FA;
+    margin: 0px 0px 15px;
+    padding: 15px;
+    border-radius: 5px;
+}
+.THIS .user-details p {
+    margin: 8px 0px;
+}
+.THIS .icon16{
+    font-size:16px;
+}
+.THIS .m-r-5{
+    margin-right:5px;
+}
+.THIS .d-flex{
+    display:flex;
+}
+.THIS .p5_0{
+    padding:5px 0px;
+}
+.THIS .align-items-center{
+    align-items:center;
+}
+.THIS .table_empty_state {
+	width:100%;
+    float:left;
+    text-align:center;
+}
+.THIS .table_empty_state img{
+    margin:auto;
+    max-width:100%;
+}
+.THIS .table_empty_state p, .THIS .table_empty_state small{
+    display:block;
+    text-align:center;
+    color:#666777;
+}
+.THIS .table_empty_state p{
+    font-size:20px;
+}
+.THIS .table_empty_state small{
+    font-size:16px;
+}

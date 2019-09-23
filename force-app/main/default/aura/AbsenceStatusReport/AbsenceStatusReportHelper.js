@@ -1,60 +1,92 @@
 ({
-	onMarksSelection: function(marksEvent){
+    selectedLeaveDetails : function(component,event,helper) {
+       
+        debugger
+        // GetLeaveDetails API Call
+        //var UserId = component.get("v.userId");
+        //var OrgId = component.get("v.orgId");
+       var empId = component.get("v.empId");
+      var leaveNo = component.get("v.leaveNo");
         
-        marksEvent.getMarksAsync().then(function(marks)
-         {
-        
-        if (marks.length != 0) {
-            var leaveClaimNo, employeeId, coverage;
-            var filterObject = {
-        'Employee Id': null, 'Claim#/Leave#': null, 'Claim#': null, 'Leave#': null,
-        'Coverage': null, 'SSN': null };
-   
-            for (var markIndex = 0; markIndex < marks.length; markIndex++) {
-                var pairs = marks[markIndex].getPairs();
-                for (var pairIndex = 0; pairIndex < pairs.length; pairIndex++) {
-                    var pair = pairs[pairIndex];
-
-                    if (pair.fieldName == 'Employee Id') {
-                        employeeId = pair.formattedValue;
-                        filterObject['Employee Id'] = employeeId; 
-                    }
-                    if (pair.fieldName == 'Coverage') {
-                        coverage = pair.formattedValue;
-                        filterObject['Coverage'] = coverage; 
-                    }
-                    if (pair.fieldName == 'Claim#/Leave#') {
-                        leaveClaimNo = pair.formattedValue;
-                        filterObject['Claim#/Leave#'] = leaveClaimNo; 
-                    }
-                    if (pair.fieldName == 'Claim#') {
-                        leaveClaimNo = pair.formattedValue;
-                        filterObject['Claim#'] = leaveClaimNo;
-                    }
-                    if (pair.fieldName == 'Leave#') {
-                        
-                        leaveClaimNo = pair.formattedValue;
-                       // sessionStorage.setItem('leaveClaimNo', leaveClaimNo);
-                       //var leaveClaimNoValue = sessionStorage.getItem('leaveClaimNo');
-                        filterObject['Leave#'] = leaveClaimNo;
-                    }
-                    if (pair.fieldName == 'SSN') {                       
-                        var selectedSSN = pair.formattedValue;
-                        filterObject['SSN#'] = selectedSSN;
-                    }
-                }
-            }
-           
-    		var filterObjectInJson = JSON.stringify(filterObject);
-        var filterObjectInJsonParse = JSON.parse(filterObjectInJson);
-        console.log(filterObjectInJson);
-        console.log(filterObjectInJsonParse);
-        //drillDown(filterObjectInJson);
-        sessionStorage.setItem('filterdata', filterObjectInJson);
-        console.log(sessionStorage.getItem('filterdata', filterObjectInJson));
-        }
-      
-    });
+        var actionGetEmployeeLeaveDetail = component.get("c.GetEmployeeLeaveDetails");
+        actionGetEmployeeLeaveDetail.setStorable();
+        actionGetEmployeeLeaveDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: "1", leaveNo : "2" });
+        $A.enqueueAction(actionGetEmployeeLeaveDetail);
+        actionGetEmployeeLeaveDetail.setCallback(this, function(response)
+            									{
+                                                     debugger
+                                                     var state = response.getState();
+                                                     if (state === "SUCCESS")
+                                                     {
+                                                         console.log("From server: " + response.getReturnValue());
+                                                         //Passing the selectedEmployeeDetails Details
+                                                         var appEvent = $A.get("e.c:LeaveDetailsEvent");
+                                                         
+                                                         appEvent.setParams({ "LeaveDetailsHeader": response.getReturnValue().Header, "LeaveDetailsLeaveSummary": response.getReturnValue().LeaveSummary, "LeaveDetailsLeavePeriod":response.getReturnValue().LeavePeriod,"LeaveDetailsIntermittentAbsence":response.getReturnValue().IntermittentAbsence,"LeaveDetailsProtection":response.getReturnValue().Protection,"LeaveDetailsAvailableTime":response.getReturnValue().AvailableTime});
+                                                         appEvent.fire();
+                                                     }
+                                                     else if (state === "INCOMPLETE")
+                                                     {
+                                                         // do something
+                                                     }
+                                                         else if (state === "ERROR")
+                                                         {
+                                                             var errors = response.getError();
+                                                             if (errors)
+                                                             {
+                                                                 if (errors[0] && errors[0].message)
+                                                                 {
+                                                                     console.log("Error message: " + errors[0].message);
+                                                                 }
+                                                             }
+                                                             else
+                                                             {
+                                                                 console.log("Unknown error");
+                                                             }
+                                                         }
+                                                 });
     },
+    selectedClaimDetails : function(component,event,helper) {
+        debugger
+        //GetClaimDetails API Call
+        //var empId = component.get("v.employeeId");
+        //var claimNo = component.get("v.claimNo");
+        
+        var actionGetEmployeeClaimDetail = component.get("c.GetEmployeeClaimDetail");
+        actionGetEmployeeClaimDetail.setStorable();
+        actionGetEmployeeClaimDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: "1", claimNo: "2" });
+        $A.enqueueAction(actionGetEmployeeClaimDetail);
+        actionGetEmployeeClaimDetail.setCallback(this, function(response)
+                                                 {
+                                                     var state = response.getState();
+                                                     if (state === "SUCCESS")
+                                                     {
+                                                         //Passing the selectedEmployeeDetails Details
+                                                         var appEvent = $A.get("e.c:ClaimDetailsEvent");
+                                                         appEvent.setParams({ "claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
+                                                         appEvent.fire();
+                                                     }
+                                                     else if (state === "INCOMPLETE")
+                                                     {
+                                                         // do something
+                                                     }
+                                                         else if (state === "ERROR")
+                                                         {
+                                                             var errors = response.getError();
+                                                             if (errors)
+                                                             {
+                                                                 if (errors[0] && errors[0].message)
+                                                                 {
+                                                                     console.log("Error message: " + errors[0].message);
+                                                                 }
+                                                             }
+                                                             else
+                                                             {
+                                                                 console.log("Unknown error");
+                                                             }
+                                                         }
+                                                 });
+        
+    }
     
 })

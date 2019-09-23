@@ -16,15 +16,13 @@
     <!-- Attributes -->
 
     <aura:registerEvent name="LoadEmployeeRecordsEvent" type="c:LoadEmployeeRecordsEvent"/>
-  
+  	<aura:registerEvent name="DateFormat" type="c:DateFormat"/>
     <!-- Events -->
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
-    <aura:registerEvent name="DateFormat" type="c:DateFormat"/>
-    
+    <aura:attribute name="hexaColorCode" type="String[]" default="['#f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']" />
     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
 
-    
     <aura:renderIf isTrue="{!v.showHideMatchingResults}">
         
         <div class="slds-grid slds-glutters slds-p-top_none  slds-p-bottom_none">    
@@ -45,7 +43,7 @@
                                             <lightning:layoutItem padding="around-small" class="slds-glutters width100 slds-p-left_none slds-p-right_none">
                                                 <div class="header-column slds-col slds-size_12-of-12" >
                                                     <span class="slds-avatar slds-avatar_circle">
-                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">{!empDetail.Abbr}</abbr>
+                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: #f04a4d">{!empDetail.Abbr}</abbr>
                                                     </span>
                                                     <span class="p15">
                                                             <a href="javascript:void(0);" class="EmpName" >{!empDetail.LastName} , {!empDetail.FirstName}&nbsp;{!empDetail.MiddleName}</a>

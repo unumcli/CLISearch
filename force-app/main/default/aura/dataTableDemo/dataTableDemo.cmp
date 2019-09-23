@@ -1,0 +1,60 @@
+<aura:component controller="CLISearchEmployeeList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<!--use JQuery Data Table css,Js and jQUERY js file in lightning component by using ltng:require component-->
+ <!--  <ltng:require styles="{! $Resource.	datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{!join(',', 
+                           $Resource.JQuery , 
+                           $Resource.datatable + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js',
+                           $Resource.datatable + '/DataTables-1.10.16/extensions/Buttons/js/dataTables.buttons.min.js')
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/> -->
+    
+<!-- <ltng:require styles="{!join(',',$Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/media/css/jquery.dataTables.min.css',
+                        $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/Buttons/css/buttons.dataTables.min.css'
+                        )}"
+                  scripts="{!join(',',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/media/js/jquery.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/media/js/jquery.dataTables.min.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/Buttons/js/dataTables.buttons.min.js',
+                           $Resource.datatable18 +  '/DataTables-1.10.18/DataTables-1.10.18/extensions/Buttons/js/buttons.flash.min.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/JSZip-2.5.0/jszip.min.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/pdfmake-0.1.36/pdfmake.min.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/pdfmake-0.1.36/vfs_fonts.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/Buttons/js/buttons.html5.min.js',
+                           $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/extensions/Buttons/js/buttons.print.min.js'
+                    
+                           )
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>  
+-->
+     
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+    <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail[]"/>
+    <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
+    <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
+    <aura:attribute name="empList" type="EmployeeList__c"/>
+    
+    <a class="toggle-vis" data-column="0">LastName</a>
+    <div class="col col-md-3 detail-profile-icon print_cont" id="empGridBtn">
+          </div>
+    <div class="slds-m-around_medium">
+        <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>SSN</th>
+                     
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.empList}" var="emp">
+                    <tr>
+                        <td>{!emp.LastName__c}</td>
+                        <td>{!emp.FirstName__c}</td>
+                        <td>{!emp.SSN__c}</td>
+                        
+                    </tr>
+                </aura:iteration>  
+            </tbody>
+        </table>
+    </div>
+</aura:component>

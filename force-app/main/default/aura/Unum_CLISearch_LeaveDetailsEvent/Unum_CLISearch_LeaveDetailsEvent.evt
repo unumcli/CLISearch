@@ -1,0 +1,10 @@
+<aura:event type="APPLICATION" description="Event template">
+    
+<aura:attribute name="LeaveDetailsHeader" type="LeaveDetails.Header"/>
+<aura:attribute name="LeaveDetailsLeaveSummary" type="LeaveDetails.LeaveSummary"/>
+<aura:attribute name="LeaveDetailsLeavePeriod" type="LeaveDetails.LeavePeriod[]"/>
+<aura:attribute name="LeaveDetailsIntermittentAbsence" type="LeaveDetails.IntermittentAbsence[]"/>  
+<aura:attribute name="LeaveDetailsProtection" type="LeaveDetails.Protection[]"/>
+<aura:attribute name="LeaveDetailsAvailableTime" type="LeaveDetails.AvailableTime[]"/>   
+    
+</aura:event>

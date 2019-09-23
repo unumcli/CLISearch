@@ -1,3 +1,3 @@
 <aura:application extends="force:slds">
-    <c:AbsenceStatusReport/>
+    <c:VideoPlayer/>
 </aura:application>

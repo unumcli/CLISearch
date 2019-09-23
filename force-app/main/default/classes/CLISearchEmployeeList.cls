@@ -10,7 +10,12 @@ public with sharing class CLISearchEmployeeList {
         EmployeeList__c emp6 = new EmployeeList__c(LastName__c = 'B', FirstName__c = 'G', SSN__c = 2 );
         EmployeeList__c emp7 = new EmployeeList__c(LastName__c = 'C', FirstName__c = 'H', SSN__c = 3 );
         EmployeeList__c emp8 = new EmployeeList__c(LastName__c = 'D', FirstName__c = 'I', SSN__c = 4 );
-        EmployeeList__c emp9 = new EmployeeList__c(LastName__c = 'E', FirstName__c = 'J', SSN__c = 5 );
+        EmployeeList__c emp9 = new EmployeeList__c(LastName__c = 'abc', FirstName__c = 'J', SSN__c = 5 );
+        EmployeeList__c emp10 = new EmployeeList__c(LastName__c = 'qwe', FirstName__c = 'J', SSN__c = 6 );
+        EmployeeList__c emp11 = new EmployeeList__c(LastName__c = 'qwee', FirstName__c = 'J', SSN__c = 7 );
+        EmployeeList__c emp12 = new EmployeeList__c(LastName__c = 'emp12', FirstName__c = 'J', SSN__c = 8 );
+        EmployeeList__c emp13 = new EmployeeList__c(LastName__c = 'ytu', FirstName__c = 'J', SSN__c = 9 );
+        EmployeeList__c emp14 = new EmployeeList__c(LastName__c = 'Emp12', FirstName__c = 'J', SSN__c = 10 );
         empList.add(emp1);
         empList.add(emp2);
         empList.add(emp3);
@@ -20,8 +25,11 @@ public with sharing class CLISearchEmployeeList {
         empList.add(emp7);
         empList.add(emp8);
         empList.add(emp9);
-
-        Integer empCount = [SELECT COUNT() FROM EmployeeList__c];
+        empList.add(emp10);
+        empList.add(emp11);
+        empList.add(emp12);
+        empList.add(emp13);
+        empList.add(emp14);
         return empList;
     }
 

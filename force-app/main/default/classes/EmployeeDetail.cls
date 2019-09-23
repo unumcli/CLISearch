@@ -1,29 +1,118 @@
 public with sharing class EmployeeDetail {
     
-    	@AuraEnabled public String EmployeeID {get;set;}
-        @AuraEnabled public String FirstName {get;set;}
-        @AuraEnabled public String LastName {get;set;}
-        @AuraEnabled public String MiddleName {get;set;}
-        @AuraEnabled public String DateOfBirth {get;set;}
-        @AuraEnabled public String ssnFilter {get;set;}
-        @AuraEnabled public Integer IsClaimOrLeave {get;set;}
-        @AuraEnabled public String SSN {get;set;}
-    	@AuraEnabled public String OpenClaimNumber {get;set;}
-    	@AuraEnabled public String OpenLeaveNumber {get;set;}
-    	@AuraEnabled public String Coverage {get;set;}
-    	@AuraEnabled public String LeaveReason {get;set;}
-        @AuraEnabled public String Abbr {get;set;}
+    @AuraEnabled public String EmployeeID {get;set;}
+    @AuraEnabled public String FirstName {get;set;}
+    @AuraEnabled public String LastName {get;set;}
+    @AuraEnabled public String MiddleName {get;set;}
+    @AuraEnabled public String DateOfBirth {get;set;}
+    @AuraEnabled public String ssnFilter {get;set;}
+    @AuraEnabled public Integer IsClaimOrLeave {get;set;}
+    @AuraEnabled public String SSN {get;set;}
+    @AuraEnabled public String OpenClaimNumber {get;set;}
+    @AuraEnabled public String OpenLeaveNumber {get;set;}
+    @AuraEnabled public String Coverage {get;set;}
+    @AuraEnabled public String LeaveReason {get;set;}
+    @AuraEnabled public String Abbr {get;set;}
+    @AuraEnabled public String AvatarColor {get;set;}
     
+    public with sharing class UserInfo
+    {
+        @AuraEnabled public String userName {get;set;}
+        @AuraEnabled public String userId {get;set;}
+        @AuraEnabled public String userEmail {get;set;}
+        @AuraEnabled public Boolean SSNAccess {get;set;}
+        @AuraEnabled public Boolean diagnosisCodeAccess {get;set;}
+        @AuraEnabled public Boolean diagnosisNameAccess {get;set;}
+        @AuraEnabled public Boolean leaveReasonAccess {get;set;}
+        @AuraEnabled public Boolean leaveProtectionTextAccess {get;set;}
+        @AuraEnabled public Boolean RTWRestrictionsAccess {get;set;}
+        @AuraEnabled public Boolean specialistContactAccess {get;set;}
+        @AuraEnabled public Boolean selfInsuredDisabilityClaimAccess {get;set;}
+        @AuraEnabled public Boolean historicalLeaveAccess {get;set;}
+        @AuraEnabled public Boolean managerNameAccess {get;set;}
+        @AuraEnabled public Boolean dateOfBirthAccess {get;set;}
+        @AuraEnabled public Boolean letterContentAccess {get;set;}
+        @AuraEnabled public Boolean imageContentAccess {get;set;}
+    }
     
+  /*   public with sharing class PolicyPartyIDNumber
+	{
+    	@AuraEnabled public String policyId {get;set;}
+    	@AuraEnabled public String partyNumber {get;set;}           
+	} */
+    
+    public with sharing class OrgCollection
+    {
+        @AuraEnabled public Integer organizationId {get;set;}
+        @AuraEnabled public String orgnizationName {get;set;}
+        @AuraEnabled public String organizationType {get;set;}
+        @AuraEnabled public Integer parentId {get;set;}                
+    }
+    
+    public with sharing class Authorization
+    {
+        @AuraEnabled public String tableauUserId {get; set;}
+        @AuraEnabled public String tableauSiteId {get; set;}        
+        @AuraEnabled public String tableauToken {get; set;}
+        @AuraEnabled public UserInfo UserInfo {get; set;}
+        @AuraEnabled public List<OrgCollection> OrgCollection {get; set;}                
+    }
     
     public with sharing class AutoSearch
     {
         @AuraEnabled public String searchText {get; set;}        
     }
-    	
     //	@AuraEnabled public List<EmployeeDetail> listEmployeeDetail {get;set;}
-
+    
     //Use @AuraEnabled to enable client- and server-side access to the method
+    
+/*  @AuraEnabled(cacheable=true)
+    public static PolicyPartyIDNumber GetUserPolicyID (String userId, String policyNumber, String partyId) {
+        system.debug('After PolicyId' + userId + ' ' + policyNumber + ' ' + partyId);
+        
+        String mockResponse = '[{"EmployeeID":"29301","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29302","FirstName": "John","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
+        String body = '{"userId":"' + userId + '","policyNumber":"' + policyNumber + '","partyId":"' + partyId + '"}';   
+        PolicyPartyIDNumber policy;
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();        
+       // request.setEndpoint(APIEndPoints.Authorization);
+        request.setMethod('POST');
+        request.setHeader('Content-Type','application/json');
+        
+        // Set the body as a JSON object
+        request.setBody(body);
+        System.debug('body= ' + body);
+        System.debug('request= ' + request);
+        HttpResponse response = http.send(request);             
+        
+        if (response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                         response.getStatusCode() + ' ' + response.getStatus());
+            try
+            {
+                policy = (PolicyPartyIDNumber)JSON.deserialize(mockResponse,PolicyPartyIDNumber.class);
+                System.debug(policy);                
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        } 
+        else {
+            try{
+                System.debug('response.getBody()' + response.getBody());
+                policy = (PolicyPartyIDNumber)JSON.deserialize(response.getBody(),PolicyPartyIDNumber.class);
+                System.debug(policy);
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        }
+        return policy; 
+        
+    } */
+    
     @AuraEnabled(cacheable=true)
     public static List<EmployeeDetail> SearchByLastName (String userId, String orgId, String searchString, String searchBy) {
         system.debug('inside searchByLastName' + userId + ' ' + orgId + ' ' + searchString + ' ' +  searchBy);
@@ -37,16 +126,16 @@ public with sharing class EmployeeDetail {
         request.setEndpoint(APIEndPoints.EmployeeDetails);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
-     		
-	    // Set the body as a JSON object
+        
+        // Set the body as a JSON object
         request.setBody(body);
         System.debug('body= ' + body);
         System.debug('request= ' + request);
         HttpResponse response = http.send(request);             
         
-		if (response.getStatusCode() != 200) {
-    	System.debug('The status code returned was not expected: ' +
-        response.getStatusCode() + ' ' + response.getStatus());
+        if (response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                         response.getStatusCode() + ' ' + response.getStatus());
             try
             {
                 employeeDetail = (List<EmployeeDetail>)JSON.deserialize(mockResponse,List<EmployeeDetail>.class);
@@ -56,18 +145,18 @@ public with sharing class EmployeeDetail {
             {
                 System.debug(ex.getMessage());
             }
-		} 
+        } 
         else {
             try{
-    			System.debug('response.getBody()' + response.getBody());
-        		employeeDetail = (List<EmployeeDetail>)JSON.deserialize(response.getBody(),List<EmployeeDetail>.class);
-				System.debug(employeeDetail);
-               }
+                System.debug('response.getBody()' + response.getBody());
+                employeeDetail = (List<EmployeeDetail>)JSON.deserialize(response.getBody(),List<EmployeeDetail>.class);
+                System.debug(employeeDetail);
+            }
             catch(Exception ex)
             {
                 System.debug(ex.getMessage());
             }
-       }
+        }
         return employeeDetail; 
         
     }
@@ -87,16 +176,16 @@ public with sharing class EmployeeDetail {
         request.setEndpoint(APIEndPoints.AutoSearch);
         request.setMethod('POST');
         request.setHeader('Content-Type','application/json');
-     		
-	    // Set the body as a JSON object
+        
+        // Set the body as a JSON object
         request.setBody(body);
         System.debug('body= ' + body);
         System.debug('request= ' + request);
         HttpResponse response = http.send(request);             
         
-		if (response.getStatusCode() != 200) {
-    	System.debug('The status code returned was not expected: ' +
-        response.getStatusCode() + ' ' + response.getStatus());
+        if (response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                         response.getStatusCode() + ' ' + response.getStatus());
             try
             {
                 autoSearch = (List<AutoSearch>)JSON.deserialize(mockRespone,List<AutoSearch>.class);
@@ -106,19 +195,113 @@ public with sharing class EmployeeDetail {
             {
                 System.debug(ex.getMessage());
             }
-		} 
+        } 
         else {
             try{
-    			System.debug('response.getBody()' + response.getBody());
-        		autoSearch = (List<AutoSearch>)JSON.deserialize(response.getBody(),List<AutoSearch>.class);
-				System.debug(autoSearch);
-               }
+                System.debug('response.getBody()' + response.getBody());
+                autoSearch = (List<AutoSearch>)JSON.deserialize(response.getBody(),List<AutoSearch>.class);
+                System.debug(autoSearch);
+            }
             catch(Exception ex)
             {
                 System.debug(ex.getMessage());
             }
-       }
+        }
         return autoSearch; 
+        
+    }
+    
+    
+    @AuraEnabled(cacheable=true)
+    public static Authorization GetAuthorization (String forgerock_auth, String emailId, Boolean isInternal) {
+        system.debug('inside SignIn' + forgerock_auth + ' ' + emailId + ' ' + isInternal);
+        
+        String mockResponse = '[{"EmployeeID":"29301","FirstName": "Amber","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1},{"EmployeeID":"29302","FirstName": "John","MiddleName": " ","LastName": "Smith","DateOfBirth": "1989-07-02T00:00:00","SSN": "406-37-0481","ssnFilter": "SSN: 0481","IsClaimOrLeave": 1}]';
+        String body = '{"forgerock_auth":"' + forgerock_auth + '","emailId":"' + emailId + '","isInternal":"' + isInternal + '"}';   
+        Authorization auth;
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();        
+        request.setEndpoint(APIEndPoints.Authorization);
+        request.setMethod('POST');
+        request.setHeader('Content-Type','application/json');
+        
+        // Set the body as a JSON object
+        request.setBody(body);
+        System.debug('body= ' + body);
+        System.debug('request= ' + request);
+        HttpResponse response = http.send(request);             
+        
+        if (response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                         response.getStatusCode() + ' ' + response.getStatus());
+            try
+            {
+                auth = (Authorization)JSON.deserialize(mockResponse,Authorization.class);
+                System.debug(auth);                
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        } 
+        else {
+            try{
+                System.debug('response.getBody()' + response.getBody());
+                auth = (Authorization)JSON.deserialize(response.getBody(),Authorization.class);
+                System.debug(auth);
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        }
+        return auth; 
+        
+    }
+    
+    @AuraEnabled  
+    public static List<CLISearchRelatedOrgList> getRelatedOrganizationList () {
+        
+        String mockResponse = '[{"OrgID":"29301","OrgName": "Amber"},{"OrgID":"29302","OrgName": "Archit"},{"OrgID":"29303","OrgName": "Snehal"},{"OrgID":"29304","OrgName": "Nandini"}]';
+        List<CLISearchRelatedOrgList> orgList;
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();        
+        //  request.setEndpoint(APIEndPoints.CLISearchRelatedOrgLists);
+        request.setMethod('POST');
+        request.setHeader('Content-Type','application/json');
+        
+        // Set the body as a JSON object
+        //  request.setBody(body);
+        //  System.debug('body= ' + body);
+        System.debug('request= ' + request);
+        HttpResponse response = http.send(request);             
+        
+        if (response.getStatusCode() != 200) {
+            System.debug('The status code returned was not expected: ' +
+                         response.getStatusCode() + ' ' + response.getStatus());
+            try
+            {
+                orgList = (List<CLISearchRelatedOrgList>)JSON.deserialize(mockResponse,List<CLISearchRelatedOrgList>.class);
+                System.debug(orgList);                
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        } 
+        else {
+            try{
+                System.debug('response.getBody()' + response.getBody());
+                orgList = (List<CLISearchRelatedOrgList>)JSON.deserialize(response.getBody(),List<CLISearchRelatedOrgList>.class);
+                System.debug(orgList);
+            }
+            catch(Exception ex)
+            {
+                System.debug(ex.getMessage());
+            }
+        }
+        return orgList; 
         
     }
 

@@ -1,6 +1,6 @@
 public with sharing class ClaimLeaveList
 {
-
+	
     @AuraEnabled public EmployeeDetail EmployeeDetail {get; set;}
     @AuraEnabled public List<ClaimLeaveData> ClaimLeaveData {get; set;}
 
@@ -38,7 +38,7 @@ public with sharing class ClaimLeaveList
     }
     
     @AuraEnabled(cacheable=true)
-    public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String employeeId, String ClaimNo) {
+    public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String employeeId, String claimNo) {
         
         String mockResponse = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T08:38:45.873Z","SSN":"string","MiddleName":"string","ClaimNumber":"Number","Coverage":"string","CurrentStatus":"string","PolicyNumber":"","Division":"string","ClaimHistory":"string"},"ClaimStatus":{"ClaimNumber":"","StatusReason":"string","ReceivedDate":"2019-06-27T08:38:45.873Z","LastPaymentAmount":"","LastPaymentDate":"2019-06-27T08:38:45.873Z","BaseCoverage":"","SupplementalCoverage":"","TotalCoverage":"","DisabilityDate":"2019-06-27T08:38:45.873Z","Division":"string","BenefitStartDate":"2019-06-27T08:38:45.873Z","EligibilityGroup":"string","ApprovedThruDate":"2019-06-27T08:38:45.873Z","Choice":"string","MaximumDurationDate":"2019-06-27T08:38:45.873Z","ReturntoWorkDate":"2019-06-27T08:38:45.873Z","DiagnosticCode":"","ClaimClosedDate":"2019-06-27T08:38:45.873Z","DiagnosticDescription":"string","ClaimClosedReason":"string","WorkRelated":"string","DisabilityBenefitsSpecialist":"string","RelatedLeaves":"string","MonthsPaid":"","TotalPaidtoDate":"2019-06-27T08:38:45.873Z","PaidThroughDate":"2019-06-27T08:38:45.873Z","SSDIAwardDate":"2019-06-27T08:38:45.873Z","ApprovalDate":"2019-06-27T08:38:45.873Z","LifeBenefitsSpecialist":"string"},"Payments":[{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"},{"PaymentDate":"2019-06-27T08:38:45.873Z","PaymentType":"string","PaymentAmount":"","PaymentPeriod":"2019-06-27T08:38:45.873Z"}]}';
         String body = '{"userId":"' + userId + '","orgId":"' + orgId + '","employeeId":"' + employeeId + '","claimNo":"' + ClaimNo + '"}';    
@@ -88,11 +88,11 @@ public with sharing class ClaimLeaveList
     }  
     
     @AuraEnabled(cacheable=true)
-    public static LeaveDetails GetLeaveDetails(string leaveNumber, string userId, string organizationId, string employeeId)
+    public static LeaveDetails GetEmployeeLeaveDetails(string userId, string orgId, string employeeId, string leaveNo)
 	{
 
         String mockResponse = '{"Header":{"EmployeeID":"string","FirstName":"string","LastName":"string","DateOfBirth":"2019-06-27T09:10:24.912Z","SSN":"string","MiddleName":"string","LeaveNo":"","ReportGroup":"string","LeaveReason":"string","Historical":"string","LeaveStatus":"string","LeaveHistory":"string"},"LeaveSummary":{"LeaveNo":0,"ReceivedDate":"2019-06-27T09:10:24.912Z","LastDayWorked":"2019-06-27T09:10:24.912Z","LeaveStartDate":"2019-06-27T09:10:24.912Z","LeaveEndDate":"2019-06-27T09:10:24.912Z","RTWDate":"string","LeaveSpecialist":"string","LeaveStatus":"string","LeaveReason":"string","OfficeLocation":"string","RTWStatus":"string","RelatedSTDClaims":"string","ServerTime":"2019-06-27T09:10:24.912Z","isASR":true},"LeavePeriod":[{"LeavePeriod":"","Type":"string","HoursOff":"","Dates":"2019-06-27T09:10:24.912Z","Classification":"string","Status":"string","StatusReason":"string"}],"IntermittentAbsence":[{"BeginDate/Time":"2019-06-27T09:10:24.912Z","EndDate/Time":"2019-06-27T09:10:24.912Z","TimeAbsent":"string","ReportedDate":"2019-06-27T09:10:24.912Z","LeavePeriod":"","PeriodStatus":"string"}],"Protection":[{"LeavePeriod":"","Dates":"2019-06-27T09:10:24.912Z","ProtectionDescription":"string","Status":"string","StatusReason":"string"}],"AvailableTime":[{"ProtectionDescription":"string","HoursTaken":"","HoursAvailable":""}]}';
-        String body = '{"leaveNo":"' + leaveNumber + '","userId":"' + userId + '","orgId":"' + organizationId + '","employeeId":"' + employeeId + '"}';
+        String body = '{"userId":"' + userId + '","orgId":"' + orgId + '","employeeId":"' + employeeId + '","leaveNo":"' + leaveNo + '"}';
         LeaveDetails leaveDetails;
         Http http = new Http();
         HttpRequest request = new HttpRequest();

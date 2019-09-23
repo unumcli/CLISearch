@@ -1,5 +1,23 @@
 <aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	
+	<!-- Data Table css,Js and jQUERY-->
+    <ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
+                          $Resource.DatatableJQuery + '/DataTables-1.10.18/css/jquery.dataTables.css',
+                          $Resource.DatatableJQuery + '/Buttons-1.5.6/css/buttons.dataTables.css')}"
+              	   
+                  scripts="{!join(',',
+                           $Resource.JQuery,
+                           $Resource.DatatableJQuery + '/jQueryUI-1.12.1/jquery-ui.js',
+                           $Resource.DatatableJQuery + '/DataTables-1.10.18/js/jquery.dataTables.js',
+                           $Resource.DatatableJQuery + '/JSZip-2.5.0/jszip.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/dataTables.buttons.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.colVis.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.flash.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.html5.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.print.js',
+                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/pdfmake.js',
+                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/vfs_fonts.js')}" 
+                  		afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    <!--Data Table ends here -->
     <aura:attribute name="mycolumns" type="List"/>
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList" />
     <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
@@ -15,7 +33,7 @@
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
     <aura:attribute name="DefaultDateFormat" type="String"/>
     
-    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
+  <!--  <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />  -->
     <!-- Events -->
     <aura:registerEvent name="LeaveDetailsEvent" type="c:LeaveDetailsEvent"/>
     <aura:registerEvent name="ClaimDetailsEvent" type="c:ClaimDetailsEvent"/>
@@ -25,38 +43,6 @@
     <!-- Handling the DateFormat Event to set the DateFormat across all the Date type fields -->
     <aura:handler event="c:DateFormat" action="{!c.setDateFormat}"/>
     
-    
-     
-  <!--  <aura:handler name="init" value="{!this}" action="{!c.fetchEmpData}"/> -->
-  <!--  <div style="background-color: LightBlue ; width : 24rem">
-            <div class="slds-grid slds-grid_vertical">
-                <div class="slds-col">
-                    <div class="slds-scrollable" style="height:24rem;width:24rem">
-    
-    <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">                            
-                            <div class="slds-box">
-                                <span class="c-container">
-                                    <lightning:layout >
-                                      Table
-                                        <lightning:layoutItem padding="around-small">
-                                            <ul>
-                                                <div class="header-column">
-                                                    <li>
-                                                        <a href="javascript:void(0);" onclick="{!c.selectedEmployeeDetails}" >{!ClaimLeaveData.ClaimData.ClaimNo} , {!ClaimLeaveData.ClaimData.Coverage} </a>
-                                                    </li>
-                                                    <br/>
-                                                    
-                                                </div>
-                                            </ul>                                       
-                                        </lightning:layoutItem>
-                                    </lightning:layout>     
-                                </span>
-                            </div>
-                        </aura:iteration> 
-                         </div>
-                </div>
-            </div>
-        </div>  -->
     <aura:iteration items="{!v.claimLeaveListEmployeeDetail}" var="EmployeeDetail">
         <div class="user-details slds-grid slds-gutters">
             <div class="slds-col slds-size_2-of-12 d-flex align-items-center">
@@ -84,8 +70,9 @@
             </div>
         </div>
         </aura:iteration>
+    <a class="toggle-vis" data-column="6">RTW Date</a>
       <div class="table-container">
-      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+      <table id="claimLeaveTable" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 		<thead>
 			<tr class="slds-line-height_reset">
 				<th class="" scope="col">
@@ -120,7 +107,7 @@
 				<tr class="slds-hint-parent">
 					<th data-label="Claim #/Leave #" scope="row">
 						<div class="slds-truncate" title="Claim #/Leave #">
-							<a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
+							<a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-ClaimNo="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
 						</div>
 					</th>
 					<td data-label="Policy Div/Report Group">

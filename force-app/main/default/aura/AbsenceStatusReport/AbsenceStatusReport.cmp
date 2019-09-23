@@ -1,15 +1,35 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
-	Absence Status Report
+<aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    Absence Status Report
     
     <aura:attribute name="workbook" access="private" type="Object" default="WorkBook" />
     <aura:attribute name="activeSheet" access="private" type="Object" default="ActiveSheet" />
     <aura:attribute name="var1" access="public" type="String" default="value1" />
-     <aura:attribute name="leaveNo" type="Integer"/>
+    <aura:attribute name="isLeave" type="Boolean" />
     
     <ltng:require scripts="{!$Resource.TableauEmbedAPI}" afterScriptsLoaded="{!c.scriptsLoaded}" />
-
-    <lightning:button variant="brand" label="Submit" onclick="{!c.filterSingleValue}" />
+   
+    <aura:handler event="c:LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/>  
+    <aura:handler event="c:ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"/>
     
     <div id="vizContainer" ></div>
+    
+    <aura:attribute name="LeaveDetailsHeader" type="LeaveDetails.Header"/>
+    <aura:attribute name="LeaveDetailsLeaveSummary" type="LeaveDetails.LeaveSummary"/>
+    <aura:attribute name="LeaveDetailsLeavePeriod" type="LeaveDetails.LeavePeriod[]"/>
+    <aura:attribute name="LeaveDetailsIntermittentAbsence" type="LeaveDetails.IntermittentAbsence[]"/>  
+    <aura:attribute name="LeaveDetailsProtection" type="LeaveDetails.Protection[]"/>
+    <aura:attribute name="LeaveDetailsAvailableTime" type="LeaveDetails.AvailableTime[]"/> 
+    <aura:attribute name="toogleLeavesModal" type="Boolean" />
+    <aura:attribute name="Coverage" type="String"/>
+    <aura:attribute name="empId" type="Integer"/>
 
+    <aura:attribute name="leaveNo" type="String"/>
+    <aura:attribute name="claimNo" type="String"/>
+    
+    <aura:renderIf isTrue="{!v.isLeave}">  
+        <c:CLISearchLeaveDetailsPopup />
+        <aura:set attribute="else">
+            <c:CLISearchClaimDetailsPopup />
+        </aura:set>
+    </aura:renderIf>
 </aura:component>

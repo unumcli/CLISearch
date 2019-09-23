@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<video autoplay="true" muted="false" loop="true" id="myVideo">
+    <source src="{!$Resource.VideoStaticResource}" type="video/mp4" />
+Your browser dont support video tag
+</video> 
+ <!--   <iframe width="500" height="300" 
+   src="{!$Resource.VideoStaticResource}" type="video/mp4">
+  </iframe> -->
+    <aura:attribute name="pdfData" type="String"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="pdfContainer" type="Aura.Component[]"/>
+	{!v.pdfContainer}
+</aura:component>

@@ -28,11 +28,16 @@
                             <div class="slds-grid slds-wrap">
                                 <div class="slds-col slds-size_2-of-12">
                                     <span class="slds-avatar slds-avatar_circle">
-                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">NA</abbr> 
-                                    </span>
+                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">NA</abbr>
+                                   </span>
+                                    <div class="header-column">
+                                   {!v.LeaveDetailsHeader.LastName} , {!v.LeaveDetailsHeader.FirstName}&nbsp;{!v.LeaveDetailsHeader.MiddleName}
+                                    <br/>
+                                </div>
                                     
                                     
                                 </div>
+                                
                                 <div class="slds-col slds-size_10-of-12 slds-border_left slds-p-left_x-small">
                                     <div class="slds-grid slds-wrap">
                                         <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
