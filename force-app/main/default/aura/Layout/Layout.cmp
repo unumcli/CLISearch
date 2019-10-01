@@ -23,47 +23,44 @@
         </h1>
     </div>    
 <div class="slds-builder-header__item slds-builder-header__utilities">
+	<div class="slds-builder-header__utilities-item">
+		<a href="javascript:void(0);" aria-label="Notificaton" class="slds-builder-header__item-action slds-media slds-media_center">
+			<div class="slds-media__body">
+				<span class="themify-icon-bell"></span> 
+			</div>
+		</a>
+	</div>
 <div class="slds-builder-header__utilities-item">
-<a href="javascript:void(0);" aria-label="Notificaton" class="slds-builder-header__item-action slds-media slds-media_center">
-<div class="slds-media__body">
-<span class="themify-icon-bell"></span> 
-</div>
-</a>
-</div>
-<div class="slds-builder-header__utilities-item">
-<a href="javascript:void(0);" aria-label="Setting" class="slds-builder-header__item-action slds-media slds-media_center">
-<div class="slds-media__body">
-<span class="themify-icon-settings"></span> 
-</div>
-</a>
+	<a href="javascript:void(0);" aria-label="Setting" class="slds-builder-header__item-action slds-media slds-media_center">
+		<div class="slds-media__body">
+			<span class="themify-icon-settings"></span> 
+		</div>
+	</a>
 </div> 
-<div class="slds-builder-header__utilities-item">
-    <lightning:buttonMenu class="profile-menu slds-builder-header__item-action" alternativeText="Profile Menu" iconName="utility:user" menuAlignment="right">
-        <lightning:menuItem label="Logout" value="menuitem1" iconName="utility:logout" />
-    </lightning:buttonMenu>  
-</div>    
+	<div class="slds-builder-header__utilities-item">
+    	<lightning:buttonMenu class="profile-menu slds-builder-header__item-action" alternativeText="Profile Menu" iconName="utility:user" menuAlignment="right">
+        	<lightning:menuItem label="Logout" value="menuitem1" iconName="utility:logout" />
+    	</lightning:buttonMenu>  
+	</div>    
 </div>
 </header>  
 </div>     
         
         <div class="navigation">
-            {!v.navBar}
+        <!--	<c:CustomNavigationBar></c:CustomNavigationBar>	-->
+          <!--   {!v.navBar}   -->
+            <c:TestBar></c:TestBar> 
         </div>
-        <div class="breadcrumb">
-            <nav role="navigation" aria-label="Breadcrumbs">
-                <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
-                    <li class="slds-breadcrumb__item">
-                        <a href="javascript:void(0);">Home</a>
-                    </li>
-                    <li class="slds-breadcrumb__item"> Search</li>
-                </ol>
-            </nav>          
+        
+        <div class="breadcrumb_container">
+        	<c:CustomBreadcrumb></c:CustomBreadcrumb>
         </div>
+        
         <div class="mainContentArea">
             {!v.body}
         </div>
-        <div class="footer">
-            {!v.footer}
-        </div>
+      <!--  <div class="footer"> -->
+      <!--        {!v.footer} -->
+       <!--   </div>  -->
     </div>
 </aura:component>

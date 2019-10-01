@@ -1,5 +1,6 @@
 <aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <aura:registerEvent name="FormDataEvent" type="c:FormDataEvent"/> 
+    <aura:registerEvent name="FormDataCompEvent" type="c:FormDataCompEvent"/> 
     <!-- FilterDataEvent-->
     <aura:registerEvent name="HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
     
@@ -41,7 +42,8 @@
     
     <!-- Render handler to execute on component initialization -->
     <aura:handler name="render" value="{!this}" action="{!c.onRender}" />	
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
     
 
     <article class="slds-card light_bg slds-border_none">
@@ -188,9 +190,9 @@
 -->
   </aura:if> 
         
-        <footer class="slds-card__footer">
+  <!--      <footer class="slds-card__footer">
             
-        </footer>
+        </footer> -->
     
     
     <!--loading spinner start... style=Brand Medium (blue dots)-->

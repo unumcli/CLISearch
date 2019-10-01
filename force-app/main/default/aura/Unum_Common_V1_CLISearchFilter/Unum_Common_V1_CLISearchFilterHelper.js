@@ -1,7 +1,7 @@
 ({
 	   doInit:function(component, event, helper) {
         debugger
-        var isInternal = false; //or false ;
+        var isInternal = true; //or false ;
 		if (isInternal === true) 
                 {
                     component.set("v.isInternal",true);
@@ -131,9 +131,10 @@
      * */
     
     onClearClick : function(component, event, helper) {
-        
+        debugger
         //clear filter input box
         component.getElement().querySelector('#ms-filter-input').value = '';
+         //component.find("relatedorganizations-filter-input").set("v.value", " ");
         //reset filter
         helper.resetAllFilters(component);
     },
@@ -189,42 +190,35 @@
     
     OnGo:function(component, event, helper) 
     {
-        
         debugger
-        var orgValidity = component.find("selectedOrg").get("v.validity");
-        var organizationGroupValidity = component.find("Organisationgroup").get("v.validity");
-       	var searchBoxValidity = component.find("searchBox").get("v.validity");
-        if(organizationGroupValidity.valid === false)
-        {  
-            component.set('v.isButtonActive',true);
-        	var OrganisationField = component.find("Organisationgroup");    
-        	OrganisationField.showHelpMessageIfInvalid();
-        	var searchBoxField = component.find("searchBox");    
-        	searchBoxField.reportValidity();   
-        }
-        else
+        var isInternal = component.get("v.isInternal");
+        if(isInternal === true)
         {
-            var OrganisationGroupName = component.find("Organisationgroup").get("v.value");
-        	var searchBy = component.find("searchByValue").get("v.value");
-        	var searchBoxValue = component.find("searchBox").get("v.value");
-        	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
-        	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
-        	var EmployeeDetail;
-            var empCount; 
-            
-        }
-        
+        var policyValidity = component.find("policyno").get("v.validity");
+        var orgValidity = component.find("selectedOrg").get("v.validity");
+        var relatedGroupValidity = document.getElementById("ms-input").value;
+       	var searchBoxValidity = component.find("searchBox").get("v.validity");
+
+
         if(orgValidity.valid === false || searchBoxValidity.valid === false) 
         {
         	component.set('v.isButtonActive',true);
+            var PolicyField = component.find("policyno");    
+        	PolicyField.showHelpMessageIfInvalid();
         	var OrganisationField = component.find("selectedOrg");    
         	OrganisationField.showHelpMessageIfInvalid();
+            var RelatedGroupOrganisationField = component.find("ms-input");    
+        	RelatedGroupOrganisationField.showHelpMessageIfInvalid();
         	var searchBoxField = component.find("searchBox");    
         	searchBoxField.reportValidity();
         }
         else
-        {            
+        {   
+            var PolicyNumber = component.find("policyno").get("v.value");
         	var OrganisationName = component.find("selectedOrg").get("v.value");
+            debugger
+            var RelatedorganisationGroup = document.getElementById("ms-input").value;
+            component.get('v.selections');
         	var searchBy = component.find("searchByValue").get("v.value");
         	var searchBoxValue = component.find("searchBox").get("v.value");
         	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
@@ -250,9 +244,17 @@
                     //for(int i=0;i<=EmployeeDetail.length;i++){
                         
                     //}
-                    EmployeeDetail.forEach(e => { 
+                    var i;
+                    var hexaCode="['background-color: #f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']";
+                    debugger
+                    EmployeeDetail.forEach(e => {
+                        
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
+                       /* hexaCode.forEach(h => {
+                        e.AvatarColor = hexaCode[h];
+                    })
+                        //e.AvatarColor = i; */
                         e.Abbr = Last + "" + First;
                         console.log(e.Abbr); 
                        })
@@ -286,7 +288,72 @@
                 	}
             	}
         	});
-      	}
+      	}   
+      }
+      else
+      {
+        var organizationGroupValidity = component.find("Organisationgroup").get("v.validity");
+        var relatedGroupValidity =  document.getElementById("ms-input").value;
+       	var searchBoxValidity = component.find("searchBox").get("v.validity");
+        if(organizationGroupValidity.valid === false)
+        {  
+            component.set('v.isButtonActive',true);
+        	var OrganisationField = component.find("Organisationgroup");    
+        	OrganisationField.showHelpMessageIfInvalid();
+            var RelatedGroupOrganisationField = component.find("ms-input");    
+        	RelatedGroupOrganisationField.showHelpMessageIfInvalid();
+        	var searchBoxField = component.find("searchBox");    
+        	searchBoxField.reportValidity();   
+        }
+        else
+        {            
+            var OrganisationGroupName = component.find("Organisationgroup").get("v.value");
+            var RelatedorganisationGroup =  document.getElementById("ms-input").value;
+            debugger
+        	var searchBy = component.find("searchByValue").get("v.value");
+        	var searchBoxValue = component.find("searchBox").get("v.value");
+        	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
+        	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
+        	var EmployeeDetail;
+            var empCount; 
+        	//SearchByLastName API Call
+        	var actionSearchByLastName = component.get("c.SearchByLastName");
+        	actionSearchByLastName.setParams({ userId : "architdutt@gmail.com", orgId : 1,searchString: searchBoxValue,searchBy: searchBy });
+        	$A.enqueueAction(actionSearchByLastName); 
+   	    	actionSearchByLastName.setCallback(this, function(response) 
+            {
+            	var state = response.getState();
+            	if (state === "SUCCESS") 
+                {
+                    component.set("v.NoSearchResultsFlag",false);
+                	console.log("From server: " + response.getReturnValue());
+                	component.set("v.EmployeeDetail",response.getReturnValue());    
+                    console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail").length);
+                    empCount = component.get("v.EmployeeDetail").length;
+                    EmployeeDetail = (component.get("v.EmployeeDetail"));
+                    
+                    //for(int i=0;i<=EmployeeDetail.length;i++){
+                        
+                    //}
+                    EmployeeDetail.forEach(e => { 
+                        var First = e.FirstName.charAt(0);
+                        var Last = e.LastName.charAt(0);
+                        e.Abbr = Last + "" + First;
+                        console.log(e.Abbr); 
+                       })
+                    
+                    //Passing the CLISearchAPI Response
+                    var appEvent = $A.get("e.c:Unum_CLISearch_FilterDataEvent");
+                    var OrganisationField = component.find("Organisationgroup");
+                    appEvent.setParams({ "Organisationgroup" : OrganisationGroupName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    appEvent.fire();
+                	// You would typically fire a event here to trigger 
+                	// client-side notification that the server-side 
+                	// action is complete
+            	} 
+            });
+         }
+      }
     },
     
     ValidationCheck: function (component,event,helper) 
@@ -427,8 +494,8 @@
         component.set('v.OrganisationFlag',false);
         component.set('v.isButtonActive',true);
         component.find("searchByValue").set("v.value","LastName");
-        var HideCLISearchEmployeeListEvent = $A.get("e.c:Unum_CLISearch_HideCLISearchEmployeeList");
         component.set("v.toggleCLISearchEmployeeList",false);
+        var HideCLISearchEmployeeListEvent = $A.get("e.c:Unum_CLISearch_HideCLISearchEmployeeList");
         var toggleCLISearchEmployeeListEvent = component.get("v.toggleCLISearchEmployeeList");
         document.getElementById("searchForm").reset();
         HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });
@@ -591,7 +658,8 @@
      * */
     
     setPickListName : function(component, selectedOptions) {
-       
+       	
+        	debugger
 			const maxSelectionShow = component.get("v.maxSelectedShow");
             //Set drop-down name based on selected value
             if(selectedOptions.length < 1){

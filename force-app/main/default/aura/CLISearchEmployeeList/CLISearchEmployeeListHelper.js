@@ -70,10 +70,15 @@
                     ClaimLeaveList = component.get("v.ClaimLeaveList");
                    
                     //Passing the selectedEmployeeDetails Details
-                    var appEvent = $A.get("e.c:LoadEmployeeRecordsEvent");
+                /*    var appEvent = $A.get("e.c:LoadEmployeeRecordsEvent");
                     var OrganisationField = component.find("selectedOrg");
                     appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
                     appEvent.fire();
+                */
+                    var cmpEvent  = component.getEvent("FormDataCompEvent");
+                    var OrganisationField = component.find("selectedOrg");
+                    appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
+                    cmpEvent.fire();
             	}
             	else if (state === "INCOMPLETE") 
                 {
@@ -109,6 +114,10 @@
                 component.set('v.empNames', response.getReturnValue());
                // component.set('v.empCount', response.getReturnValue());
             
+    },
+    scriptsLoaded : function(component, event, helper) 
+    {
+      alert("DT Scripts loaded");
     }
    /* iterateEmployeeListMethod : function (component, event, helper){
         debugger

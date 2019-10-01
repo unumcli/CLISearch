@@ -3,14 +3,13 @@
        
         debugger
         // GetLeaveDetails API Call
-        //var UserId = component.get("v.userId");
-        //var OrgId = component.get("v.orgId");
+        
        var empId = component.get("v.empId");
-      var leaveNo = component.get("v.leaveNo");
+       var leaveNo = component.get("v.leaveNo");
         
         var actionGetEmployeeLeaveDetail = component.get("c.GetEmployeeLeaveDetails");
         actionGetEmployeeLeaveDetail.setStorable();
-        actionGetEmployeeLeaveDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: "1", leaveNo : "2" });
+        actionGetEmployeeLeaveDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: empId, leaveNo : leaveNo });
         $A.enqueueAction(actionGetEmployeeLeaveDetail);
         actionGetEmployeeLeaveDetail.setCallback(this, function(response)
             									{
@@ -49,12 +48,12 @@
     selectedClaimDetails : function(component,event,helper) {
         debugger
         //GetClaimDetails API Call
-        //var empId = component.get("v.employeeId");
-        //var claimNo = component.get("v.claimNo");
         
+        var empId = component.get("v.empId");
+        var claimNo = component.get("v.claimNo");
         var actionGetEmployeeClaimDetail = component.get("c.GetEmployeeClaimDetail");
         actionGetEmployeeClaimDetail.setStorable();
-        actionGetEmployeeClaimDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: "1", claimNo: "2" });
+        actionGetEmployeeClaimDetail.setParams({ userId : "architdutt@gmail.com", organisationId : "1", employeeId: empId, claimNo: claimNo });
         $A.enqueueAction(actionGetEmployeeClaimDetail);
         actionGetEmployeeClaimDetail.setCallback(this, function(response)
                                                  {

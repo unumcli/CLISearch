@@ -1,0 +1,228 @@
+<aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="isInternal" type="Boolean" />
+    <aura:attribute name="toggleCLISearchEmployeeList" type="Boolean" default="true"/>
+    <aura:attribute name="OrganisationFlag" type="Boolean" default="false"/>
+    <aura:attribute name="SearchFlag" type="Boolean" default="false"/>
+    <aura:attribute name="NoSearchResultsFlag" type="Boolean" default="true"/>
+    <aura:attribute name="isButtonActive" type="Boolean" default="true" />   
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    
+    <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="empCount" type="Integer"/>
+    
+    <!-- Related Organisation Attributes -->
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="relatedOrganisation" type="String" default="Related Organisation" />
+    <aura:attribute name="maxSelectedShow" type="String" default="=2" />
+    <aura:attribute name="optionsList" type="List" />
+    <aura:attribute name="showFilterInput" type="Boolean" default="true" />
+    <aura:attribute name="showRefreshButton" type="Boolean" default="true" />
+    <aura:attribute name="showClearButton" type="Boolean" default="true" />
+    <aura:attribute name="selectedValue" type="String" default=" -Select- " /> 
+    <aura:attribute name="selectedOptions" type="List" />
+    <aura:attribute name="selectedRelatedOrganisation" type="String" default=" -Select- " />
+    <aura:attribute name="initializationCompleted" type="Boolean" default="false" />
+    
+    <ltng:require styles="{!$Resource.ThemifyFontCss}" />
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>  
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    
+    <aura:registerEvent name="Unum_CLISearch_FilterDataEvent" type="c:FormDataEvent"/> 
+    <aura:registerEvent name="Unum_CLISearch_HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
+    
+    <article class="slds-card light_bg slds-border_none">
+        <div class="slds-card__body slds-card__body_inner slds-var-p-around_small">
+            <form id="searchForm" class="slds-form--stacked">
+               <aura:renderif isTrue="{!v.isInternal}"> 
+                    <!-- Policy/Party Id Number Code Starts HERE-->
+                    <div class="slds-grid slds-wrap form_row1">
+                        <div class="slds-col slds-size_1-of-3  slds-x-large-size--1-of-2">
+                            <lightning:input aura:id="policyNo" label="Policy/Party ID Number" name="policy/partyIDNumber" placeholder="Enter Policy/Party ID Number" required="true" />
+                            <button class="slds-button slds-button_brand" onclick="{!c.OnNextArrow}">
+                                <span class="themify-icon-arrow-right search_ico" aria-label="next button"></span>
+                            </button>
+                        </div>
+                        
+                        <!-- Organisation Code Starts HERE-->
+                        <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 slds-text-align_right org m-5-0">
+                            <lightning:select aura:id="selectedOrg" label="Select Organization" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationChange}">
+                                <option value="Organisation">-Select-</option>
+                                <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
+                                <option value="AA New Org">AA New Org</option>
+                                <option value="AB New Org">AB New Org</option>
+                            </lightning:select>
+                        </div>
+                        
+                        <!-- Related Organisation Code Starts HERE-->
+                        <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 rel_org m-5-0">
+                            <div class="slds-form-element">
+                                <aura:if isTrue="{! !empty(v.relatedOrganisation)}">
+                                    <label class="slds-form-element__label">{!v.relatedOrganisation} </label>
+                                </aura:if>
+                                <div id="ms-picklist-dropdown" class="slds-form-element__control">
+                                    <div class="slds-combobox_container multi-select">
+                                        <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
+                                             aria-expanded="false" aria-haspopup="listbox" role="listbox" >
+                                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                                <input class="slds-combobox__input ms-input" id="ms-input" aria-controls="ms-dropdown-items" 
+                                                       role="textbox" type="text" placeholder="" value="{!v.selectedRelatedOrganisation}" readonly="true"/>
+                                                <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Click to open dropdown">
+                                                    <lightning:icon iconName="utility:down" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                </span>
+                                            </div>
+                                            <div id="ms-dropdown-items" role="listbox">
+                                                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ms-dropdown" role="presentation">
+                                                    <aura:if isTrue="{!v.showFilterInput}">
+                                                        <input class="slds-listbox__item ms-filter-input" id="ms-filter-input" aria-controls="ms-dropdown-items" 
+                                                               role="textbox" type="text" placeholder="Filter values.." value="" oninput="{!c.onInputChange}"/>
+                                                    </aura:if>                                      
+                                                    <aura:if isTrue="{!v.showClearButton}">
+                                                        <lightning:buttonIcon iconName="utility:clear" alternativeText="Clear current filters" onclick="{!c.onClearClick}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.showRefreshButton}">
+                                                        <lightning:buttonIcon iconName="utility:refresh" alternativeText="Clear all selections and rebuild picklist" onclick="{!c.onRefreshClick}"/>
+                                                    </aura:if>
+                                                    <aura:iteration items="{!v.options}" var="item">
+                                                        <li role="presentation" class="{!'slds-listbox__item ms-list-item '+ (item.selected ? 'slds-is-selected' : '')}"
+                                                            id="ms-list-item" data-id="{!item.Id}" data-name="{!item.Name}">
+                                                            <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                                <span class="slds-media__figure">
+                                                                    <lightning:icon iconName="utility:check" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                                </span>
+                                                                <span class="slds-media__body">
+                                                                    <span class="slds-truncate" title="{!item.Name}">{!item.Name}</span>
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </aura:iteration>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div> 
+                   <aura:set attribute="else">
+                       <div class="slds-grid slds-wrap form_row1">
+
+                           <!-- Organisation Code Starts HERE-->
+                           <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 slds-text-align_right org m-5-0">
+                               <lightning:select aura:id="selectedOrg" label="Organization/Group" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationGroupChange}">
+                                   <option value="Organisation">-Select-</option>
+                                   <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
+                                   <option value="AA New Org">AA New Org</option>
+                                   <option value="AB New Org">AB New Org</option>
+                               </lightning:select>
+                           </div>
+                           
+                           <!-- Related Organisation Code Starts HERE-->
+                           <div class="slds-col slds-size_1-of-3 slds-x-large-size--1-of-2 rel_org m-5-0">
+                               <div class="slds-form-element">
+                                   <aura:if isTrue="{! !empty(v.relatedOrganisation)}">
+                                       <label class="slds-form-element__label">{!v.relatedOrganisation} </label>
+                                   </aura:if>
+                                   <div id="ms-picklist-dropdown" class="slds-form-element__control">
+                                       <div class="slds-combobox_container multi-select">
+                                           <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
+                                                aria-expanded="false" aria-haspopup="listbox" role="listbox" >
+                                               <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                                   <input class="slds-combobox__input ms-input" id="ms-input" aria-controls="ms-dropdown-items" 
+                                                          role="textbox" type="text" placeholder="" value="{!v.selectedRelatedOrganisation}" readonly="true"/>
+                                                   <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Click to open dropdown">
+                                                       <lightning:icon iconName="utility:down" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                   </span>
+                                               </div>
+                                               <div id="ms-dropdown-items" role="listbox">
+                                                   <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ms-dropdown" role="presentation">
+                                                       <aura:if isTrue="{!v.showFilterInput}">
+                                                           <input class="slds-listbox__item ms-filter-input" id="ms-filter-input" aria-controls="ms-dropdown-items" 
+                                                                  role="textbox" type="text" placeholder="Filter values.." value="" oninput="{!c.onInputChange}"/>
+                                                       </aura:if>                                      
+                                                       <aura:if isTrue="{!v.showClearButton}">
+                                                           <lightning:buttonIcon iconName="utility:clear" alternativeText="Clear current filters" onclick="{!c.onClearClick}"/>
+                                                       </aura:if>
+                                                       <aura:if isTrue="{!v.showRefreshButton}">
+                                                           <lightning:buttonIcon iconName="utility:refresh" alternativeText="Clear all selections and rebuild picklist" onclick="{!c.onRefreshClick}"/>
+                                                       </aura:if>
+                                                       <aura:iteration items="{!v.options}" var="item">
+                                                           <li role="presentation" class="{!'slds-listbox__item ms-list-item '+ (item.selected ? 'slds-is-selected' : '')}"
+                                                               id="ms-list-item" data-id="{!item.Id}" data-name="{!item.Name}">
+                                                               <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+                                                                   <span class="slds-media__figure">
+                                                                       <lightning:icon iconName="utility:check" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
+                                                                   </span>
+                                                                   <span class="slds-media__body">
+                                                                       <span class="slds-truncate" title="{!item.Name}">{!item.Name}</span>
+                                                                   </span>
+                                                               </div>
+                                                           </li>
+                                                       </aura:iteration>
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div> 
+                       </div> 
+                   </aura:set>
+                </aura:renderif> 
+                
+                <!-- SearchBy Code Starts Here -->
+                <div class="slds-grid slds-wrap form_row2"> 
+                    <div class="slds-col slds-size_4-of-12">
+                        <span></span>
+                        <lightning:select aura:id="searchByValue" label="Search by" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
+                            <option value="LastName">Last Name</option>
+                            <option value="SSN">SSN</option>
+                            <option value="EEID">EEID</option>
+                            <option value="ClaimNumber">Claim Number/Leave Number</option>
+                        </lightning:select>
+                    </div>
+                    
+                    <!-- SearchText Code Starts Here -->
+                    <div class="slds-col slds-size_4-of-12 m-5-0 search_section">
+                        <span></span>
+                        <span class="themify-icon-search search_ico" aria-label="Search"></span>
+                        <lightning:input aura:id="searchBox" label="Search" name="enter-search" placeholder="Enter your search text" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please enter search text" />
+                        <label class="sr-only">Search</label>
+                    </div>
+                    <!-- SSN Display Format Code Starts Here -->
+                    <div class="slds-col slds-size_4-of-12 p-l-12">
+                        <span></span>
+                        <div class="p-l-125">
+                            <lightning:select aura:id="ssnDisplay" label="SSN Display Format" name="ssnDisplayFormat" >
+                                <option value="Show Partial">Show Partial</option>
+                                <option value="Show Full">Show Full</option>
+                                <option value="Show None">Show None</option>
+                            </lightning:select> 
+                        </div>
+                    </div>
+                    
+                    <lightning:button label="Go" class="slds-m-top--medium go_btn" variant="brand" onclick="{!c.OnGo}" disabled= "{!v.isButtonActive}" />
+                    
+                    <div aura:id="firstsection" class="clearsearch" >
+                        <a href="javascript:void(0);" id="clearSearchTag" onclick="{!c.ClearSearch}"><u>Clear Search</u></a>
+                    </div> 
+                </div>
+            </form> 
+        </div>
+    </article>
+    
+    <aura:if isTrue="{!v.NoSearchResultsFlag}">
+        <div class="home_empty_state">
+            <img src="{!$Resource.Home_empty_state}" alt=""/>
+            <p>No Search Results Available</p>
+            <small>Select the search filters to get results</small>
+        </div>
+    </aura:if>
+    
+    <footer class="slds-card__footer">
+    </footer>
+    
+</aura:component>

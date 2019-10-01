@@ -1,0 +1,144 @@
+.THIS article {
+			width: 100%;
+			margin: 0 auto;
+			background: #000;
+			color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 15px 2px #666;
+		}
+	
+.THIS #main_nav ul {
+    background: #e7edf1;
+    transition: .5s;
+    width: 100%;
+    float: left;
+    padding-top: 5px;
+    z-index:10;
+}
+.THIS #main_nav ul ul {
+    padding-top:0px;
+}
+.THIS #main_nav ul ul{
+    background:none;
+}
+	
+.THIS #main_nav li {
+			float: left;
+            position: relative;
+            list-style: none;
+            transition: .5s;
+            padding: 0px 25px 10px;
+		}
+.THIS #main_nav li.active{
+    background:#fff;
+    border-top-right-radius:4px;
+    border-top-left-radius:4px;
+}
+.THIS #main_nav li:before{
+    position: absolute;
+    left: 15px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    color: #333;
+    content:'';
+    z-index: 1;
+    background-size:15px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.THIS #main_nav li.dropdown:after{
+    position: absolute;
+    left: 15px;
+    bottom: 0px;
+    width: 20px;
+    height: 20px;
+    color: #333;
+    content:'';
+    z-index: 1;
+    background-image:url('/unumclisearch/s/sfsites/c/resource/downarrow');
+    background-size:10px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.THIS #main_nav li.home:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/Home');
+}
+.THIS #main_nav li.search:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/search');
+}
+.THIS #main_nav li.standardreports:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/standardReport');
+}
+.THIS #main_nav li.customreports:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/CustomReports');
+}
+.THIS #main_nav li.publicfolder:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/myFolders');
+}
+.THIS #main_nav li.myfolder:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/userico');
+}
+.THIS #main_nav li:first-child::before {
+    left: 20px;
+}
+
+.THIS #main_nav a:focus {
+    outline: 0;
+    background:none;
+}
+	
+.THIS #main_nav a {
+			display: block;
+			text-decoration: none;
+			padding: 5px 15px;
+			color: #000;
+		}
+
+.THIS #main_nav ul ul {
+			position: absolute;
+			left: 0;
+			top: 100%;
+    		display:none;
+    		background:#fff;
+        	box-shadow: 3px 3px 3px rgba(0,0,0,.1);
+		}
+	
+.THIS #main_nav ul ul ul {
+			left: 100%;
+			top: 0;
+		}
+	
+.THIS #main_nav li:hover{
+			background: #fff;
+            border-top-right-radius:4px;
+            border-top-left-radius:4px;
+		}
+.THIS #main_nav li:hover li {
+    background: #fff;
+    border-top-right-radius:0px;
+    border-top-left-radius:0px;
+}	
+.THIS #main_nav li li{
+    padding: 5px 15px;
+    border-bottom: 1px solid #f9f9f9;
+    width:100%;
+}
+.THIS #main_nav li li:last-child{
+    border-bottom: none;
+}
+.THIS #main_nav li:first-child{
+    min-width:auto;
+}
+.THIS #main_nav li li:hover, .THIS #main_nav li li:hover li {
+			background: #efefef;
+		}
+	
+.THIS #main_nav li li li:hover {
+			background: #ddd;
+		}
+	
+.THIS #main_nav li:hover > ul {
+			display:block;
+		}

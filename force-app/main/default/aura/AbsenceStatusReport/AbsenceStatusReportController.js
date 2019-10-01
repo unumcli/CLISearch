@@ -1,4 +1,9 @@
 ({
+    doInit: function(component, event, helper) {
+        component.set("v.ASRurl",'https://public.tableau.com/views/WorldIndicators/GDPpercapita?:embed=y&:display_count=yes&:origin=viz_share_link');
+        component.set("v.Spinner", true);
+        },
+
     scriptsLoaded : function(component, event, helper) {
         debugger
         var tempComp = component;
@@ -18,12 +23,12 @@
                 console.log("get worked " + component.get("v.var1"));
                 component.set("v.var1","valueChanged");
                 console.log("set worked " + component.get("v.var1")); 
-                
+                component.set("v.Spinner", false); 
             }
         };
         
-        var viz = new tableau.Viz(placeholderDiv, 'https://public.tableau.com/views/WorldIndicators/GDPpercapita?:embed=y&:display_count=yes&:origin=viz_share_link', options);
-        
+        var viz = new tableau.Viz(placeholderDiv, component.get("v.ASRurl"), options);
+            
         viz.addEventListener('marksselection',function(marksEvent){
             debugger
             
@@ -78,7 +83,7 @@
              console.log(sessionStorage.getItem('filterdata', filterObjectInJson));
              //filterObject['Coverage']=="Leave";
              // help.selectedLeaveDetails();
-             var coverageValue = "Claim";//filterObject['Coverage'];                       
+             var coverageValue = "Leave";//filterObject['Coverage'];                       
              component.set("v.Coverage", coverageValue);
              var empId = "123";//filterObject['Employee Id'];
              component.set("v.empId", empId);

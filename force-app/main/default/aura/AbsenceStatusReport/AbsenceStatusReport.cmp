@@ -5,11 +5,12 @@
     <aura:attribute name="activeSheet" access="private" type="Object" default="ActiveSheet" />
     <aura:attribute name="var1" access="public" type="String" default="value1" />
     <aura:attribute name="isLeave" type="Boolean" />
-    
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
     <ltng:require scripts="{!$Resource.TableauEmbedAPI}" afterScriptsLoaded="{!c.scriptsLoaded}" />
    
     <aura:handler event="c:LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/>  
     <aura:handler event="c:ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
     
     <div id="vizContainer" ></div>
     
@@ -22,10 +23,28 @@
     <aura:attribute name="toogleLeavesModal" type="Boolean" />
     <aura:attribute name="Coverage" type="String"/>
     <aura:attribute name="empId" type="Integer"/>
-
-    <aura:attribute name="leaveNo" type="String"/>
+	<aura:attribute name="leaveNo" type="String"/>
     <aura:attribute name="claimNo" type="String"/>
+    <aura:attribute name="ASRurl" type="String" />
     
+    <aura:if isTrue="{!v.Spinner}"> 
+   		<div aura:id="spinnerId" class="slds-spinner_container">
+       		<span class="slds-assistive-text">Loading</span> 
+       		<!--<div class="slds-spinner__dot-a"></div> 
+          		<div class="slds-spinner__dot-b"></div>-->
+            <div class="spinner_container">
+                <div style="width:100%; text-align:center;">
+                    <img src="{!$Resource.loader_img}" alt=""/>
+                    <div class="ellipsis_container">
+                    	<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                   	</div> 
+                </div>
+        	</div>
+			
+            <!--<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>-->
+    	</div>
+   	</aura:if> 
+                    
     <aura:renderIf isTrue="{!v.isLeave}">  
         <c:CLISearchLeaveDetailsPopup />
         <aura:set attribute="else">

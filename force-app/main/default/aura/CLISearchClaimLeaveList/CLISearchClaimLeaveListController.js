@@ -54,9 +54,15 @@
     {
         helper.setDateFormat(component, event, helper); 
     },
-    scriptsLoaded : function(component, event, helper) 
+    scriptsLoaded : function(component, event, helper)    
     {
+        debugger
         helper.scriptsLoaded(component, event, helper); 
+    },
+    exportToCSV : function(component, event, helper)    
+    {
+        debugger
+        helper.exportToCSV(component, event, helper); 
     }
     
 

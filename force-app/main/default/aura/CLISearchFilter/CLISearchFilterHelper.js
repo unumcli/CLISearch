@@ -148,22 +148,30 @@
                     //for(int i=0;i<=EmployeeDetail.length;i++){
                         
                     //}
-                    var hexaCode="['#f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']";
+                    var i;
+                    var hexaCode="['background-color: #f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']";
                     debugger
                     EmployeeDetail.forEach(e => {
                         
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
-                        e.AvatarColor = hexaCode[0]; 
+                       /* hexaCode.forEach(h => {
+                        e.AvatarColor = hexaCode[h];
+                    })
+                        //e.AvatarColor = i; */
                         e.Abbr = Last + "" + First;
                         console.log(e.Abbr); 
                        })
                     
                     //Passing the CLISearchAPI Response
-                    var appEvent = $A.get("e.c:FormDataEvent");
+                    var cmpEvent  = component.getEvent("FormDataCompEvent");
+                    var OrganisationField = component.find("selectedOrg");
+                    cmpEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    cmpEvent.fire();
+                  /*  var appEvent = $A.get("e.c:FormDataEvent");
                     var OrganisationField = component.find("selectedOrg");
                     appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
-                    appEvent.fire();
+                    appEvent.fire(); */
                 	// You would typically fire a event here to trigger 
                 	// client-side notification that the server-side 
                 	// action is complete
@@ -368,7 +376,7 @@
     },
     
     showSpinner: function(component, event, helper) {
-        
+        debugger
     	//make Spinner attribute true for display loading spinner 
         component.set("v.Spinner", true); 
    	},

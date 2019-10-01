@@ -1,0 +1,43 @@
+.THIS .slds-col .ui-widget {
+   margin: 16px 0;
+}
+ 
+.THIS .slds-col.content {
+   width: 1140px;
+}
+.THIS ul.TopNav li {
+    display: inline-block;
+}
+.THIS ul.TopNav .slds-navigation-list--vertical__action{
+    border:none;
+}
+.THIS ul.TopNav .slds-is-active .slds-navigation-list--vertical__action{
+    background-color:#fff;
+}
+.THIS ul.TopNav{
+    background: #e7edf1;
+}
+.THIS ul.TopNav li{
+    position:relative;
+}
+
+.THIS ul.TopNav li span {
+    position: absolute;
+    left: 5px;
+    top: 7px;
+    width: 20px;
+    height: 20px;
+    content: '\ea11';
+    font-family: 'themify-icon' !important;
+    color: #333;
+    z-index: 1;
+    background-size:15px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.THIS ul.TopNav li:nth-child(9) span{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/myFolders');
+}
+.THIS ul.TopNav li:nth-child(9) span{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/myFolders');
+}

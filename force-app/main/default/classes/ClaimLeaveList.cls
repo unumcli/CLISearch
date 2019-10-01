@@ -1,6 +1,6 @@
 public with sharing class ClaimLeaveList
-{
-	
+{   
+    @AuraEnabled public final string ASR ='https://public.tableau.com/views/WorldIndicators/GDPpercapita?:embed=y&:display_count=yes&:origin=viz_share_link';
     @AuraEnabled public EmployeeDetail EmployeeDetail {get; set;}
     @AuraEnabled public List<ClaimLeaveData> ClaimLeaveData {get; set;}
 

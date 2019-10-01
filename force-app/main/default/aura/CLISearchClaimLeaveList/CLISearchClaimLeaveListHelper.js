@@ -1,10 +1,11 @@
 ({
     scriptsLoaded : function(component, event, helper) 
     {
-        alert("datatable scripts loaded");
+        console.log("datatable scripts loaded");
     },	
     fetchEmpData : function(component, event, helper) {
         debugger
+         console.log("fetchEmpData");
          var selectedEmployeeID = event.getParam("selectedEmployeeID"); 
         var IsClaimOrLeave = event.getParam("IsClaimOrLeave");
         var ClaimLeaveList = event.getParam("ClaimLeaveList");
@@ -20,24 +21,38 @@
         component.set("v.toggleCLISearchClaimLeaveListFlag", toggleCLISearchClaimLeaveListFlag);
         
         setTimeout(function(){ 
-                    var claimLeaveTable = $('#claimLeaveTable').DataTable({
-                       	 dom: 'Bfrtip',
+            debugger
+            
+                
+  //var claimLeaveTable = 
+      $('#claimLeaveTable').DataTable({
+                        dom: 'Bfrtip',//'lBftipr',
                         "paging":   true,
         				"ordering": true,
        					"info":     true,
                         "lengthChange": false,
 						"pagingType": "full_numbers",
       					"pageLength": 1,
-      				//	"processing": true,
-      				//	"destroy": true,
+      					"processing": true,
+      					"destroy": true,
       					"searching": false,	
       				    "sorting": true,
-					buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                			]                        
+					 buttons	: [
+         				 'excel','print','csv'
+       				]                  
                     });
+            
+         /*   		var buttons = new $.fn.dataTable.Buttons(claimLeaveTable, {
+                buttons: [
+            'copy', 'csv', 'excel', 'print'
+        ]		
+            });	*/ //.container().appendTo($('#empGridBtn'));
                     
-                    $('a.toggle-vis').on( 'click', function (e) {
+            //    claimLeaveTable.buttons().container().appendTo( $('#empGridBtn', claimLeaveTable.table().container() ) );
+                    //
+                   
+           // claimLeaveTable.buttons().container().appendTo( $('#empGridBtn', claimLeaveTable.table().container() ) );
+     /*               $('a.toggle-vis').on( 'click', function (e) {
                         debugger
         				e.preventDefault();
  
@@ -48,8 +63,8 @@
         			column.visible( ! column.visible() );
    	 				} );
                     
+            */
             
-            //claimLeaveTable.buttons().container().appendTo( $('#empGridBtn', claimLeaveTable.table().container() ) );
             //.container().appendTo($('#empGridBtn'));  
                     
                     
@@ -57,6 +72,8 @@
                     $('div.dataTables_filter input').addClass('slds-input');
                     $('div.dataTables_filter input').css("marginBottom", "10px");
                 }, 500);
+
+
         
     },
     
@@ -231,5 +248,12 @@
             }
         }
         component.set("v.pageList", pageList);
+    },
+    exportToCSV : function(component, event, helper)    
+    {
+        debugger
+        $('claimLeaveTable').csvExport({
+  		title:'Exported_Table'
+		}); 
     }
 })

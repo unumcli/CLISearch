@@ -65,7 +65,7 @@
     <!-- Handling the DateFormat Event to set the DateFormat across all the Date type fields -->
     <aura:handler event="c:Unum_CLISearch_DateFormat" action="{!c.setDateFormat}"/>
     
-    
+    <lightning:button variant="brand" label="Download as CSV" title="Download as CSV"  onclick="{!c.exportTableToCSV}" />
      
   <!--  <aura:handler name="init" value="{!this}" action="{!c.fetchEmpData}"/> -->
   <!--  <div style="background-color: LightBlue ; width : 24rem">
@@ -133,7 +133,7 @@
       <a class="toggle-vis" data-column="6">RTW Date</a>
       <div class="table-container">
       <table id="tableId" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
-		<thead>
+          	<thead>
 			<tr class="slds-line-height_reset">
 				<th class="" scope="col">
 					<div class="slds-truncate" title="Claim #/Leave #">Claim #/Leave #</div>
@@ -234,7 +234,8 @@
 				  </tr>
                 </aura:iteration>
 			</tbody>
-		</table>
+		</table>    
+          
         </div>
  
    

@@ -56,9 +56,10 @@
 .THIS .slds-builder-header__item + .slds-builder-header__item{border-left:0px;}
 .THIS h1.slds-builder-header__item-label{font-size:20px;}
 .THIS .slds-text-heading--label{letter-spacing:normal; text-transform:normal;}
+.THIS .breadcrumb_container {    float: left;    width: 100%;    padding: 15px 15px;}
 .THIS .breadcrumb{padding:7px 10px;}
 .THIS .breadcrumb li:last-child{padding-left:7px;}
-.THIS .siteforceContentArea .comm-layout-column:not(:empty){padding-top:0px;}
+/*.THIS .siteforceContentArea .comm-layout-column:not(:empty){padding-top:0px;}*/
 .THIS .slds-builder-header .slds-builder-header__utilities-item .slds-dropdown__item span{font-size:16px;}
 .THIS .profile-menu{margin-right:15px;margin-left: 10px; display: flex; align-items: center;}
 .THIS .slds-button_icon-more{background: transparent;border-radius: 50%;height: 34px;width: 34px;color:#fff;border: 1px solid #fff;}

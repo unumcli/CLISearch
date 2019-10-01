@@ -1,22 +1,40 @@
 <aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 	<!-- Data Table css,Js and jQUERY-->
-    <ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
+ <!--   <ltng:require styles="{!join(',',$Resource.DatatableV12 + '/DatatablesV12/1.10.12/css/dataTables.jqueryui.css',
+                          $Resource.DatatableV12 + '/DatatablesV12/1.10.12/css/jquery.dataTables.css',
+                          $Resource.DatatableJQuery + '/Buttons-1.5.6/css/buttons.dataTables.css')}"
+              	   
+                  scripts="{!join(',',
+                           $Resource.DatatableV12 + '/DatatablesV12/JQuery/jquery-2.2.4.js',
+                           $Resource.DatatableV12 + '/DatatablesV12/1.10.12/js/dataTables.jqueryui.js',
+                           $Resource.DatatableV12 + '/DatatablesV12/1.10.12/js/jquery.dataTables.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/dataTables.buttons.js',
+                           $Resource.DatatableJQuery + '/JSZip-2.5.0/jszip.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.colVis.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.flash.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.html5.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.print.js'
+                          )}" 
+                  		afterScriptsLoaded="{!c.scriptsLoaded}"/>
+-->
+ 
+<ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
                           $Resource.DatatableJQuery + '/DataTables-1.10.18/css/jquery.dataTables.css',
                           $Resource.DatatableJQuery + '/Buttons-1.5.6/css/buttons.dataTables.css')}"
               	   
                   scripts="{!join(',',
-                           $Resource.JQuery,
+                           $Resource.DatatableV12 + '/DatatablesV12/JQuery/jquery-2.2.4.js',
                            $Resource.DatatableJQuery + '/jQueryUI-1.12.1/jquery-ui.js',
                            $Resource.DatatableJQuery + '/DataTables-1.10.18/js/jquery.dataTables.js',
-                           $Resource.DatatableJQuery + '/JSZip-2.5.0/jszip.js',
                            $Resource.DatatableJQuery + '/Buttons-1.5.6/js/dataTables.buttons.js',
+                           $Resource.DatatableJQuery + '/JSZip-2.5.0/jszip.js',
                            $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.colVis.js',
                            $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.flash.js',
                            $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.html5.js',
-                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.print.js',
-                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/pdfmake.js',
-                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/vfs_fonts.js')}" 
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.print.js'
+                          )}" 
                   		afterScriptsLoaded="{!c.scriptsLoaded}"/>
+
     <!--Data Table ends here -->
     <aura:attribute name="mycolumns" type="List"/>
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList" />
@@ -71,6 +89,7 @@
         </div>
         </aura:iteration>
     <a class="toggle-vis" data-column="6">RTW Date</a>
+    <div  id="empGridBtn"></div>  
       <div class="table-container">
       <table id="claimLeaveTable" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
 		<thead>

@@ -1,0 +1,53 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="pageReference" type="Object"/>
+    
+    <lightning:navigation aura:id="navService"/>
+    <article>
+		<nav id="main_nav">
+			<ul>
+                <li class="home">
+					<a href="javascript:void(0);"  data-mainNav="home" onclick="{!c.handleNavigation}">&nbsp;</a>
+				</li>
+				<li class="search active">
+					<a href="javascript:void(0);"  data-mainNav="home" onclick="{!c.handleNavigation}">Search</a>
+				</li>
+				<li class="standardreports dropdown">
+					<a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Standard Reports</a>
+					<ul>
+						<li>
+							<a href="javascript:void(0);">Disability Reporting</a>
+							<ul>				
+								<li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Absence Status Report</a></li>
+                                <li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Payment History Report</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:void(0);">Leave Reporting</a>
+							<ul>
+								
+								<li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Available Time Report</a></li>
+                                <li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Daily Absence Report</a></li>
+                                <li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Detail Integrated Absence Report</a></li>
+                                <li><a href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Intermittent Leave Summary Report</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="customreports">
+					<a  href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Custom Reports</a>
+				</li>
+				<li class="publicfolder">
+					<a  href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">Public Folders</a>				
+				</li>
+                <li class="myfolder">
+					<a  href="javascript:void(0);" data-mainNav="absence-status-report" onclick="{!c.handleNavigation}">MyFolders</a>			
+				</li>
+                <li class="help">
+					<a  href="javascript:void(0);" data-mainNav="absence-status-report">Help</a>			
+				</li>
+			</ul>
+		</nav>
+	
+	</article>
+</aura:component>

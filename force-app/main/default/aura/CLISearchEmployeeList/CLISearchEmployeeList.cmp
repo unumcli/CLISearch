@@ -21,7 +21,38 @@
     <aura:handler event="c:FormDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
     <aura:attribute name="hexaColorCode" type="String[]" default="['#f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']" />
-    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
+    
+    <!-- myMethod to get attributes from parent(CLISearch) -->
+    <aura:method name="myMethod" action="{!c.executeMyMethod}"> 
+        <aura:attribute name="param1" type="EmployeeDetail"/> 
+        <aura:attribute name="selectedOrg" type="String"/>
+        <aura:attribute name="searchByValue" type="String"/>
+        <aura:attribute name="searchBoxEvent" type="String"/>
+        <aura:attribute name="ssnDisplayEvent" type="String"/>
+        <aura:attribute name="param2" type="String"/>
+        <aura:attribute name="param2" type="String"/>
+        <aura:attribute name="param2" type="String"/>
+    </aura:method>
+    <!--  myMethod to get attributes from parent(CLISearch) -->
+    
+    <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" /> 
+   <!-- <ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
+                          $Resource.DatatableJQuery + '/DataTables-1.10.18/css/jquery.dataTables.css',
+                          $Resource.DatatableJQuery + '/Buttons-1.5.6/css/buttons.dataTables.css')}"
+              	   
+                  scripts="{!join(',',
+                           $Resource.JQuery,
+                           $Resource.DatatableJQuery + '/jQueryUI-1.12.1/jquery-ui.js',
+                           $Resource.DatatableJQuery + '/DataTables-1.10.18/js/jquery.dataTables.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/dataTables.buttons.js',
+                           $Resource.DatatableJQuery + '/JSZip-2.5.0/jszip.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.colVis.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.flash.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.html5.js',
+                           $Resource.DatatableJQuery + '/Buttons-1.5.6/js/buttons.print.js',
+                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/pdfmake.js',
+                           $Resource.DatatableJQuery + '/pdfmake-0.1.36/vfs_fonts.js')}" 
+                  		afterScriptsLoaded="{!c.scriptsLoaded}"/>  -->
 
     <aura:renderIf isTrue="{!v.showHideMatchingResults}">
         
@@ -29,7 +60,7 @@
             <div class="slds-form-element__control slds-p-top_large slds-p-bottom_large slds-grid slds-wrap slds-col slds-size_12-of-12">
                     <p><strong><lightning:formattedNumber value="{!v.empCountEvent}" /></strong> Matching Results For <b>"<lightning:formattedText value="{!v.searchByValueEvent}" />: </b><strong><lightning:formattedText value="{!v.searchBoxEvent}" /></strong>" </p> 
             </div>
-        </div>
+        </div> 
         
         <div class="slds-grid slds-glutters slds-p-top_none">
             <div style="background-color: LightWhite" class="slds-col slds-size_3-of-12">

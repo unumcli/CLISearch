@@ -2,7 +2,11 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "c/jQuery-3.3.1": [
+                "../staticresources/datatable_18/jQuery-3.3.1/jQuery-3.3.1.js"
+            ]
+        }
     },
     "include": [
         "**/*",

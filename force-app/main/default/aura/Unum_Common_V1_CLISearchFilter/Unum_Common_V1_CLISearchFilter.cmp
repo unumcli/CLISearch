@@ -22,7 +22,7 @@
     <aura:attribute name="options" type="List" />
     <aura:attribute name="relatedOrganisation" type="String" default="Related Organisation:" />
     <!-- max selected item display -->
-    <aura:attribute name="maxSelectedShow" type="Integer" default="=2" />
+    <aura:attribute name="maxSelectedShow" type="String" default="=2" />
     <!-- Option list to show in drop down -->
     <aura:attribute name="optionsList" type="List" />
     <!-- Show filter input box -->
@@ -78,14 +78,16 @@
                                 <aura:if isTrue="{! !empty(v.relatedOrganisation)}">
                                     <label class="slds-form-element__label">{!v.relatedOrganisation} </label>
                                 </aura:if>
-                                <div class="slds-form-element__control">
+                                <div id="ms-picklist-dropdown" class="slds-form-element__control">
                                     <div class="slds-combobox_container multi-select">
                                         <div id="ms-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown" 
                                              aria-expanded="false" aria-haspopup="listbox" role="listbox" >
                                             <!-- MAIN BUTTON CODE -->
                                             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                               <!-- <lightning:input aura:id="relatedorganizationGroup" class="slds-combobox__input relatedorganizationGroup"  aria-controls="ms-dropdown-items" 
+                                                       role="textbox" type="text" label="{!v.selectedLabel}" value="" readonly="true"/> -->
                                                 <input class="slds-combobox__input ms-input" id="ms-input" aria-controls="ms-dropdown-items" 
-                                                       role="textbox" type="text" placeholder="{!v.selectedLabel}" value="" readonly="true"/>
+                                                       role="textbox" type="text" placeholder="" value="{!v.selectedLabel}" readonly="true"/>
                                                 <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Click to open dropdown">
                                                     <lightning:icon iconName="utility:down" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
                                                 </span>
@@ -98,6 +100,8 @@
                                                     
                                                     <!-- showing filter input -->
                                                     <aura:if isTrue="{!v.showFilterInput}">
+                                                      <!--  <lightning:input aura:id="relatedorganizations-filter-input" class="slds-listbox__item ms-filter-input" aria-controls="ms-dropdown-items" 
+                                                       role="textbox" type="text" label="Filter values.." value="" oninput="{!c.onInputChange}"/> -->
                                                         <input class="slds-listbox__item ms-filter-input" id="ms-filter-input" aria-controls="ms-dropdown-items" 
                                                                role="textbox" type="text" placeholder="Filter values.." value="" oninput="{!c.onInputChange}"/>
                                                     </aura:if>
@@ -161,7 +165,7 @@
                                                 <!-- MAIN BUTTON CODE -->
                                                 <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
                                                     <input class="slds-combobox__input ms-input" id="ms-input" aria-controls="ms-dropdown-items" 
-                                                           role="textbox" type="text" placeholder="{!v.selectedLabel}" value="" readonly="true"/>
+                                                           role="textbox" type="text" placeholder="" value="{!v.selectedLabel}" readonly="true"/>
                                                     <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Click to open dropdown">
                                                         <lightning:icon iconName="utility:down" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
                                                     </span>
