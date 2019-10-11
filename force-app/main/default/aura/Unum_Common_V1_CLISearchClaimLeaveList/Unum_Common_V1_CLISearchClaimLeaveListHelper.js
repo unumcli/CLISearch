@@ -1,7 +1,23 @@
 ({
     
     scriptsLoaded : function(component, event, helper) {
-        console.log('datatable Script loaded..'); 
+       console.log('table Script loaded..'); 
+       
+      
+	
+   /*    html2canvas(document.getElementById('tblCustomers'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Table.pdf");
+                }
+            }); */
+        
     },
     
  
@@ -255,5 +271,56 @@
             }
         }
         component.set("v.pageList", pageList);
+    },
+     print : function(component, event, helper) 
+    {
+        debugger
+    //    var printContents = document.getElementById("printableArea").innerHTML;
+  //   var originalContents = document.body.innerHTML;
+
+//     document.body.innerHTML = printContents;
+
+     window.print();
+
+ //   document.body.innerHTML = originalContents;
+      /*   jQuery("document").ready(function(){
+			jQuery("#print").printThis();          
+          
+      });
+      */
+       // $('#print').printThis();
+        
+  /*     $(function() {
+$("#printable").find('.print').on('click', function() {
+$.print("#printable");
+});
+});
+      
+       //Get the HTML of div
+          var divElements = document.getElementById("tableId").innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = 
+          "<html><head><title></title></head><body>" + 
+          divElements + "</body>";
+        //Print Page
+        window.print();
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+        */
+        
+   /*    var divToPrint=document.getElementById("tableId");
+  		var newWin= window.open("");
+   		newWin.document.write(divToPrint.outerHTML);
+   		newWin.print();
+   		newWin.close();
+       var table = document.getElementById('tableId');
+        var win = window.open("","","width=900,height=700");
+        win.document.write(table.outerHTML);
+        win.document.close();
+        win.focus();
+        win.print();
+        win.close();*/
     }
 })

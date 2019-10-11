@@ -1,7 +1,7 @@
 <aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-    <aura:registerEvent name="FormDataEvent" type="c:FormDataEvent"/> 
+    <aura:registerEvent name="Unum_V1_CLISearch_FilterDataEvent" type="c:Unum_V1_CLISearch_FilterDataEvent"/> 
     <!-- FilterDataEvent-->
-    <aura:registerEvent name="HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
+    <aura:registerEvent name="Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" type="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent"/>
     
     
     <aura:attribute name="isInternal" type="Boolean" />

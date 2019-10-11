@@ -45,10 +45,11 @@
                                            
                                            
         //Passing the date format across the application 
-        var appEvent = $A.get("e.c:Unum_CLISearch_DateFormat");
+      //  var appEvent = $A.get("e.c:Unum_CLISearch_DateFormat");
+        var compEvent  = component.getEvent("Unum_V1_CLISearch_DateFormatEvent");                                  
         var formattedDateTime = "numeric";
-        appEvent.setParams({"FormattedDateTime": formattedDateTime});
-        appEvent.fire();
+        compEvent.setParams({"FormattedDateTime": formattedDateTime});
+        compEvent.fire();
         
         //GetClaimLeave API Call
         	var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
@@ -70,10 +71,11 @@
                     ClaimLeaveList = component.get("v.ClaimLeaveList");
                    
                     //Passing the selectedEmployeeDetails Details
-                    var appEvent = $A.get("e.c:Unum_CLISearch_LoadEmployeeRecordsEvent");
+                   // var appEvent = $A.get("e.c:Unum_V1_CLISearch_LoadEmployeeRecordsEvent");
+                    var cmpEvent  = component.getEvent("Unum_V1_CLISearch_LoadEmployeeRecordsEvent");
                     var OrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
-                    appEvent.fire();
+                    cmpEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
+                    cmpEvent.fire();
             	}
             	else if (state === "INCOMPLETE") 
                 {

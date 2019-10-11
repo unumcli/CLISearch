@@ -15,11 +15,11 @@
     <aura:attribute name="passEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
     <!-- Attributes -->
 
-    <aura:registerEvent name="Unum_CLISearch_LoadEmployeeRecordsEvent" type="c:Unum_CLISearch_LoadEmployeeRecordsEvent"/>
-  	<aura:registerEvent name="Unum_CLISearch_DateFormat" type="c:Unum_CLISearch_DateFormat"/>
+    <aura:registerEvent name="Unum_V1_CLISearch_LoadEmployeeRecordsEvent" type="c:Unum_V1_CLISearch_LoadEmployeeRecordsEvent"/>
+  	<aura:registerEvent name="Unum_V1_CLISearch_DateFormatEvent" type="c:Unum_V1_CLISearch_DateFormatEvent"/>
     <!-- Events -->
-    <aura:handler event="c:Unum_CLISearch_FilterDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
-    <aura:handler event="c:Unum_CLISearch_HideCLISearchEmployeeList" action="{!c.showHideCLISearchEmployeeListEvent}"/>
+  <!--  <aura:handler event="c:Unum_V1_CLISearch_FilterDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
+    <aura:handler event="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" action="{!c.showHideCLISearchEmployeeListEvent}"/>  -->
    
     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
 

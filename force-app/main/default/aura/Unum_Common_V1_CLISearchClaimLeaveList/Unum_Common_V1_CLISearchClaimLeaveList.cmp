@@ -1,13 +1,31 @@
 <aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 	
     	<!-- Static Resource for datatable-->
+ <!--    $Resource.download + '/table/tableHTMLExport.js'
+$Resource.download + '/table/html2canvas.js', -->
+ <!--    $Resource.download + '/table/jquery-3.3.1.slim.min.js', -->
     	<!--use JQuery Data Table css,Js and jQUERY js file in lightning component by using ltng:require component-->
-    <ltng:require styles="{! $Resource.datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+   
+  <!--   <ltng:require 
+
+     
+        scripts="{!$table.PDFmake}"
+
+        afterScriptsLoaded="{!c.scriptsLoaded}" /> -->
+     <ltng:require scripts="{!join(',', 
+                           $Resource.download + '/table/jquery-2.2.4.js',                           
+                 		   $Resource.download + '/table/jQuery.print.js',
+                            $Resource.download + '/table/printThis.js'
+                           )
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/> 
+
+       
+ <!--   <ltng:require styles="{! $Resource.datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
                   scripts="{!join(',', 
                            $Resource.JQuery , 
                            $Resource.datatable + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js'
                            )
-                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>  
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>  	-->
  <!--  <ltng:require styles="{! $Resource.datatable18 + '/DataTables-1.10.18/DataTables-1.10.18/media/css/jquery.dataTables.min.css'}" 
                   scripts="{!join(',',
                            $Resource.JQuery,
@@ -54,6 +72,7 @@
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
     <aura:attribute name="DefaultDateFormat" type="String"/>
+    <aura:attribute name="isEmployeeCount" type="Boolean"/>
     
     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
     <!-- Events -->
@@ -65,7 +84,8 @@
     <!-- Handling the DateFormat Event to set the DateFormat across all the Date type fields -->
     <aura:handler event="c:Unum_CLISearch_DateFormat" action="{!c.setDateFormat}"/>
     
-    <lightning:button variant="brand" label="Download as CSV" title="Download as CSV"  onclick="{!c.exportTableToCSV}" />
+   <!--   <lightning:button variant="brand" label="Download as PDF" title="Download as PDF"  onclick="{!c.exportToPDF}" />	-->
+    <!--  <lightning:button variant="brand" label="Download as CSV" title="Download as CSV"  onclick="{!c.exportTableToCSV}" />	-->
      
   <!--  <aura:handler name="init" value="{!this}" action="{!c.fetchEmpData}"/> -->
   <!--  <div style="background-color: LightBlue ; width : 24rem">
@@ -97,6 +117,7 @@
                 </div>
             </div>
         </div>  -->
+    
     <aura:iteration items="{!v.claimLeaveListEmployeeDetail}" var="EmployeeDetail">
         <div class="user-details slds-grid slds-gutters">
             <div class="slds-col slds-size_2-of-12 d-flex align-items-center">
@@ -105,38 +126,40 @@
                 </span>
                 {!EmployeeDetail.LastName} , {!EmployeeDetail.FirstName}&nbsp;{!EmployeeDetail.MiddleName}
             </div>
-            <div class="slds-col slds-size_3-of-12">
+            <div class="slds-col slds-size_2-of-12">
                 <p><b>SSN:</b>{!EmployeeDetail.SSN}</p>
-                <p><b>Open Leave#:</b>{!EmployeeDetail.OpenLeaveNumber}</p>
+                <!--<p><b>Open Leave#:</b>{!EmployeeDetail.OpenLeaveNumber}</p>-->
             </div>
-            <div class="slds-col slds-size_3-of-12">
+            <div class="slds-col slds-size_2-of-12">
                 <p><b>Employee ID:</b>{!EmployeeDetail.EmployeeID}</p>
-                <p><b>Open Claim#:</b>{!EmployeeDetail.OpenClaimNumber}</p>
+                <!--<p><b>Open Claim#:</b>{!EmployeeDetail.OpenClaimNumber}</p>-->
             </div>
             <div class="slds-col slds-size_3-of-12">
               <!--  <p><b>Date of Birth:{!EmployeeDetail.DateOfBirth}</b></p> -->
                 <p><b>Date of Birth:</b><lightning:formattedDateTime value="{!EmployeeDetail.DateOfBirth}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></p>
-                <p>&nbsp;</p>
+                
             </div>
-            <div class="slds-col slds-size_1-of-12 icon16">
-                <div class="p5_0 p-relative download_opt"><!--<span class="themify-icon-download"></span>-->
+            <div class="slds-col slds-size_3-of-12 icon16">
+                <div class="p5_0 p-relative download_opt" onclick="{!c.exportTableToCSV}"><!--<span class="themify-icon-download"></span>-->
                  <span class="themify-icon-download"></span>
 
                 </div>
-                <div class="p5_0"><span class="themify-icon-printer"></span></div>
+                <div class="p5_0 print_opt" onclick="{!c.print}"><span class="themify-icon-printer"></span></div>
             </div>
         </div>
         </aura:iteration>
-       <div id="empGridBtn">
-    	</div>
                         
-      <a class="toggle-vis" data-column="6">RTW Date</a>
-      <div class="table-container">
-      <table id="tableId" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+     <!-- <a class="toggle-vis" data-column="6">RTW Date</a>-->
+    
+
+   <div class="claim_leave_details_area bg-white">
+      <div class="table-container section-to-print">
+          
+        <table id="tableId" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
           	<thead>
 			<tr class="slds-line-height_reset">
 				<th class="" scope="col">
-					<div class="slds-truncate" title="Claim #/Leave #">Claim #/Leave #</div>
+					<div class="slds-truncate" title="Claim #/Leave #">Claim /Leave </div>
 				</th>
 				<th class="" scope="col">
 					<div class="slds-truncate" title="Policy Div/Report Group">Policy Div/Report Group</div>
@@ -235,8 +258,23 @@
                 </aura:iteration>
 			</tbody>
 		</table>    
-          
+           
         </div>
- 
+       
+       
+    <!--   <div class="total_item_numbers">
+                <span>Showing 0 items</span>
+            </div> -->
+       
+       
+       </div>
+ <!--<div id="print">Print this </div>
    
+       <div id="printableArea">
+      <h1>Print me</h1>
+</div>
+ <input type="button" onclick="{!c.print}" value="print a div!" />-->
+   
+ 
+
 </aura:component>

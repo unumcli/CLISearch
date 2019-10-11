@@ -1,27 +1,74 @@
 .THIS {
 }
-
+.THIS .field1, .THIS .field2{
+    padding-left:100px;
+}
+.THIS .field2{
+    margin:15px 0px 0px;
+}
 .THIS .ms-filter-input{
-    margin: 0px 5%;
-    width: 50%;
+    margin: 0 10px;
+    width: 70%;
     height: 30px;
     border-radius: 2px;
     border-style: solid;
     border-width: thin;
-    border-color: darkgray;
+    border-color: transparent;
     padding: 2px 5px;
+    background: transparent;
+}
+
+.THIS .filter-input{
+    margin: 0 10px;
+    width: 70%;
+    height: 30px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: thin;
+    border-color: transparent;
+    padding: 2px 5px;
+    background: transparent;
 }
 
 .THIS .ms-input{
     background-color: rgb(255, 255, 255);
-    border:none;
+    border:1px solid #ccc;
     border-radius: .25rem;
     width: 100%;
     transition: border .1s linear,background-color .1s linear;
     display: inline-block;
-    padding: 0 1rem 0 .75rem;
+    padding: 0 2rem 0 .75rem;
     line-height: 1.875rem;
     min-height: calc(1.875rem + (1px * 2));
+}
+.THIS .select-dropdown{
+    background-color: rgb(255, 255, 255);
+    border:1px solid #ccc;
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    display: inline-block;
+    padding: 0 2rem 0 .75rem;
+    line-height: 1.875rem;
+    min-height: calc(1.875rem + (1px * 2));
+}
+
+.THIS .slds-combobox__form-element:after {
+    border-style: solid;
+    border-width: .15em .15em 0 0;
+    content: '';
+    display: inline-block;
+    height: .5em;
+    left: auto;
+    right: 15px;
+    position: absolute;
+    top: .15em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: .5em;
+    border-color: #0a5492;
+    top: 12px;
+    transform: rotate(135deg);
 }
 
 .THIS .ms-refresh-icon{
@@ -45,15 +92,19 @@
 }
 
 .THIS.slds-card.light_bg{
-    background:#F6F8FA;
-    margin: 0px -.75rem 0px -.75rem;
+    background:#fff;
     border-radius: 0px;
     border:none;
+    float:left;
+    width:100%;
+}
+.THIS .searchbtnarea{
+    margin-top: 40px;
 }
 .THIS .slds-has-error .slds-form-element__help{
-    right: 15px;
+    right: 0px;
     position: absolute;
-    top: 5px;
+    bottom: -17px;
 }
 .THIS .form_row2 label.sr-only {
     position: absolute;
@@ -63,6 +114,8 @@
 }
 .THIS.slds-card.light_bg .slds-card__body{
     margin-top:0px;
+    float:left;
+    width:100%;
 }
 .THIS .grey_icon{
     color:#ccc;
@@ -103,102 +156,9 @@
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 .THIS .slds-card__body{
-    padding:30px .75rem;
-}
-.THIS .form_row1{
-    background: #fff;
-    border-radius: 4px;
-    padding: 0px 15px;
-    border: 1px solid #ccc;
-}
-.THIS .form_row1 label{
-    display: inline-block;
-    position: absolute;
-    left:0px;
-    top: 3px;
-}
-.THIS .form_row2 label{
-    position: absolute;
-    height: 100%;
-    z-index: 1;
-    align-items: center;
-    top: 0;
-    padding: 0;
-    display: flex;
-}
-.THIS .form_row2 .search_section label{
-    left:22px;
-}
-.THIS .form_row1 .org label{
-    left:0px;
-}
-.THIS .form_row2 .m-5-0{
-    position:relative;
-    padding:0px 15px;
-}
-.THIS .form_row2 .search_ico{
-    position: absolute;
-    left: 18px;
-    top: 10px;
-    background:transparent;
-}
-.THIS .form_row2 .m-5-0:after{
-    content:'|';
-    position:absolute;
-    font-size:20px;
-    right:0px;
-    color:#ccc;
-    top:0;
-}
-.THIS .p-l-12{
-    padding-left:12px;
-}
-.THIS .p-l-12 select{
-    padding-left:20px;
+    padding:0px .75rem;
 }
 
-.THIS .form_row1 .m-5-0:before{
-    content:'|';
-    position:absolute;
-    font-size:20px;
-    left:0px;
-    color:#ccc;
-    top:0;
-}
-.THIS .form_row2 .m-5-0:before{
-    content:'|';
-    position:absolute;
-    font-size:20px;
-    left:0px;
-    color:#ccc;
-    top:0;
-}
-.THIS .form_row1 .slds-form-element__control{
-    display: inline-block;
-    width: 100%;
-    padding-left: 165px;
-    float: left;
-}
-.THIS .form_row1 .slds-col{
-    position:relative;
-}
-.THIS .form_row1 .slds-col button{
-    position: relative;
-    float: right;
-    margin-top: -32px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-.THIS .form_row1 .slds-col .multi-select button{
-    margin-top:0px;
-}
-
-.THIS .form_row2 .p-l-125 .slds-form-element__control{
-    padding-left:120px;
-}
-.THIS .form_row2 .p-l-125 .slds-select_container{
-    margin-right:35px;
-}
 .THIS .slds-select_container:before, .THIS .slds-select_container:after {
     /* position: absolute; */
     /* content: ''; */
@@ -228,27 +188,12 @@
     top: 12px;
     transform: rotate(135deg);
 }
-.THIS .form_row1 .slds-icon-text-default {
-    fill: rgb(255, 255, 255);
-}
-.THIS .form_row1 .slds-icon-standard-account{
-    background:transparent;
-}
-.THIS .form_row2 .slds-form-element__control{
-    display:inline-block;
-    min-width:100%;
-    padding-left:65px;
-}
-.THIS .form_row2 .search_section .slds-form-element__control{
-    padding-left:20px;
-}
 .THIS .slds-select,.THIS .slds-input{
-    border:none;
-    border-radius:0px;
+    border:1px solid #ccc;
+    border-radius:4px;
 }
 .THIS .slds-has-error .slds-input{
     background-color: #fff8f8;
-    border:none;
     box-shadow:none;
 }
 .THIS .clearsearch{
@@ -269,8 +214,9 @@
 .home_empty_state.THIS {
 	width:100%;
     float:left;
-    margin-top:30px;
+    padding:30px 0px;
     text-align:center;
+    margin-top: 20px;
 }
 .home_empty_state.THIS img{
     margin:auto;
@@ -286,6 +232,11 @@
 }
 .home_empty_state.THIS small{
     font-size:16px;
+}
+
+.THIS .f-left.w100{
+    float:left;
+    width:100%;
 }
 
 /* Spinner css*/
@@ -365,5 +316,188 @@
     transform: translate(19px, 0);
   }
 }
+.THIS .slds-col{
+    position:relative;
+}
 
+
+.THIS .green_btn{
+    background-color:#8cc342;
+    color:#fff;
+    border:none;
+    border-radius:20px;
+    margin-left: -7px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.15);
+}
+.THIS .slds-button_brand.green_btn[disabled="true"], .THIS .slds-button_brand.green_btn[disabled="true"]:hover, .THIS .slds-button_brand.green_btn[disabled="true"]:focus{
+    background-color:#999 !important;
+    color:#fff;
+}
+.THIS .gray_btn{
+    background-color:#efefef;
+    color:#333;
+    border-radius:20px;
+    border:none;
+    transition:all .3s;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.15);
+}
+.THIS .gray_btn:focus, .THIS .gray_btn:hover{
+    background-color:#ddd;
+    color:#333;
+    border-radius:20px;
+    border:none;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.15);
+}
+.THIS .green_btn span.search_ico{
+    margin-right:5px;
+}
+.THIS .circle-container {
+    position: absolute;
+    width: 62px;
+    height: 78px;
+    display: flex;
+    margin-top: 40px;
+    left: 0;
+    padding-left: 20px;
+    align-items: center;
+    border: 1px dashed #ccc;
+    border-right: none;
+    margin-left: 62px;
+}
+.THIS .circle {
+    width: 30px;
+    height: 30px;
+    background: #ccc;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: -35px;
+    text-align: center;
+    padding-top: 4px;
+    font-weight: 700;
+    color: #555;
+}
+.THIS .field1 .slds-form-element:before {
+    border-style: solid;
+    border-width: 0.15em 0.15em 0 0;
+    content: '';
+    display: inline-block;
+    height: .45em;
+    left: -7px !important;
+    position: relative;
+    top: 38px;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: .45em;
+    left: 0;
+    transform: rotate(45deg);
+    border-color: #bbb;
+}
+
+.THIS .field2.searchbtnarea:before{
+    border-style: solid;
+    border-width: 0.15em 0.15em 0 0;
+    content: '';
+    display: inline-block;
+    height: .45em;
+    left: -7px !important;
+    position: relative;
+    top: 16px;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: .45em;
+    left: 0;
+    transform: rotate(45deg);
+    border-color: #bbb;
+}
+.THIS .field2 .slds-form-element:before {
+    border-style: solid;
+    border-width: 0.15em 0.15em 0 0;
+    content: '';
+    display: inline-block;
+    height: .45em;
+    left: -7px !important;
+    position: relative;
+    top: 41px;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: .45em;
+    left: 0;
+    transform: rotate(45deg);
+    border-color: #bbb;
+}
 /* spinner css ends*/
+
+.THIS .multi-select .ms-filter-input {
+    margin: 0 10px;
+    width: 70%;
+    height: 30px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: thin;
+    padding: 2px 5px;
+}
+.THIS .multi-select .multi-select-search-opt button {
+    margin-top: -5px;
+    border-color:transparent;
+}
+
+.THIS .multi-select .slds-button:focus {
+    outline: 0;
+    background: #dcdcdc;
+    box-shadow: none;
+}
+
+.THIS #searchForm .slds-button_brand:hover,.THIS #searchForm .slds-button_brand:focus {
+    background-color: #7fb339;
+    border-color: transparent;
+    color: rgb(255, 255, 255);
+}
+
+
+
+.THIS .multi-select ul.ms-dropdown{
+    width:100%;
+}
+.THIS .multi-select .slds-picklist li .slds-icon--selected {
+    opacity: 1;
+    transition: opacity .05s ease;
+}
+.THIS .multi-select .slds-picklist li .slds-icon--selected svg {
+    opacity: 0;
+    padding:2px;
+    transition: opacity .05s ease;
+}
+.THIS .multi-select .slds-picklist li.slds-is-selected .slds-icon--selected svg {
+    opacity: 1;
+    transition: opacity .05s ease;
+}
+.THIS .multi-select .slds-picklist li.slds-is-selected .slds-icon--selected svg.slds-icon-text-default {
+    fill: rgb(255, 255, 255);
+}
+.THIS .multi-select .slds-picklist li.slds-is-selected {
+    background:#F8FAFB;
+}
+.THIS .multi-select .slds-picklist li{
+    border: 1px solid #f3f3f3;
+    margin: 0px 5px;
+    border-radius: 4px;
+}
+.THIS .multi-select .multi-select-search-opt{
+    background:#E8E8E8;
+    padding: 5px 0px 2px;
+    margin: 0px 5px 5px;
+    border-radius: 4px;
+    border:1px solid #d8d8d8;
+}
+
+.THIS .multi-select ul li .slds-icon-utility-check{
+    width: 20px;
+    box-sizing: border-box;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.THIS .multi-select ul li.slds-is-selected .slds-icon-utility-check{
+    background:#0a5492;
+    border-color:#0a5492;
+}

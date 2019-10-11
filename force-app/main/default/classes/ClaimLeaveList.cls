@@ -1,15 +1,25 @@
 public with sharing class ClaimLeaveList
-{   
-    @AuraEnabled public final string ASR ='https://public.tableau.com/views/WorldIndicators/GDPpercapita?:embed=y&:display_count=yes&:origin=viz_share_link';
+{      
     @AuraEnabled public EmployeeDetail EmployeeDetail {get; set;}
     @AuraEnabled public List<ClaimLeaveData> ClaimLeaveData {get; set;}
 
+    public ClaimLeaveList(){
+        EmployeeDetail = new EmployeeDetail();
+        ClaimLeaveData = new List<ClaimLeaveData>();
+    }
+    
     public with sharing class ClaimLeaveData
     {
         @AuraEnabled public ClaimData ClaimData {get; set;}
         @AuraEnabled public LeaveData LeaveData {get; set;}
         @AuraEnabled public Boolean IsClaim {get; set;}
+         public ClaimLeaveData()
+         {
+        
+    	}
     }
+    
+   
 
     public with sharing class ClaimData
     {
@@ -36,6 +46,8 @@ public with sharing class ClaimLeaveList
         @AuraEnabled public String RTWDate {get; set;}
         @AuraEnabled public String RTWStatus {get; set;}
     }
+    
+    
     
     @AuraEnabled(cacheable=true)
     public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String employeeId, String claimNo) {

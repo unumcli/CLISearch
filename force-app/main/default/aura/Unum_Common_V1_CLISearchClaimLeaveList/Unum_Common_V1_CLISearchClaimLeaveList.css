@@ -1,6 +1,11 @@
 .THIS .selected{
     color:orange;
 }
+.THIS .enableprint{
+    visibility:hidden;
+    position:absolute;
+    z-index:-1;
+}
 .THIS .slds-truncate{
     font-size:100%;
 }
@@ -19,7 +24,7 @@
 }
 .THIS .user-details {
     background: #ccc;
-    margin: 0px 0px 15px;
+    margin: 0px 0px 0px;
     padding: 15px;
     border-radius: 5px;
 }
@@ -47,6 +52,9 @@
 .THIS .download_opt .slds-button_icon-border{
     opacity:0;
 }
+.THIS .download_opt, .THIS .print_opt{
+    display:inline-block;
+}
 .THIS .download_opt .slds-dropdown-trigger_click{
     position:absolute;
     left:0;
@@ -54,4 +62,19 @@
 .THIS .download_opt .slds-dropdown_left,.THIS .download_opt .slds-dropdown--left{
     left:auto;
     right:0;
+}
+.claim_leave_details_area.THIS {
+    position:relative;
+    min-height:500px;
+    border: 1px solid #3273af;
+    border-radius: 4px;
+    overflow: hidden
+}
+.claim_leave_details_area.THIS .total_item_numbers {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
+.THIS .bg-white{
+    background:#fff;
 }

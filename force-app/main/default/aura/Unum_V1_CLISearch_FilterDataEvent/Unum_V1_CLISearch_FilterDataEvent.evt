@@ -1,0 +1,11 @@
+<aura:event type="COMPONENT" description="Event template" >
+    
+    <aura:attribute name="selectedOrg" type="String"/>
+    <aura:attribute name="searchByValue" type="String"/>
+    <aura:attribute name="searchBox" type="String"/>
+    <aura:attribute name="ssnDisplay" type="String"/>
+    <aura:attribute name="showEmployeeListComponent" type="Boolean"/>
+    <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+    <aura:attribute name="empCount" type="Integer"/>
+ 
+</aura:event>

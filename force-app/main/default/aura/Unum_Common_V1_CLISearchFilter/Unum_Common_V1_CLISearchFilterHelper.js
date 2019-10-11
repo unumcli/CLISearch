@@ -224,6 +224,7 @@
         	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
         	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
         	var EmployeeDetail;
+            var EmployeeDetail2;
             var empCount;
         	//SearchByLastName API Call
         	var actionSearchByLastName = component.get("c.SearchByLastName");
@@ -240,30 +241,27 @@
                     console.log("From v.EmployeeDetail: " + component.get("v.EmployeeDetail").length);
                     empCount = component.get("v.EmployeeDetail").length;
                     EmployeeDetail = (component.get("v.EmployeeDetail"));
-                    
-                    //for(int i=0;i<=EmployeeDetail.length;i++){
-                        
-                    //}
-                    var i;
-                    var hexaCode="['background-color: #f04a4d', '#f6894c', '#c14e9d','#56c8f3', '#509f4c', '#843092', '#6b6d2e']";
-                    debugger
+                    var hexaCodeCount = 0;  
                     EmployeeDetail.forEach(e => {
-                        
+                       	if(hexaCodeCount==7){
+                        	hexaCodeCount = 0 ;
+                    	}                    
+                        var hexaCode=["background-color: #f04a4d", "background-color: #f6894c", "background-color: #c14e9d","background-color: #56c8f3", "background-color: #509f4c", "background-color: #843092", "background-color: #6b6d2e"];
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
-                       /* hexaCode.forEach(h => {
-                        e.AvatarColor = hexaCode[h];
-                    })
-                        //e.AvatarColor = i; */
                         e.Abbr = Last + "" + First;
+                        e.AvatarColor = hexaCode[hexaCodeCount++];                    
                         console.log(e.Abbr); 
+                        console.log(e.AvatarColor);
+                     
                        })
+                    //   }
                     
                     //Passing the CLISearchAPI Response
-                    var appEvent = $A.get("e.c:Unum_CLISearch_FilterDataEvent");
+                    var cmpEvent  = component.getEvent("Unum_V1_CLISearch_FilterDataEvent");
                     var OrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
-                    appEvent.fire();
+                    cmpEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    cmpEvent.fire();
                 	// You would typically fire a event here to trigger 
                 	// client-side notification that the server-side 
                 	// action is complete
@@ -335,12 +333,20 @@
                     //for(int i=0;i<=EmployeeDetail.length;i++){
                         
                     //}
-                    EmployeeDetail.forEach(e => { 
+                   /* var i;
+                    var hexaCode="['background-color: #f04a4d', 'background-color:#f6894c', 'background-color:#c14e9d','background-color:#56c8f3', 'background-color:#509f4c', 'background-color:#843092', 'background-color:#6b6d2e']";
+                    debugger
+                    EmployeeDetail.forEach(e => {
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
+                        hexaCode.forEach(h => {
+                        e.AvatarColor = hexaCode[h];
+                    })
+                       // e.AvatarColor = i; 
                         e.Abbr = Last + "" + First;
                         console.log(e.Abbr); 
-                       })
+                       }) */
+                       
                     
                     //Passing the CLISearchAPI Response
                     var appEvent = $A.get("e.c:Unum_CLISearch_FilterDataEvent");
@@ -495,7 +501,8 @@
         component.set('v.isButtonActive',true);
         component.find("searchByValue").set("v.value","LastName");
         component.set("v.toggleCLISearchEmployeeList",false);
-        var HideCLISearchEmployeeListEvent = $A.get("e.c:Unum_CLISearch_HideCLISearchEmployeeList");
+       // var HideCLISearchEmployeeListEvent = $A.get("e.c:Unum_CLISearch_HideCLISearchEmployeeList");
+        var HideCLISearchEmployeeListEvent  = component.getEvent("Unum_CLISearch_HideCLISearchEmployeeList");
         var toggleCLISearchEmployeeListEvent = component.get("v.toggleCLISearchEmployeeList");
         document.getElementById("searchForm").reset();
         HideCLISearchEmployeeListEvent.setParams({ "hideEmployeeListComponent" : toggleCLISearchEmployeeListEvent });

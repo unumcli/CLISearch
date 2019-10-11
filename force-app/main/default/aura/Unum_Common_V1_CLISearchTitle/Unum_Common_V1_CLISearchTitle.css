@@ -1,0 +1,12 @@
+.THIS .breadcrumb_container {    float: left;    width: 100%;    padding: 15px 15px;}
+.THIS .page_title{
+    font-weight:400 !important;
+}
+.THIS a.pagestorylink{
+    color: rgb(19, 95, 144);
+    text-decoration:none;
+}
+.THIS a.pagestorylink:hover{
+    color: rgb(19, 95, 144);
+    text-decoration:underline;
+}

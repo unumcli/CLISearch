@@ -9,11 +9,22 @@
     <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" default="false"/>
     
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+    
+    <!-- attributes for the Title and Page Path -->
+    <aura:attribute name="setSearch" type="Boolean" />
+    <aura:attribute name="setNameResults" type="Boolean" /> 
+    <aura:attribute name="setRecordResults" type="Boolean" /> 
+    <!-- attributes for the Title and Page Path ends here-->
         
     <aura:handler name="FormDataCompEvent" event="c:FormDataCompEvent" action="{!c.handleComponentEvent}"/>
     
 <!--  	<c:CLISearchFilter /> -->
-    <c:CLISearchEmployeeList aura:id="child"/>
+  <!--  <c:Unum_Common_V1_CLISearchFilter /> -->
+    <c:Unum_Common_V1_CLISearchTitle />
+    <c:Unum_Common_V2_CLISearchFilter /> 
+    <c:Unum_Common_V2_CLISearchEmployeeList />
+    
+  <!--  <c:CLISearchEmployeeList aura:id="child"/> -->
 <!--   <c:CLISearchClaimLeaveList /> -->
 	<c:CLISearchClaimDetailsPopup /> 
 	<c:CLISearchLeaveDetailsPopup /> 

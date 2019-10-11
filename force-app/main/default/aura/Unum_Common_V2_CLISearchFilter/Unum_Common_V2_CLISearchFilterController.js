@@ -5,7 +5,7 @@
         helper.doInit(component, event, helper); 
     },
     
-        //this function automatic call by aura:waiting event  
+    //this function automatic call by aura:waiting event  
 	showSpinner: function(component, event, helper) 
     {
 		helper.showSpinner(component, event, helper);
@@ -32,11 +32,26 @@
             //Marking initializationCompleted property true
             component.set("v.initializationCompleted", true);
             //Set picklist name
-            	helper.setPickListName(component, component.get("v.selectedOptions"));
-        }
+            	helper.setPickListName(component, component.get("v.selectedOptions")); 
+          }
         
+     /*   if(!component.get("v.initializationCompletedList")){
+            //Attaching document listener to detect clicks
+            component.getElement().addEventListener("click", function(event){
+                //handle click component
+                helper.handleSelectedClick(component, event, 'component');
+            });
+            //Document listner to detect click outside multi select component
+            document.addEventListener("click", function(event){
+                helper.handleSelectedClick(component, event, 'document');
+            });
+            //Marking initializationCompleted property true
+            component.set("v.initializationCompletedList", true);
+            //Set picklist name
+            helper.setSinglePickListName(component, component.get("v.selectedOptionsList")); 
+        } */
     },
-    
+
     OnNextArrow: function(component, event, helper) 
     {
         debugger
@@ -61,18 +76,36 @@
         helper.filterDropDownValues(component, inputText);
     },   
     
+    onSelectedInputChange : function(component, event, helper) {
+
+        var inputText = event.target.value;
+        helper.filterDropDownValues(component, inputText);
+    },
+    
     onRefreshClick : function(component, event, helper) {
         
         helper.onRefreshClick(component, event, helper);
         helper.rebuildPicklist(component);
         helper.setPickListName(component, component.get("v.selectedOptions"));
     },
-    
+	
+ /*   onSelectedRefreshClick : function(component, event, helper) {
+        
+        helper.onSelectedRefreshClick(component, event, helper);
+        helper.rebuildPicklist(component);
+        helper.setSinglePickListName(component, component.get("v.selectedOptionsList"));
+    },*/
     onClearClick : function(component, event, helper) {
         
         helper.onClearClick(component, event, helper);
         helper.resetAllFilters(component);
     },
+
+  /*  onSelectedClearClick : function(component, event, helper) {
+        
+        helper.onSelectedClearClick(component, event, helper);
+        helper.resetAllFilters(component);
+    },*/
     
     OnGo: function(component, event, helper) 
     {
@@ -80,13 +113,13 @@
         helper.OnGo(component, event, helper);
     },
     
-        ValidationCheck: function (component,event,helper) 
+    ValidationCheck: function (component,event,helper) 
     {
         debugger
 		helper.ValidationCheck(component,event,helper);
     },
     
-        clearSearchInput: function (component, event, helper)
+    clearSearchInput: function (component, event, helper)
     {
         debugger
         helper.clearSearchInput(component, event, helper);

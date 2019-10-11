@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="Event template" >
+
+    <aura:attribute name="claimDetailsEmployeeDetail" type="ClaimDetails.Header"/>
+    <aura:attribute name="claimDetailsClaimStatus" type="ClaimDetails.ClaimStatus"/>
+    <aura:attribute name="claimDetailsPayments" type="ClaimDetails.Payments[]"/>
+    
+</aura:event>
