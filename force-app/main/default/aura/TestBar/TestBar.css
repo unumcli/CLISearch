@@ -95,6 +95,12 @@
 .THIS #main_nav li.myfolder:before{
     background-image: url('/unumclisearch/s/sfsites/c/resource/userico');
 }
+.THIS #main_nav li.help{
+    float:right;
+}
+.THIS #main_nav li.help:before{
+    background-image: url('/unumclisearch/s/sfsites/c/resource/help');
+}
 .THIS #main_nav li:first-child::before {
     left: 20px;
 }

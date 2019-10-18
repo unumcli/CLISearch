@@ -44,7 +44,8 @@ public with sharing class LeaveDetails
 		@AuraEnabled public String LeaveReason {get;set;} 
 		@AuraEnabled public String Historical {get;set;} 
 		@AuraEnabled public String LeaveStatus {get;set;} 
-		@AuraEnabled public String LeaveHistory {get;set;} 
+		@AuraEnabled public String LeaveHistory {get;set;}
+        @AuraEnabled public String middleNameWithDot {get;set;}
 
 	}
 	

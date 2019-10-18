@@ -3,7 +3,6 @@
     scriptsLoaded : function(component, event, helper) {
        console.log('table Script loaded..'); 
        
-      
 	
    /*    html2canvas(document.getElementById('tblCustomers'), {
                 onrendered: function (canvas) {
@@ -20,23 +19,18 @@
         
     },
     
- 
    fetchEmpData : function(component, event, helper) {
         debugger
-         var selectedEmployeeID = event.getParam("selectedEmployeeID"); 
-        var IsClaimOrLeave = event.getParam("IsClaimOrLeave");
-        var ClaimLeaveList = event.getParam("ClaimLeaveList");
-        var toggleCLISearchClaimLeaveListFlag = event.getParam("toggleCLISearchClaimLeaveListFlag");
-       // var claimLeaveListEmployeeDetail = event.getParam("claimLeaveListEmployeeDetail");
-        var claimLeaveListClaimLeaveData = event.getParam("claimLeaveListClaimLeaveData");
-        // set the handler attributes based on event data
-        component.set("v.selectedEmployeeID", selectedEmployeeID);
-        component.set("v.IsClaimOrLeave", IsClaimOrLeave);
-        component.set("v.ClaimLeaveList", ClaimLeaveList);
-        component.set("v.claimLeaveListEmployeeDetail", event.getParam("claimLeaveListEmployeeDetail"));
-        component.set("v.claimLeaveListClaimLeaveData", claimLeaveListClaimLeaveData);
-        component.set("v.toggleCLISearchClaimLeaveListFlag", toggleCLISearchClaimLeaveListFlag);
-        
+        var params = JSON.parse(JSON.stringify(event.getParam('arguments')));      
+        component.set("v.selectedEmployeeID", params.selectedEmployeeID);
+        component.set("v.IsClaimOrLeave", params.IsClaimOrLeave);
+        component.set("v.toggleCLISearchClaimLeaveListFlag", params.toggleCLISearchClaimLeaveListFlag);
+        component.set("v.ClaimLeaveList", params.ClaimLeaveList);
+        component.set("v.claimLeaveListEmployeeDetail",  params.claimLeaveListEmployeeDetail);
+        component.set("v.claimLeaveListClaimLeaveData", params.claimLeaveListClaimLeaveData);
+        component.set("v.passEmployeeDetail", params.passEmployeeDetail);
+		
+       
         setTimeout(function(){ 
                     var claimLeaveTable = $('#tableId').DataTable({
                        // dom: 'Bfrtip',
@@ -75,7 +69,7 @@
                     $('div.dataTables_filter input').addClass('slds-input');
                     $('div.dataTables_filter input').css("marginBottom", "10px");
                 }, 500);
-   
+
     },
     
     onNext : function(component, event, helper) {
@@ -111,9 +105,7 @@
     },
     
     selectedClaimDetails : function(component, event, helper) {
-        debugger
-        
-
+        	debugger
         	var selectedisClaim = event.currentTarget.getAttribute('data-isClaim');
         	var selectedclaimNumber = parseInt(event.currentTarget.getAttribute('data-claimNo'));
         	var selectedEmployeeID = component.get("v.selectedEmployeeID");
@@ -143,9 +135,10 @@
                     
 
                     //Passing the selectedEmployeeDetails Details
-                    var appEvent = $A.get("e.c:Unum_CLISearch_ClaimDetailsEvent");
-                    appEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedclaimNumber" : selectedclaimNumber , "claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
-                    appEvent.fire();
+                    var ClaimDetailsEvent = component.getEvent("Unum_V1_CLISearch_ClaimDetailsEvent");
+                    ClaimDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedclaimNumber" : selectedclaimNumber , "claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
+                  //  ClaimDetailsEvent.setParams({"claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
+                    ClaimDetailsEvent.fire();
                 }
                 else if (state === "INCOMPLETE")
                 {
@@ -189,10 +182,9 @@
                 {
                     console.log("From server: " + response.getReturnValue());
                     //Passing the selectedEmployeeDetails Details
-                    var appEvent = $A.get("e.c:Unum_CLISearch_LeaveDetailsEvent");
-                    // var OrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedleaveNumber" : selectedleaveNumber ,"LeaveDetailsHeader": response.getReturnValue().Header, "LeaveDetailsLeaveSummary": response.getReturnValue().LeaveSummary, "LeaveDetailsLeavePeriod":response.getReturnValue().LeavePeriod,"LeaveDetailsIntermittentAbsence":response.getReturnValue().IntermittentAbsence,"LeaveDetailsProtection":response.getReturnValue().Protection,"LeaveDetailsAvailableTime":response.getReturnValue().AvailableTime});
-                    appEvent.fire();
+                    var LeaveDetailsEvent = component.getEvent("Unum_V1_CLISearch_LeaveDetailsEvent");
+                    LeaveDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedleaveNumber" : selectedleaveNumber ,"LeaveDetailsHeader": response.getReturnValue().Header, "LeaveDetailsLeaveSummary": response.getReturnValue().LeaveSummary, "LeaveDetailsLeavePeriod":response.getReturnValue().LeavePeriod,"LeaveDetailsIntermittentAbsence":response.getReturnValue().IntermittentAbsence,"LeaveDetailsProtection":response.getReturnValue().Protection,"LeaveDetailsAvailableTime":response.getReturnValue().AvailableTime});
+                    LeaveDetailsEvent.fire();
                 }
                 else if (state === "INCOMPLETE")
                 {
@@ -272,55 +264,11 @@
         }
         component.set("v.pageList", pageList);
     },
-     print : function(component, event, helper) 
+    
+    print : function(component, event, helper) 
     {
-        debugger
-    //    var printContents = document.getElementById("printableArea").innerHTML;
-  //   var originalContents = document.body.innerHTML;
-
-//     document.body.innerHTML = printContents;
-
-     window.print();
-
- //   document.body.innerHTML = originalContents;
-      /*   jQuery("document").ready(function(){
-			jQuery("#print").printThis();          
-          
-      });
-      */
-       // $('#print').printThis();
-        
-  /*     $(function() {
-$("#printable").find('.print').on('click', function() {
-$.print("#printable");
-});
-});
-      
-       //Get the HTML of div
-          var divElements = document.getElementById("tableId").innerHTML;
-        //Get the HTML of whole page
-        var oldPage = document.body.innerHTML;
-        //Reset the page's HTML with div's HTML only
-        document.body.innerHTML = 
-          "<html><head><title></title></head><body>" + 
-          divElements + "</body>";
-        //Print Page
-        window.print();
-        //Restore orignal HTML
-        document.body.innerHTML = oldPage;
-        */
-        
-   /*    var divToPrint=document.getElementById("tableId");
-  		var newWin= window.open("");
-   		newWin.document.write(divToPrint.outerHTML);
-   		newWin.print();
-   		newWin.close();
-       var table = document.getElementById('tableId');
-        var win = window.open("","","width=900,height=700");
-        win.document.write(table.outerHTML);
-        win.document.close();
-        win.focus();
-        win.print();
-        win.close();*/
+        var compEvent = component.getEvent("printEvent");
+        compEvent.setParams({"type" : "PDF"});
+        compEvent.fire();
     }
 })

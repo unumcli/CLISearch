@@ -197,4 +197,16 @@ public with sharing class ClaimLeaveList
        }
        return claimLeaveList;
     }
+     @AuraEnabled
+    public static List<Sobject> saveHTML(List<Sobject> sObjectList){
+        List<Sobject> sobjectItems = new List<Sobject>();
+        try{
+           Database.SaveResult[] dr = Database.insert(sObjectList); 
+           sobjectItems = sObjectList;
+        }catch(Exception e){
+            System.debug('Exception Message :'+ e.getMessage());
+        }
+        return sobjectItems;
+        
+    }
 }

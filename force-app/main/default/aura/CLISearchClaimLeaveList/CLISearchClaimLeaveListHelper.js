@@ -1,7 +1,7 @@
 ({
     scriptsLoaded : function(component, event, helper) 
     {
-        console.log("datatable scripts loaded");
+        alert("datatable scripts loaded");
     },	
     fetchEmpData : function(component, event, helper) {
         debugger

@@ -1,31 +1,49 @@
-<aura:component controller="CLISearch" implements="forceCommunity:availableForAllPageTypes" access="global">
-  	<aura:attribute name="selectedOrgEvent" type="String"/>
-    <aura:attribute name="searchByValueEvent" type="String"/>
-    <aura:attribute name="searchBoxEvent" type="String"/>
-    <aura:attribute name="ssnDisplayEvent" type="String"/>
-    <aura:attribute name="showHideMatchingResults" type="boolean"/>
-    <aura:attribute name="enableActiveClass" type="boolean" default="true"/>
-    <aura:attribute name="empCountEvent" type="Integer"/>
-    <aura:attribute name="CLISearchClaimLeaveListFlag" type="boolean" default="false"/>
-    
-    <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
+<aura:component controller="GetAuthorization" implements="forceCommunity:availableForAllPageTypes" access="global">
+  	
+	<!-- attributes for the Authorization Info -->
+    <aura:attribute name="emailId" type="String" default="architdutt@gmail.com"/>
+    <aura:attribute name="isUserInternal" type="Boolean" default="false"/>
+    <aura:attribute name="validLogin" type="Boolean" default="false"/> 
+    <aura:attribute name="GetAuthorization" type="GetAuthorization"/>
+    <aura:attribute name="OrganizationCollection" type="GetAuthorization.OrganizationCollection"/>
+    <!-- attributes for the Authorization Info ends here--> 
     
     <!-- attributes for the Title and Page Path -->
-    <aura:attribute name="setSearch" type="Boolean" />
-    <aura:attribute name="setNameResults" type="Boolean" /> 
-    <aura:attribute name="setRecordResults" type="Boolean" /> 
+    <aura:attribute name="setSearch" type="String" />
+    <aura:attribute name="setNameResults" type="String" /> 
+    <aura:attribute name="setRecordResults" type="String" /> 
+    <aura:attribute name="setResults" type="String" default="A"/>
     <!-- attributes for the Title and Page Path ends here-->
-        
-    <aura:handler name="FormDataCompEvent" event="c:FormDataCompEvent" action="{!c.handleComponentEvent}"/>
     
-<!--  	<c:CLISearchFilter /> -->
-  <!--  <c:Unum_Common_V1_CLISearchFilter /> -->
-    <c:Unum_Common_V1_CLISearchTitle />
+    <!--   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>	-->     
+    <!--  <aura:handler name="FormDataCompEvent" event="c:FormDataCompEvent" action="{!c.handleComponentEvent}"/> -->
+    
+    
+    <aura:handler name="Unum_V1_CLISearch_FilterDataEvent" event="c:Unum_V1_CLISearch_FilterDataEvent" action="{!c.handleUnum_V1_CLISearch_FilterDataEventComponentEvent}"/>
+    <aura:handler name="Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" event="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" action="{!c.handleUnum_V1_CLISearch_HideCLISearchEmployeeListEvent}"/>
+    <aura:handler name="Unum_V1_CLISearch_ClaimDetailsEvent" event="c:Unum_V1_CLISearch_ClaimDetailsEvent" action="{!c.handleUnum_V1_CLISearch_ClaimDetailsEvent}"/>
+    <aura:handler name="Unum_V1_CLISearch_LeaveDetailsEvent" event="c:Unum_V1_CLISearch_LeaveDetailsEvent" action="{!c.handleUnum_V1_CLISearch_LeaveDetailsEvent}"/>
+	
+    <c:Unum_Common_V1_CLISearchTitle getResults="{!v.setResults}" aura:id="CLISearchTitle"/>
     <c:Unum_Common_V2_CLISearchFilter /> 
-    <c:Unum_Common_V2_CLISearchEmployeeList />
-    
+    <!-- <c:Unum_Common_V1_CLISearchFilter /> -->
+    <!-- <c:Unum_Common_V1_CLISearchEmployeeList aura:id="child"/> -->
+           <!--     <aura:renderIf isTrue="{!v.validLogin}"> 	-->
+    				 
+   				     <c:Unum_Common_V2_CLISearchEmployeeList aura:id="CLISearchEmployeeList" /> 
+
+              <!--        <aura:set attribute="else">     -->              
+                    
+                <!--           <div> -->
+        					
+               <!--               <p>Invalid Login!!</p>	-->
+            				
+        		  <!-- 		</div>	-->
+                  <!-- 	</aura:set>	-->
+                <!--    </aura:renderIf>    -->
+    <!--  	<c:CLISearchFilter /> -->
   <!--  <c:CLISearchEmployeeList aura:id="child"/> -->
 <!--   <c:CLISearchClaimLeaveList /> -->
-	<c:CLISearchClaimDetailsPopup /> 
-	<c:CLISearchLeaveDetailsPopup /> 
+	<c:Unum_Common_V1_CLISearchClaimDetails aura:id="CLISearchClaimPopup" /> 
+	<c:Unum_Common_V1_CLISearchLeaveDetails aura:id="CLISearchLeavePopup" /> 
 </aura:component>

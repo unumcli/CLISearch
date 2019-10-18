@@ -14,6 +14,7 @@ public with sharing class EmployeeDetail {
     @AuraEnabled public String LeaveReason {get;set;}
     @AuraEnabled public String Abbr {get;set;}
     @AuraEnabled public String AvatarColor {get;set;}
+    @AuraEnabled public String middleNameWithDot {get;set;}
     
     public with sharing class UserInfo
     {
@@ -59,9 +60,14 @@ public with sharing class EmployeeDetail {
     }
     
     public with sharing class AutoSearch
-    {
-        @AuraEnabled public String searchText {get; set;}        
+    {     
+		@AuraEnabled public List<ResultSet1> ResultSet1 {get; set;}				       
     }
+    public with sharing class ResultSet1 
+    {
+		@AuraEnabled public string LASTNAME {get; set;}
+	} 
+   
     //	@AuraEnabled public List<EmployeeDetail> listEmployeeDetail {get;set;}
     
     //Use @AuraEnabled to enable client- and server-side access to the method
@@ -163,24 +169,26 @@ public with sharing class EmployeeDetail {
     
     // AutoSearch 
     @AuraEnabled(cacheable=true)
-    public static List<AutoSearch> GetAutoSearch (String searchBy, String searchText, String userId, String orgId) {
+    public static AutoSearch GetAutoSearch (String searchBy, String searchText, String userId, String orgId) {
         system.debug('inside AutoSearch' + searchBy + ' ' + searchText + ' ' + userId + ' ' +  orgId);
         
-        String mockRespone = '[{"searchText": "aaa1"},{"searchText": "aaa2"}]';
-        String body = '{"searchBy":"' + searchBy + '","searchText":"' + searchText + '","userId":"' + userId + '","orgId":"' + orgId + '"}';   
-        List<AutoSearch> autoSearch;
-        
+       String mockRespone = '{"resultSet1":[{"LASTNAME":"BBB"}]}';
+      //  String body = '{"searchBy":"' + searchBy + '","searchText":"' + searchText + '","userId":"' + userId + '","orgId":"' + orgId + '"}';   
+        AutoSearch autoSearch;
+        autoSearch = (AutoSearch)JSON.deserialize(mockRespone,AutoSearch.class);
+        return autoSearch;
+        /*
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        
-        request.setEndpoint(APIEndPoints.AutoSearch);
-        request.setMethod('POST');
+       // httpReq.setEndpoint( 'https://apibibforceapi.test.tyrecheck.com/api/tcUser?Query=UserCode = \''+userCode+ '\' ');               
+        String endpoint = 'http://employees-cli-prc-api.us-e1.cloudhub.io/api/cli/employees/v1?searchBy='+searchBy+'&searchText='+searchText+'&userId='+userId+'&orgId='+orgId+'';
+      // request.setEndpoint('http://employees-cli-prc-api.us-e1.cloudhub.io/api/cli/employees/v1?searchBy='+searchBy+'&searchText='+searchText+'&userId='+userId+'&orgId='+orgId+'');
+        request.setEndpoint(endpoint);
+        request.setMethod('GET');
         request.setHeader('Content-Type','application/json');
         
         // Set the body as a JSON object
-        request.setBody(body);
-        System.debug('body= ' + body);
-        System.debug('request= ' + request);
+       // request.setBody(body);
         HttpResponse response = http.send(request);             
         
         if (response.getStatusCode() != 200) {
@@ -188,7 +196,7 @@ public with sharing class EmployeeDetail {
                          response.getStatusCode() + ' ' + response.getStatus());
             try
             {
-                autoSearch = (List<AutoSearch>)JSON.deserialize(mockRespone,List<AutoSearch>.class);
+                autoSearch = (AutoSearch)JSON.deserialize(mockRespone,AutoSearch.class);
                 System.debug(autoSearch);                
             }
             catch(Exception ex)
@@ -198,8 +206,8 @@ public with sharing class EmployeeDetail {
         } 
         else {
             try{
-                System.debug('response.getBody()' + response.getBody());
-                autoSearch = (List<AutoSearch>)JSON.deserialize(response.getBody(),List<AutoSearch>.class);
+                System.debug('response.getBody() : ' + response.getBody());
+                autoSearch = (AutoSearch)JSON.deserialize(response.getBody(),AutoSearch.class);
                 System.debug(autoSearch);
             }
             catch(Exception ex)
@@ -207,8 +215,7 @@ public with sharing class EmployeeDetail {
                 System.debug(ex.getMessage());
             }
         }
-        return autoSearch; 
-        
+        return autoSearch; */
     }
     
     

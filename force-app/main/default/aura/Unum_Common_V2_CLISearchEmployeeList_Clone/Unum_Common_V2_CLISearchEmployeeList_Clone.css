@@ -1,0 +1,185 @@
+.THIS .width100{
+    width:100%;
+}
+.f-left.THIS{
+    float:left;
+}
+.w100.THIS{
+    width:100%;
+}
+.THIS .emplist_heading{
+    font-weight:bold;
+}
+.THIS .EmpName{
+    font-size:14px;
+}
+.THIS .EmpSubList{
+    color:#666777;
+}
+.THIS .p15{
+    padding:15px;
+}
+.THIS .p015{
+    padding:0px 15px;
+}
+.THIS .bg_grey{
+    background:#F6F8FA;
+}
+.THIS .employee_box{
+    position:relative;
+    padding:0px 15px;
+    cursor:pointer;
+    border:none;
+    direction: ltr;
+    border-radius:4px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border:1px solid #F6F8FA;
+    border-right:none;
+    box-sizing:border-box;
+}
+.THIS .emplist_scroll{
+    max-height:500px;
+    overflow-y: auto;
+    direction: rtl;
+    width: calc(100% + 1px);
+}
+.THIS .employee_box.active:after {
+    content: '';
+    background: #ffffff;
+    position: absolute;
+    right: -1px;
+    height: 100%;
+    width: 2px;
+    bottom: 0;
+    z-index: 10;
+}
+.THIS .employee_box a:hover{
+    text-decoration:none;
+}
+.THIS .employee_box:hover, .THIS .employee_box.active{
+    background: #fff;
+    border:1px solid #3273af;
+    box-sizing:border-box;
+    border-right:none;
+}
+
+
+.THIS .employee_box:hover .slds-avatar__initials, .THIS .employee_box.active .slds-avatar__initials{
+    
+    color:#fff !important;
+}
+.THIS .slds-avatar__initials[title]{
+    color:#fff;
+}
+.THIS .employee_box:hover a ,  .THIS .employee_box.active a{
+    color:#525252;
+}
+.THIS .employee_box:hover .EmpSubList, .THIS .employee_box.active .EmpSubList{
+    color:#525252;
+}
+.THIS .border-bottom{
+    border:none;
+    border-bottom:1px solid #ccc;
+    border-radius:0px;
+}
+.THIS .border-bottom:last-child{
+    border-bottom:none;
+}
+.THIS .empListContainer{
+    height: auto;
+    width: 100%;
+    border-radius: 5px;
+    padding: 0px 0px;
+    overflow: visible;
+}
+.THIS .emp_record_area{
+    margin-top:15px;
+}
+
+/* table side css */
+.THIS .selected{
+    color:orange;
+}
+.THIS .slds-truncate{
+    font-size:100%;
+}
+.THIS .slds-table thead th{
+    background-color:#ccc;
+}
+.THIS .slds-table_col-bordered th+th{
+    border-left: 1px solid #aaa;
+}
+.THIS .slds-table_col-bordered tr:nth-child(even){
+    background-color:#f9f9f9;
+}
+.THIS .table-container{
+    max-width:100%;
+    overflow-x:auto;
+}
+.THIS .user-details {
+    background: #a1d3ea;
+    margin: 0 15px 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+}
+.THIS .user-details p {
+    margin: 8px 0px;
+}
+.THIS .icon16{
+    font-size:16px;
+}
+.THIS .m-r-5{
+    margin-right:5px;
+}
+.THIS .d-flex{
+    display:flex;
+}
+.THIS .p5_0{
+    padding:5px 0px;
+}
+.THIS .align-items-center{
+    align-items:center;
+}
+.THIS .table_empty_state {
+	width:100%;
+    float:left;
+    text-align:center;
+    padding: 200px 0px;
+    background:#fff;
+    border-radius:4px;
+    position:relative;
+}
+.THIS .table_empty_state img{
+    margin:auto;
+    max-width:100%;
+}
+.THIS .table_empty_state .total_item_numbers {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+}
+.THIS .table_empty_state p{
+    display:block;
+    text-align:center;
+    font-size:20px;
+    padding:10px 0px;
+    color:#666777;
+}
+.bg-grey.THIS {
+    background-color:#F6F8FA;
+}
+.rounder-border.THIS {
+    border-radius:4px;
+}
+.p-0-15.THIS{
+   padding:0px 15px;
+}
+.THIS .bg-white {
+    background-color:#fff;
+}
+.THIS .table_empty_state small{
+    font-size:16px;
+}

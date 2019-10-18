@@ -108,6 +108,59 @@
     hideSpinner : function(component,event,helper)
     {
 		helper.hideSpinner(component,event,helper);   
+    },
+    keyPressController : function(component,event,helper)
+    {
+		debugger
+        var searchText = event.target.value;
+        var searchBy = "lastName";
+        var userId = 0;
+        var orgId = 27232;
+        if(searchText.length > 2){
+        component.set("v.showAutoComplete",true);
+            
+        //AutoSearch API Call
+        	var actionAutoSearch = component.get("c.GetAutoSearch");
+            actionAutoSearch.setStorable();
+       
+        	actionAutoSearch.setParams({ searchBy : searchBy, searchText : searchText,userId : userId,orgId : orgId });
+        	$A.enqueueAction(actionAutoSearch); 
+   	    	actionAutoSearch.setCallback(this, function(response) 
+            {
+            	var state = response.getState();
+            	if (state === "SUCCESS") 
+                {
+                	console.log("From server: " + response.getReturnValue());
+                    component.set("v.ResultSet1",response.getReturnValue());
+                    
+            	}
+            	else if (state === "INCOMPLETE") 
+                {
+                	// do something
+            	}
+            	else if (state === "ERROR") 
+                {
+                	var errors = response.getError();
+                	if (errors) 
+                    {
+                    	if (errors[0] && errors[0].message) 
+                        {
+                        	console.log("Error message: ");
+                    	}
+                	} 
+                	else 
+                	{
+                    	console.log("Unknown error");
+                	}
+            	}
+        	});
+    	}
+        
+    },
+    
+    scriptsLoaded: function(component,event,helper){
+        
+        alert("loaded");
     }
     
 

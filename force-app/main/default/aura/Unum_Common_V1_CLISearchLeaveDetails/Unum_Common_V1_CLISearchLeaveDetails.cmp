@@ -7,10 +7,18 @@
     <aura:attribute name="LeaveDetailsProtection" type="LeaveDetails.Protection[]"/>
     <aura:attribute name="LeaveDetailsAvailableTime" type="LeaveDetails.AvailableTime[]"/> 
     <ltng:require styles="{!$Resource.ThemifyFontCss}" />
-    
     <aura:attribute name="toogleLeavesModal" type="Boolean" />
     
-    <aura:handler event="c:Unum_CLISearch_LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/> 
+    <aura:method name="LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"> 
+        <aura:attribute name="LeaveDetailsHeader" type="LeaveDetails.Header"/>
+        <aura:attribute name="LeaveDetailsLeaveSummary" type="LeaveDetails.LeaveSummary"/>
+        <aura:attribute name="LeaveDetailsLeavePeriod" type="LeaveDetails.LeavePeriod[]"/>
+        <aura:attribute name="LeaveDetailsIntermittentAbsence" type="LeaveDetails.IntermittentAbsence[]"/>  
+        <aura:attribute name="LeaveDetailsProtection" type="LeaveDetails.Protection[]"/>
+        <aura:attribute name="LeaveDetailsAvailableTime" type="LeaveDetails.AvailableTime[]"/>
+    </aura:method>
+    
+ <!--  <aura:handler event="c:Unum_V1_CLISearch_LeaveDetailsEvent" action="{!c.fetchLeaveDetails}"/> -->
     
     <aura:renderIf isTrue="{!v.toogleLeavesModal}">
         
@@ -30,7 +38,10 @@
                                     <span class="slds-avatar slds-avatar_circle">
                                         <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">NA</abbr> 
                                     </span>
-                                    
+                                    <div class="header-column">
+                                        {!v.LeaveDetailsHeader.FirstName}&nbsp;{!v.LeaveDetailsHeader.MiddleName} {!v.LeaveDetailsHeader.LastName}
+                                        <br/>
+                                    </div>
                                     
                                 </div>
                                 <div class="slds-col slds-size_10-of-12 slds-border_left slds-p-left_x-small">

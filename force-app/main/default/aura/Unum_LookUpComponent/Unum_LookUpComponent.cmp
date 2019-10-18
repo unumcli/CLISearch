@@ -1,0 +1,64 @@
+<aura:component >
+    <aura:attribute name="selectedItem" type="object"/>
+    <aura:attribute name="itemList" type="object[]" />
+    <aura:attribute name="allRecords" type="object[]" />
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="inputPlaceHolder" type="String" default="Enter minimum 2 character to search..." />
+    <aura:attribute name="searchText" type="String" />
+    <aura:attribute name="show" type="boolean" default="false"/>
+    <aura:attribute name="error" type="boolean" default="false"/>
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:attribute name="visibleProperty" type="String" default="LASTNAME" />
+    <aura:attribute name="showLabel" type="String" />
+    <!-- Define Event Handlers --> 
+    
+    
+    <!-- Define and Register Events  -->
+    <aura:registerEvent name="onSearch" type="c:Unum_LookUpEvent"/>
+    <aura:registerEvent name="onSelect" type="c:Unum_LookUpEvent"/>
+    <aura:registerEvent name="onRemove" type="c:Unum_LookUpEvent"/>
+    
+    <aura:method name="setItemList"
+                 description="">
+        <aura:attribute name="itemsList" type="object[]"  />
+    </aura:method>
+    
+    
+    <div class="{!if(v.error,' slds-has-error ',' ')+' slds-form-element '}">
+        <label class="slds-form-element__label" for="combobox-id-5">{!v.label}</label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container slds-has-selection">
+                <div class="{!if(v.show,' slds-is-open ',' ')+' slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click'}" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                        <input type="text" aura:id="inputElement" class="{!if(v.selectedItem,'slds-combobox__input-value','')+ ' unm-padclass slds-input slds-combobox__input'}" id="combobox-id-5" aria-controls="listbox-id-5" onkeyup="{!c.onKeyUp}" autoComplete="off" role="textbox" placeholder="{!v.inputPlaceHolder}"  value="{!v.searchText}" />
+                        <lightning:button class="{!if(v.selectedItem,'','slds-hide')+' slds-button slds-button_icon slds-input__icon slds-input__icon_right'}"  onclick="{!c.onRemove}" title="Remove selected option">
+                            <lightning:icon iconName="utility:close" alternativeText="Close" size="x-small" />
+                            <span class="slds-assistive-text">Remove selected option</span>
+                        </lightning:button> 
+                    </div>
+                    <div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <aura:if isTrue="{!v.itemList.length > 0}">
+                                <aura:iteration items="{!v.itemList}" var="item" indexVar="i">
+                                    <li role="presentation" class="slds-listbox__item" data-index="{!i}" data-selected-item="{!item}" onclick="{!c.onselect}">
+                                        <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!item.LASTNAME}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    {!v.showLabel}
+                                </aura:set>
+                            </aura:if>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.error}">
+                <div class="slds-form-element__help" >{!v.errorMessage}</div> 
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

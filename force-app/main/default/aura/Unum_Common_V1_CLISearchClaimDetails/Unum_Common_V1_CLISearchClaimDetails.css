@@ -7,15 +7,16 @@
 .THIS .overflow-y-scroll{
     overflow-y:scroll;
 }
-.THIS .popup{
-    width: 80%;    
-    max-width: none;    
-    background: #fff;    
-    height: auto;   
-    min-height: 475px;    
-    padding-top: 0px;
-    display:block;
-    margin: 65px auto;
+.THIS .popup {
+    width: 90%;
+    max-width: none;
+    background: #fff;
+    height: auto;
+    min-height: 475px;
+    padding-top: 0;
+    display: block;
+    margin: 65px 5%;
+    float: left;
 }
 .THIS .popup table th{
     background:#ccc;
@@ -43,4 +44,103 @@
 }
 .THIS .popup .slds-modal__header{
     border-bottom:none;
+}
+
+.THIS .p-0-10{
+    padding:0px 10px;
+}
+
+
+
+
+	/*
+    CSS for the main interaction
+    */
+    .popup.THIS .tabset > input[type="radio"] {
+    position: absolute;
+    left: -200vw;
+    }
+
+    .popup.THIS .tabset .tab-panel {
+    display: none;
+    }
+
+    .popup.THIS .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .popup.THIS .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .popup.THIS .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .popup.THIS .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .popup.THIS .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .popup.THIS .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+    display: block;
+    }
+
+    /*
+    Styling
+    */
+
+    .popup.THIS .tabset > label {
+    position: relative;
+    display: inline-block;
+    padding: 15px 15px 25px;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    cursor: pointer;
+    font-weight: 600;
+    }
+
+    .popup.THIS .tabset > label:hover,
+    .popup.THIS .tabset > input:focus + label {
+    color: #06c;
+    }
+	.popup.THIS .user_name_area .slds-avatar{
+    width:4rem;
+    height:4rem;
+    margin-top:-2rem;
+    }
+.popup.THIS .popup_container {
+    float: left;
+    margin-top: 35px;
+}
+    .popup.THIS .tabset > input:checked + label {
+    border: none;
+    border-bottom: 3px solid #3273af;
+    margin-bottom: -1px;
+    }
+
+    .popup.THIS .tab-panel {
+    padding: 30px 0;
+    border-top: 1px solid #ccc;
+    }
+
+    .popup.THIS .left_panel{
+        border:1px solid #ccc;
+    }
+    .popup.THIS .right_panel{
+        border:1px solid #ccc;
+    	padding:0px 15px 0px;
+    }
+
+.popup.THIS .right_panel .tabset{
+        border:1px solid #ccc;
+    	padding:15px;
+    }
+
+    .popup.THIS .user_name_area {
+        text-align: center;
+        padding-bottom: 30px;
+    }
+	.popup.THIS .user_name_area .header-column  {
+        font-size:24px;
+    	font-weight:bold;
+    }
+    .popup.THIS .common_details .header-column {
+        line-height: 150%;
+        padding: 5px 15px;
+    }
+
+.slds-fade-in-open.THIS{
+    overflow-y: overlay;
+}
+.popup.THIS .slds-modal__header{
+   padding-top:0px;
 }

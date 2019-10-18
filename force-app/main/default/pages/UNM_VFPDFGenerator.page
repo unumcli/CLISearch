@@ -1,0 +1,20 @@
+<apex:page controller="UNM_PDFController" cache="true" renderAs="PDF" >
+    <head> 
+        <style> 
+            body { font-family: 'Arial Unicode MS'; }
+            .companyName { font: bold 30px; color: red; }  
+            
+        </style>
+        
+    </head>
+    <body>
+        <center>
+            <apex:repeat value="{!data.ClaimLeaveData}" var="tes" id="theRepeat">
+                <apex:outputText value="{!tes.ClaimData.ClaimNo}" id="theValue"/><br/>
+            </apex:repeat>
+            
+        </center>
+        
+    </body>
+    
+</apex:page>

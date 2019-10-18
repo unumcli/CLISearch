@@ -19,7 +19,7 @@
 </div>
     <div class="slds-builder-header__item slds-has-flexi-truncate">
         <h1 class="slds-builder-header__item-label">
-            <span class="slds-truncate pagename" title="Page Type">Claims &amp; Leave Insights</span>
+            <span class="slds-truncate pagename" title="Page Type">Claim &amp; Leave InSight</span>
         </h1>
     </div>    
 <div class="slds-builder-header__item slds-builder-header__utilities">
@@ -59,8 +59,8 @@
         <div class="mainContentArea">
             {!v.body}
         </div>
-      <!--  <div class="footer"> -->
-      <!--        {!v.footer} -->
-       <!--   </div>  -->
+        <div class="footer"> 
+            {!v.footer} 
+        </div>  
     </div>
 </aura:component>

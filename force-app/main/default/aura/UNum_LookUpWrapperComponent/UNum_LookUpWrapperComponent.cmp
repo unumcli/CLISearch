@@ -1,0 +1,10 @@
+<aura:component controller="EmployeeDetail"  implements="flexipage:availableForAllPageTypes" access="global">
+	
+    
+    
+     <c:Unum_LookUpComponent label="Last Name"
+                             aura:id="lookupcmp"
+                             onSearch="{!c.getResult}"
+                             onRemove="{!c.onRemove}"
+                             onSelect="{!c.onSelect}"/>
+</aura:component>

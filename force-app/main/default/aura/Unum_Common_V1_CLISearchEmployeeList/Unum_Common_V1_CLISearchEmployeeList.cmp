@@ -20,7 +20,18 @@
     <!-- Events -->
   <!--  <aura:handler event="c:Unum_V1_CLISearch_FilterDataEvent" action="{!c.fetchCLISearchFormEvent}"/>
     <aura:handler event="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" action="{!c.showHideCLISearchEmployeeListEvent}"/>  -->
-   
+    
+	<!-- myMethod to get attributes from parent(CLISearch) -->
+    <aura:method name="myMethod" action="{!c.executeMyMethod}"> 
+        <aura:attribute name="selectedOrgGroup" type="String"/>
+        <aura:attribute name="searchByValue" type="String"/>
+        <aura:attribute name="searchBoxEvent" type="String"/>
+        <aura:attribute name="ssnDisplayEvent" type="String"/>
+        <aura:attribute name="showEmployeeListComponent" type="Boolean"/>
+        <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>    
+        <aura:attribute name="empCount" type="Integer"/>
+    </aura:method>
+
     <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" />
 
     <aura:renderIf isTrue="{!v.showHideMatchingResults}">

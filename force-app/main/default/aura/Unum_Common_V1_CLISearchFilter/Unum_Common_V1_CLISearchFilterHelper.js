@@ -349,10 +349,10 @@
                        
                     
                     //Passing the CLISearchAPI Response
-                    var appEvent = $A.get("e.c:Unum_CLISearch_FilterDataEvent");
+                    var cmpEvent  = component.getEvent("Unum_V1_CLISearch_FilterDataEvent");
                     var OrganisationField = component.find("Organisationgroup");
-                    appEvent.setParams({ "Organisationgroup" : OrganisationGroupName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
-                    appEvent.fire();
+                    cmpEvent.setParams({ "selectedOrg" : OrganisationName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    cmpEvent.fire();
                 	// You would typically fire a event here to trigger 
                 	// client-side notification that the server-side 
                 	// action is complete

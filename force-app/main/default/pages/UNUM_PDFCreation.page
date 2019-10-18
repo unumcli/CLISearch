@@ -1,0 +1,143 @@
+<apex:page controller="UNUM_PdfController" action="{!MyActionMethod}" renderAs="pdf"  showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+	<html>
+        <head>
+            <style> 
+               body{
+                    margin:0;
+                    padding:0;
+                    border:none;
+                    padding:0px;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+                .table-container th{
+                    text-align: left;
+                    vertical-align: top;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    padding:0px 5px;
+                }
+                .user-details {
+                    background-color: #a1d3ea;
+                    float: left;
+                	font-size:14px;
+                    padding: 5px 15px;
+                    width: 100%;
+                    margin-bottom: 30px;
+                    box-sizing: border-box;
+                    display: flex;
+                    align-items: center;
+                }
+                .user-details .avatar_det{
+                    margin-left: 15px;
+                    padding:0;
+                }
+                .user-details div:first-child {
+                    padding: 5px 0px;
+                    width: 28%;
+                }
+                .user-details .slds-avatar__initials{
+                    color: #fff;
+                    text-decoration: none;
+                }
+                .user-details div:first-child span:first-child{
+                    width: 40px;
+                    height:40px;
+                    border-radius: 50%;
+                    background-color: #3273af;
+                    display:inline-block;
+                    float: left;
+                    text-align: center;
+                    line-height: 40px;
+                }
+                .user-details div:first-child span.username{
+                    width: 100%;
+                    text-align: left;
+                    height:auto;
+                    font-weight: bold;
+                    border-radius:0px;
+                    background-color: transparent;
+                    display:inline-block;
+                }
+                .user-details span.section_name{
+                    float: left;
+                    width: 100%;
+                    font-size: 12px;
+                    margin-top: -9px;
+                    display: none;
+                }
+                .user-details div:first-child div{
+                    width: 70%;
+                    display: inline-block;
+                }
+                .user-details div {
+                    float: left;
+                    width: 24%;
+                    vertical-align: top;
+                    padding: 0px 10px;
+                }
+                .user-details div:last-child{
+                    display: none;
+                }
+                .user-details div .download_opt, .user-details div .print_opt, .c_label, .l_label{
+                    display: none
+                }
+                .table-container {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    font-size: 14px;
+                }
+                .table-container table {
+                    width: 100%;
+                    margin: 40px 0px;
+                }
+                .table-container table tr td, .table-container table tr th {
+                    border-bottom: 1px solid #ccc;
+                    padding: 10px 0px;
+                }
+                .tab-panel{
+                    float: left;
+                    position: relative;
+                    width: 100%;
+                }
+                .tab-panel.claim_area:before{
+                    position: absolute;
+                    content: 'Claim Records';
+                    top: 0;
+                    left: 0;
+                    color: #3273af;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                .tab-panel.leave_area:before{
+                    position: absolute;
+                    content: 'Leave Records';
+                    top: 0;
+                    left: 0;
+                    color: #5fa143;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                .tab-panel .claim_tags a {
+                    width: auto;
+                    display: inline-block;
+                    padding: 5px 15px;
+                    color: #fff;
+                    text-decoration: none;
+                    background-color: #3273af;
+                }
+                .tab-panel .leave_tags a {
+                    width: auto;
+                    display: inline-block;
+                    padding: 5px 15px;
+                    color: #fff;
+                    text-decoration: none;
+                    background-color: #5fa143;
+                }
+            </style>
+        </head>
+        <body>
+            <apex:outputText value="{!model.content}" escape="false"/>
+        </body>
+    </html>
+</apex:page>

@@ -4,89 +4,73 @@
     <aura:attribute name="claimDetailsClaimStatus" type="ClaimDetails.ClaimStatus"/>
     <aura:attribute name="toogleClaimsModal" type="boolean" />
     
-    <aura:handler event="c:Unum_CLISearch_ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"/>
+    <aura:method name="ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"> 
+        <aura:attribute name="claimDetailsEmployeeDetail" type="ClaimDetails.Header"/>
+    	<aura:attribute name="claimDetailsClaimStatus" type="ClaimDetails.ClaimStatus"/>
+    	<aura:attribute name="claimDetailsPayments" type="ClaimDetails.Payments[]"/>
+    </aura:method>
+    
+   <!-- <aura:handler event="c:Unum_V1_CLISearch_ClaimDetailsEvent" action="{!c.fetchEmpClaimData}"/>  -->
     
     <aura:renderIf isTrue="{!v.toogleClaimsModal}">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open overflow-y-scroll">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open overflow-y-scroll popup">
                 <div class="slds-modal__container popup">
                     <header class="slds-modal__header">
-                        <!--<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                            <lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseClaimPopup}"/> 
-                            <span class="slds-assistive-text">Close</span>
-                        </button>-->
-                        
                         <button class="slds-button slds-button_icon slds-modal__close" title="Close">
                             <!--<lightning:icon iconName="action:close" size="small" alternativeText="closes popup" onclick="{!c.CloseLeavePopup}"/>-->
                             <span class="themify-icon-close" onclick="{!c.CloseClaimPopup}"></span>
                             <!--<span class="slds-assistive-text">Close</span>-->
                         </button>
-                        
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate slds-text-align_left">Claim Record</h2><br/>
-                        
-                        <div class="slds-grid slds-grid_vertical">
-                            <div class="slds-col">
-                      <!--        <aura:iteration items="{!v.claimDetailsEmployeeDetail}" var="EmployeeDetail"> -->
-                                <div class="slds-box bg-light-blue slds-border_none">
-                                    <span class="c-container">
-                                        <lightning:layout >
-                                            <!--<lightning:layoutItem padding="around-small">
-                                                <div class="header-column" >
-                                                    <span class="slds-avatar slds-avatar_circle">
-                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AB</abbr>
-                                                    </span>
-                                                </div>
-                                            </lightning:layoutItem>-->
-                                            <lightning:layoutItem padding="around-small"  class="slds-col slds-size_2-of-12">
-
-                                                    <span class="slds-avatar slds-avatar_circle">
-                                                        <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AS</abbr> 
-                                                    <!--	{!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName} -->
-                                                    </span>
-
-                                               
-                                                    <div class="header-column">
-                                                        {!v.claimDetailsEmployeeDetail.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}&nbsp;{!v.claimDetailsEmployeeDetail.MiddleName}
-                                                        <br/>
-                                                    </div>
-                                                
-                                            </lightning:layoutItem>
-                                            <lightning:layoutItem padding="around-small" class="slds-col slds-size_10-of-12 slds-border_left slds-p-left_x-small">
-                                              
-                                                	<div class="slds-grid slds-wrap">
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>SSN:</b> {!v.claimDetailsEmployeeDetail.SSN}
-                                                        </div>
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>EmployeeID:</b> {!v.claimDetailsEmployeeDetail.EmployeeID}
-                                                        </div>
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>ClaimNumber #:</b> {!v.claimDetailsEmployeeDetail.ClaimNumber}
-                                                        </div>
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>Coverage:</b> {!v.claimDetailsEmployeeDetail.Coverage}
-                                                        </div>
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>PolicyNumber:</b>{!v.claimDetailsEmployeeDetail.PolicyNo}
-                                                        </div>
-                                                        <div class="header-column slds-col slds-size_1-of-4 slds-text-align_left">
-                                                                <b>Division:</b>{!v.claimDetailsEmployeeDetail.PolicyDiv}
-                                                        </div>
-                                                	</div>
-                                            </lightning:layoutItem>
-                                        </lightning:layout>                   
-                                    </span>
-                                </div>
-                         <!--     </aura:iteration> -->
+                    </header>
+                    
+                    <div class="slds-grid slds-wrap p-0-10 popup_container">
+                      <div class="slds-col slds-size_3-of-12 left_panel">
+                        <div class="user_name_area">
+                            <span class="slds-avatar slds-avatar_circle">
+                                <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Person name" style="background-color: LightGrey">AS</abbr> 
+                                {!v.claimDetailsEmployeeDetail.FirstName},  {!v.claimDetailsEmployeeDetail.LastName}, &nbsp;{!v.claimDetailsEmployeeDetail.MiddleName}
+                            </span>
+                            <div class="header-column">
+                            {!v.claimDetailsEmployeeDetail.FirstName}  &nbsp;{!v.claimDetailsEmployeeDetail.middleName} &nbsp;{!v.claimDetailsEmployeeDetail.LastName}
+                            <br/>
                             </div>
                         </div>
-                    </header> 
-                    
-                    <lightning:tabset>
-                        <lightning:tab label="Claim Status">
-                      <!--    <aura:iteration items="{!v.claimDetailsClaimStatus}" var="ClaimStatus"> -->
-                            <div class="slds-modal__content slds-p-around_medium common_tab" id="modal-content-id-1">
+                        <div class="common_details">
+                            <div class="slds-grid slds-wrap">
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>SSN:</b> {!v.claimDetailsEmployeeDetail.SSN}
+                                </div>
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>EmployeeID:</b> {!v.claimDetailsEmployeeDetail.EmployeeID}
+                                </div>
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>ClaimNumber #:</b> {!v.claimDetailsEmployeeDetail.ClaimNumber}
+                                </div>
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>Coverage:</b> {!v.claimDetailsEmployeeDetail.Coverage}
+                                </div>
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>PolicyNumber:</b>{!v.claimDetailsEmployeeDetail.PolicyNo}
+                                </div>
+                                <div class="header-column slds-col slds-size_4-of-4 slds-text-align_left">
+                                        <b>Division:</b>{!v.claimDetailsEmployeeDetail.PolicyDiv}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_9-of-12 right_panel">
+                        <div class="tabset">
+                          <!-- Tab 1 -->
+                          <input type="radio" name="tabset1" id="claim_status" aria-controls="claim_status" checked="checked" />
+                          <label for="claim_status">Claim Status</label>
+                          <!-- Tab 2 -->
+                          <input type="radio" name="tabset1" id="payments" aria-controls="payments" />
+                          <label for="payments">Payments</label>
+                          <div class="tab-panels">
+                            <section id="claim_status" class="tab-panel">
+                             <div class="slds-modal__content slds-p-around_medium common_tab">
                                 <div class="slds-grid slds-wrap">
-                                    <div class="slds-col slds-size_1-of-3 ">
+                                    <div class="slds-col slds-size_1-of-2 ">
                                         <div class="header-column">
                                             <h2><b>Claim History:-</b> {!v.claimDetailsEmployeeDetail.ClaimHistory}</h2> 
                                         </div>
@@ -114,14 +98,15 @@
                                         <div class="header-column">
                                             <h2><b>Approved Thru Date:</b> {!v.claimDetailsClaimStatus.ApprovedThruDate}</h2> 
                                         </div>
-                                    </div>
-                                    <div class="slds-col slds-size_1-of-3 ">
-                                        <div class="header-column">
+                                         <div class="header-column">
                                             <h2><b>Claim Closed Date:</b> {!v.claimDetailsClaimStatus.ClaimClosedDate}</h2> 
                                         </div>
                                         <div class="header-column">
                                             <h2><b>Last Payment Amount:</b> {!v.claimDetailsClaimStatus.LastPaymentAmount}</h2> 
                                         </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 ">
+                                       
                                         <div class="header-column">
                                             <h2><b>Choice:</b> {!v.claimDetailsClaimStatus.Choice}</h2> 
                                         </div>
@@ -140,8 +125,6 @@
                                         <div class="header-column">
                                             <h2><b>Disability Date:</b> {!v.claimDetailsClaimStatus.DisabilityDate}</h2> 
                                         </div>
-                                    </div>
-                                    <div class="slds-col slds-size_1-of-3 ">
                                         <div class="header-column">
                                             <h2><b>Retrun to Work Date(PT):</b> {!v.claimDetailsClaimStatus.ReturntoWorkDate}</h2> 
                                         </div>
@@ -160,176 +143,54 @@
                                     </div>
                                 </div>
                             </div>
-                      <!--    </aura:iteration> -->
-                        </lightning:tab>
-                        <lightning:tab label="Payments">
-                            <div class="slds-p-around_medium">
-                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
-                                    <thead>
-                                        <tr class="slds-line-height_reset">
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Date</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Type</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Amount</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Period</div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                        <aura:iteration items="{!v.claimDetailsPayments}" var="ClaimDetailsData">   
-                                            <tr class="slds-hint-parent">
-                                                <td data-label="Policy Div/Report Group">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentDate}</div>
-                                                </td>
-                                                <td data-label="Coverage">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentType}</div>
-                                                </td>
-                                                <td data-label="Received Date">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentAmount}</div>
-                                                </td>
-                                                <td data-label="Disability/Leave Start Date">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentPeriod}</div>
-                                                </td>
+                          </section>
+                            <section id="payments" class="tab-panel">
+                                <div class="slds-p-around_medium">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="">Payment Date</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="">Payment Type</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="">Payment Amount</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="">Payment Period</div>
+                                                </th>
                                             </tr>
-                                        </aura:iteration>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </lightning:tab>
-                    </lightning:tabset>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <!--<div class="slds-tabs_default">
-                        <ul class="slds-tabs_default__nav" role="tablist">
-                            <li class="slds-tabs_default__item slds-is-active" title="" role="presentation">
-                                <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1 Leave Summary" id="tab-default-1__Leave Summary">Claim Status</a> 
-                            </li>
-                            <li class="slds-tabs_default__item slds-is-active" title="" role="presentation">
-                                <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Payments</a>
-                            </li>  
-                        </ul>
-                    </div>
-                           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                            <div class="header-column">
-                                <h2><b>Claim History:-</b> {!v.claimDetailsClaimStatus.LastName} , {!v.claimDetailsEmployeeDetail.FirstName}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Benifit Start Date:</b> {!v.claimDetailsClaimStatus.BenefitStartDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Diagnostic Code(ICD):</b> {!v.claimDetailsClaimStatus.DiagnosisCode}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Claim Number:</b> {!v.claimDetailsClaimStatus.ClaimNumber}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Eligibility Group:</b> {!v.claimDetailsClaimStatus.EligibilityGroup}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Diagnostic Description:</b> {!v.claimDetailsClaimStatus.DiagnosisDescription}</h2> 
-                            </div>
-                            <div>
-                                <h2><b>Status Reason:</b> {!v.claimDetailsClaimStatus.StatusReason}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Received Date:</b> {!v.claimDetailsClaimStatus.ReceivedDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Approved Thru Date:</b> {!v.claimDetailsClaimStatus.ApprovedThruDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Claim Closed Date:</b> {!v.claimDetailsClaimStatus.ClaimClosedDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Last Payment Amount:</b> {!v.claimDetailsClaimStatus.LastPaymentAmount}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Choice:</b> {!v.claimDetailsClaimStatus.Choice}</h2> 
-                            </div>
-                            <div>
-                                <h2><b>Claim Closed Reason:</b> {!v.claimDetailsClaimStatus.ClaimClosedDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Last Payment Date:</b> {!v.claimDetailsClaimStatus.LastPaymentDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Maximum Duration Date:</b> {!v.claimDetailsClaimStatus.MaximumDurationDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Work Related:</b> {!v.claimDetailsClaimStatus.WorkRelated}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Disability Date:</b> {!v.claimDetailsClaimStatus.DisabilityDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Retrun to Work Date(PT):</b> {!v.claimDetailsClaimStatus.ReturntoWorkDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Disability Benefits Specalist:</b> {!v.claimDetailsClaimStatus.DisabilityBenefitsSpecialist}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Divison: </b> {!v.claimDetailsClaimStatus.Division}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Retrun to Work Date(FT):</b> {!v.claimDetailsClaimStatus.ReturntoWorkDate}</h2> 
-                            </div>
-                            <div class="header-column">
-                                <h2><b>Related Leaves:</b> {!v.claimDetailsClaimStatus.RelatedLeaves}</h2> 
-                            </div>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <aura:iteration items="{!v.claimDetailsPayments}" var="ClaimDetailsData">   
+                                                <tr class="slds-hint-parent">
+                                                    <td data-label="Policy Div/Report Group">
+                                                        <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentDate}</div>
+                                                    </td>
+                                                    <td data-label="Coverage">
+                                                        <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentType}</div>
+                                                    </td>
+                                                    <td data-label="Received Date">
+                                                        <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentAmount}</div>
+                                                    </td>
+                                                    <td data-label="Disability/Leave Start Date">
+                                                        <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentPeriod}</div>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                          </div>
                         </div>
-                            
-                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
-                                    <thead>
-                                        <tr class="slds-line-height_reset">
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Date</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Type</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Amount</div>
-                                            </th>
-                                            <th class="" scope="col">
-                                                <div class="slds-truncate" title="">Payment Period</div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                        <aura:iteration items="{!v.claimDetailsPayments}" var="ClaimDetailsData">   
-                                            <tr class="slds-hint-parent">
-                                                <td data-label="Policy Div/Report Group">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentDate}</div>
-                                                </td>
-                                                <td data-label="Coverage">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentType}</div>
-                                                </td>
-                                                <td data-label="Received Date">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentAmount}</div>
-                                                </td>
-                                                <td data-label="Disability/Leave Start Date">
-                                                    <div class="slds-truncate" title="">{!ClaimDetailsData.PaymentPeriod}</div>
-                                                </td>
-                                            </tr>
-                                        </aura:iteration>
-                                    </tbody>
-                                </table>   -->
-                 
+                      </div>
+                    </div>
+      
+      
                 </div>
             </section>
             <div class="slds-backdrop slds-backdrop_open"></div>

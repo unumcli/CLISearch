@@ -1,0 +1,16 @@
+<apex:component controller="UNUM_PdfController" >
+   
+   <head> 
+       <apex:slds />
+
+        <style> 
+            body { font-family: 'Arial Unicode MS'; }
+            .companyName { font: bold 30px; color: red; }  
+        </style>
+       
+    </head>
+    <body>
+        <apex:outputText value="{!pdfData.Content__c}" escape="false"/>
+    </body>
+    
+</apex:component>

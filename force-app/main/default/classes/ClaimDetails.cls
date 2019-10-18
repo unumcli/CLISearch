@@ -55,7 +55,8 @@ public with sharing class ClaimDetails {
 		@AuraEnabled public String CurrentStatus {get;set;} 
 		@AuraEnabled public String PolicyNo {get;set;} 
 		@AuraEnabled public String PolicyDiv {get;set;} 
-		@AuraEnabled public String ClaimHistory {get;set;} 
+		@AuraEnabled public String ClaimHistory {get;set;}
+       
 	}
 	
 }

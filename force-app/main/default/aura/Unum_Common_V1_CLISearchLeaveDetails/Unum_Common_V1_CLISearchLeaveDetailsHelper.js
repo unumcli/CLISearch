@@ -15,20 +15,13 @@
                 $('html,body').animate({ScrollTop:0},500).css({'overflow-y':'hidden'});
                 $('.overflow-y-scroll').css({'overflow-y':'scroll'}); 
             });
-        
-        var LeaveDetailsHeader = event.getParam("LeaveDetailsHeader");
-        var LeaveDetailsLeaveSummary = event.getParam("LeaveDetailsLeaveSummary");
-        var LeaveDetailsLeavePeriod = event.getParam("LeaveDetailsLeavePeriod");
-        var LeaveDetailsIntermittentAbsence = event.getParam("LeaveDetailsIntermittentAbsence");
-        var LeaveDetailsProtection = event.getParam("LeaveDetailsProtection");
-        var LeaveDetailsAvailableTime = event.getParam("LeaveDetailsAvailableTime");
-        
-        component.set("v.LeaveDetailsHeader", LeaveDetailsHeader);
-        component.set("v.LeaveDetailsLeaveSummary", LeaveDetailsLeaveSummary);
-        component.set("v.LeaveDetailsLeavePeriod", LeaveDetailsLeavePeriod);
-        component.set("v.LeaveDetailsIntermittentAbsence", LeaveDetailsIntermittentAbsence);
-        component.set("v.LeaveDetailsProtection", LeaveDetailsProtection);
-        component.set("v.LeaveDetailsAvailableTime", LeaveDetailsAvailableTime);
+        var params = JSON.parse(JSON.stringify(event.getParam('arguments')));
+        component.set("v.LeaveDetailsHeader", params.LeaveDetailsHeader);
+        component.set("v.LeaveDetailsLeaveSummary", params.LeaveDetailsLeaveSummary);
+        component.set("v.LeaveDetailsLeavePeriod", params.LeaveDetailsLeavePeriod);
+        component.set("v.LeaveDetailsIntermittentAbsence", params.LeaveDetailsIntermittentAbsence);
+        component.set("v.LeaveDetailsProtection", params.LeaveDetailsProtection);
+        component.set("v.LeaveDetailsAvailableTime", params.LeaveDetailsAvailableTime);
 		component.set("v.toogleLeavesModal",true);
     }
 })

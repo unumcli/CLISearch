@@ -1,5 +1,4 @@
 <aura:component controller="EmployeeDetail" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
-    
     <aura:attribute name="isInternal" type="Boolean"/>
     <aura:attribute name="toggleCLISearchEmployeeList" type="Boolean" default="true"/>
     <aura:attribute name="OrganisationFlag" type="Boolean" default="false"/>
@@ -7,32 +6,11 @@
     <aura:attribute name="NoSearchResultsFlag" type="Boolean" default="true"/>
     <aura:attribute name="isButtonActive" type="Boolean" default="true" />   
     <aura:attribute name="Spinner" type="boolean" default="false"/>
-    
     <aura:attribute name="EmployeeDetail" type="EmployeeDetail"/>
     <aura:attribute name="empCount" type="Integer"/>
-        
-    <!-- Organisation Attributes -->
-    <aura:attribute name="optionsSelected" type="List" />
-    <aura:attribute name="selectedOrganisation" type="String" default="Select Organization / Group" />
-    <!-- Option list to show in drop down -->
-    <aura:attribute name="maxSelectedShowList" type="String" default="=1" />
-    <aura:attribute name="optionsListDisplay" type="List" />
-    <!-- Show filter input box -->
-    <aura:attribute name="showFilteredInput" type="Boolean" default="true" />
-    <!-- Show filter input box -->
-    <aura:attribute name="showRefreshedButton" type="Boolean" default="true" />
-    <!-- Show filter input box -->
-    <aura:attribute name="showClearedButton" type="Boolean" default="true" />
-    <!-- Selected options label -->
-    <aura:attribute name="selectedValueList" type="String" default=" SELECT " /> 
-     <!-- Selected option list -->
-    <aura:attribute name="selectedOptionsList" type="List" />
-    <!-- Selected options label -->
-    <aura:attribute name="selectedOrganisationGroup" type="String" default=" SELECT "/>
-    <!-- Selected options label -->
-    <aura:attribute name="initializationCompletedList" type="Boolean" default="false" />
- 
-
+    <aura:attribute name="lastNameValue" type="String" default="" /> 
+     <aura:attribute name="selectedItem" type="String"  /> 
+    <aura:attribute name="selectedValueData" type="String" default="LastName" /> 
     <!-- Related Organisation Attributes -->
     <aura:attribute name="options" type="List" />
     <aura:attribute name="relatedOrganisation" type="String" default="Select Related / Sub Organization" />
@@ -50,11 +28,11 @@
     
     <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>  
     <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
-    <aura:handler name="render" value="{!this}" action="{!c.onRender}" /> 
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}" />  
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
     
-    <aura:registerEvent name="Unum_CLISearch_FilterDataEvent" type="c:FormDataEvent"/> 
-    <aura:registerEvent name="Unum_CLISearch_HideCLISearchEmployeeList" type="c:HideCLISearchEmployeeList"/>
+    <aura:registerEvent name="Unum_V1_CLISearch_FilterDataEvent" type="c:Unum_V1_CLISearch_FilterDataEvent"/>
+    <aura:registerEvent name="Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" type="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent"/>
     
     <article class="slds-card light_bg slds-border_none">
         <div class="slds-card__body slds-card__body_inner slds-var-p-around_small">
@@ -72,55 +50,6 @@
                                     <option value="AA New Org">AA New Org</option>
                                     <option value="AB New Org">AB New Org</option>
                                 </lightning:select> 
-                                <div class="slds-form-element">
-                                    <aura:if isTrue="{! !empty(v.selectedOrganisation)}">
-                                        <label class="slds-form-element__label">{!v.selectedOrganisation}</label>
-                                    </aura:if>
-                                    
-                                    <div id="select-picklist-dropdown" class="slds-form-element__control">
-                                        <div class="slds-combobox_container multi-select">
-                                            <div id="select-picklist-dropdown" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-picklist ms-picklist-dropdown"  
-                                                 aria-expanded="false" aria-haspopup="listbox" role="listbox" >
-                                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none" >
-                                                    <input class="slds-combobox__input ms-input" id="select-dropdown" aria-controls="ms-dropdown-items" 
-                                                           role="textbox" type="text" placeholder="" value="{!v.selectedOrganisationGroup}" readonly="true"/>
-                                                </div>
-                                                
-                                                <div id="select-dropdown-items" role="listbox">
-                                                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid ms-dropdown" role="presentation">
-                                                        
-                                                        <div class="multi-select-search-opt"> 
-                                                            <aura:if isTrue="{!v.showFilterInput}">
-                                                                <input class="slds-listbox__item ms-filter-input" id="filter-input" aria-controls="ms-dropdown-items" 
-                                                                       role="textbox" type="text" placeholder="Enter Related Organization Names to filter" value="" oninput="{!c.onInputChange}"/>
-                                                            </aura:if>                                      
-                                                            <aura:if isTrue="{!v.showClearButton}">
-                                                                <lightning:buttonIcon iconName="utility:clear" alternativeText="Clear current filters" onclick="{!c.onClearClick}"/>
-                                                            </aura:if>
-                                                            <aura:if isTrue="{!v.showRefreshButton}">
-                                                                <lightning:buttonIcon iconName="utility:refresh" alternativeText="Clear all selections and rebuild picklist" onclick="{!c.onRefreshClick}"/>
-                                                            </aura:if>
-                                                        </div> 
-                                                        
-                                                        <aura:iteration items="{!v.optionsSelected}" var="itemList">
-                                                            <li role="presentation" class="{!'slds-listbox__item ms-list-item '+ (itemList.selected ? 'slds-is-selected' : '')}"
-                                                                id="list-item" data-id="{!itemList.Id}" data-name="{!itemList.Name}">
-                                                                <div id="listbox-option" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
-                                                                    <span class="slds-media__figure">
-                                                                        <lightning:icon iconName="utility:check" size="x-small" class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small" />
-                                                                    </span>
-                                                                    <span class="slds-media__body">
-                                                                        <span class="slds-truncate" title="{!itemList.Name}">{!itemList.Name}</span>
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                        </aura:iteration>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                          </div>
                             <div class="field2">
                                 <div class="slds-form-element">
@@ -179,7 +108,7 @@
                             	<div class="circle">2</div>
                             </div>
                             <div class="field1">
-                                <lightning:select aura:id="searchByValue" label="Select what to search by" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
+                                <lightning:select value="{!v.selectedValueData}" aura:id="searchByValue" label="Select what to search by" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
                                     <option value="LastName">Last Name</option>
                                     <option value="SSN">SSN</option>
                                     <option value="EEID">EEID</option>
@@ -187,7 +116,18 @@
                                 </lightning:select>  
                             </div>
                             <div class="field2">
-                                <lightning:input aura:id="searchBox" label="Enter Search Terms" name="enter-search" placeholder="Enter your search text" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please enter search text" />                            
+                                <aura:if isTrue="{!v.selectedValueData == 'LastName'}">
+                                    <c:Unum_LookUpComponent label="Last Name"
+                                                            aura:id="lookupcmp"
+                                                            selectedItem="{!v.selectedItem}"
+															onSelect="{!c.onSelectValue}"
+                                                            onSearch="{!c.getResult}"
+                                                            onRemove="{!c.onRemove}"
+                                                            />
+                                    <aura:set attribute="else">
+											<lightning:input aura:id="searchBox" label="Enter Search Terms" name="enter-search" placeholder="Enter your search text" type="string" onchange="{!c.ValidationCheck}" required="true" messageWhenValueMissing="Please enter search text" />                            
+                                    </aura:set>
+                                </aura:if>
                             </div>
                       </div>
                         <div class="slds-col slds-size_1-of-3 ">
@@ -205,7 +145,7 @@
                             <div class="field2 searchbtnarea">
                                 <lightning:button label="Search" class="slds-button slds-button_brand green_btn" variant="brand" onclick="{!c.OnGo}" disabled= "{!v.isButtonActive}" />
                               <!--  <button class="slds-button slds-button_brand green_btn"><span class="themify-icon-search search_ico" aria-label="Search"></span>Search</button> -->
-                                <button class="slds-button slds-button_neutral gray_btn">Clear</button>
+                                <lightning:button class="slds-button slds-button_neutral gray_btn" label="Clear" onclick="{!c.ClearSearch}"/>
                             </div>
                         </div>
                    	</div>

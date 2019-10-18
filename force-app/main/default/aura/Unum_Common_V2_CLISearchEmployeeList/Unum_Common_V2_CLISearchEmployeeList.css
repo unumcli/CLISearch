@@ -23,7 +23,7 @@
     padding:0px 15px;
 }
 .THIS .bg_grey{
-    background:#efefef;
+    background:#F6F8FA;
 }
 .THIS .employee_box{
     position:relative;
@@ -34,14 +34,15 @@
     border-radius:4px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    border:1px solid #efefef;
+    border:1px solid #F6F8FA;
     border-right:none;
     box-sizing:border-box;
 }
 .THIS .emplist_scroll{
-    max-height:560px;
-    unicode-bidi:bidi-override;
-    
+    max-height:500px;
+    overflow-y: auto;
+    direction: rtl;
+    width: calc(100% + 1px);
 }
 .THIS .employee_box.active:after {
     content: '';
@@ -58,9 +59,10 @@
 }
 .THIS .employee_box:hover, .THIS .employee_box.active{
     background: #fff;
-    border:1px solid #3273af;
+    border:1px solid #5fa143;
     box-sizing:border-box;
     border-right:none;
+    
 }
 
 
@@ -93,7 +95,7 @@
     overflow: visible;
 }
 .THIS .emp_record_area{
-    margin-top:15px;
+    margin-top:8px;
 }
 
 /* table side css */
@@ -168,7 +170,7 @@
     color:#666777;
 }
 .bg-grey.THIS {
-    background-color:#efefef;
+    background-color:#F6F8FA;
 }
 .rounder-border.THIS {
     border-radius:4px;
@@ -181,4 +183,20 @@
 }
 .THIS .table_empty_state small{
     font-size:16px;
+}
+.THIS .spinner_container{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;    
+}
+
+.THIS .spinner_container img{
+    margin:auto; 
+    max-width:100px;
 }

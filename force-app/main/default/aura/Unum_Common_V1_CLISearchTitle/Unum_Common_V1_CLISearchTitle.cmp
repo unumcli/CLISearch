@@ -1,7 +1,9 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
 	<aura:attribute name="Title" type="String"/>
     <aura:attribute name="Path" type="String"/>
+    <aura:attribute name="getResults" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.getResults}" action="{!c.setPagePath}"/>
     
     <!-- used to updated the Title And the Path -->
     <aura:method name="setPagePath" action="{!c.setPagePath}" description="Used to set the page path"> 

@@ -1,5 +1,6 @@
 ({
-    doInit:function(component, event, helper) {
+    doInit:function(component, event, helper) 
+    {
         debugger
         var isInternal = true; //or false ;
 		if (isInternal === true) 
@@ -18,50 +19,21 @@
                        {'Id':4,'Name':'Organization-D'},
                        {'Id':5,'Name':'Organization-E'},];
 		component.set("v.options", options);  
-                       
-      const optionsSelected=[{'Id':1,'Name':'Norton HealthCare'},
-                       {'Id':2,'Name':'AA New Org'},
-                       {'Id':3,'Name':'AB New Org'},];
-		component.set("v.optionsSelected", optionsSelected);
  	},
                        
-    showSpinner: function(component, event, helper) { 
+    showSpinner: function(component, event, helper) 
+    { 
         component.set("v.Spinner", true); 
    	},
     
  	//this function automatic call by aura:doneWaiting event 
-    hideSpinner : function(component,event,helper){   
+    hideSpinner : function(component,event,helper)
+    {   
        	component.set("v.Spinner", false);
     },
                        
-    OnNextArrow:function(component, event, helper){
-        debugger
-        component.find("policyNo").get("v.value");
-    }, 
-    
-    onOrgansationChange: function(component, event, helper){
-        debugger
-        var OrganisationName = component.find("selectedOrg").get("v.value");
-        var searchBoxValue = component.find("searchBox").get("v.value");
-        if(OrganisationName==='Select Organisation'){
-        	component.set('v.OrganisationFlag',false);
-        	component.set('v.isButtonActive',true);
-        }
-        else
-        {
-        	component.set('v.OrganisationFlag',true); 
-            if(((component.get('v.OrganisationFlag'))===true && (component.get('v.SearchFlag')===true))) 
-            {
-            	component.set('v.isButtonActive',false);  
-            }
-            else 
-            {
-                component.set('v.isButtonActive',true);
-            }
-        }
-    },
-                       
-    onOrgansationGroupChange: function(component, event, helper){
+    onOrgansationGroupChange: function(component, event, helper)
+	{
         debugger
         var OrganisationGroupName = component.find("selectedOrgGroup").get("v.value");
         var searchBoxValue = component.find("searchBox").get("v.value");
@@ -83,7 +55,8 @@
         }
     },
                        
-    handleClick: function(component, event, where) {       
+    handleClick: function(component, event, where)
+     {       
         //getting target element of mouse click
         var tempElement = event.target;
         var outsideComponent = true;
@@ -121,48 +94,9 @@
             this.closeAllDropDown();
         }
     },
-
-  /*  handleSelectedClick: function(component, event, where) {       
-        //getting target element of mouse click
-        var tempElement1 = event.target;
-        
-        var outsideComponent1 = true;
-        //click indicator
-        //1. Drop-Down is clicked
-        //2. Option item within dropdown is clicked
-        //3. Clicked outside drop-down
-        //loop through all parent element
-        while(tempElement1){
-            if(tempElement1.id === 'list-item'){
-                //2. Handle logic when picklist option is clicked
-                //Handling option click in helper function
-                if(where === 'component'){
-                	this.onSelectedOptionClick(component, event.target);
-                }
-                outsideComponent1 = false;
-                break;
-            } else if(tempElement1.id === 'dropdown-items'){
-                //3. Clicked somewher within dropdown which does not need to be handled
-                //Break the loop here
-                outsideComponent1 = false;
-                break;
-            } else if(tempElement1.id === 'picklist-dropdown'){
-                //1. Handle logic when dropdown is clicked
-                if(where === 'component'){
-                	this.onDropDownClick(tempElement1);
-                }
-                outsideComponent1 = false;
-                break;
-            }
-            //get parent node
-            tempElement1 = tempElement1.parentNode;
-        }
-        if(outsideComponent1){
-            this.closeAllDropDown();
-        }
-    },*/
-
-    onOptionClick: function(component, ddOption) {
+                       
+    onOptionClick: function(component, ddOption) 
+    {
         
             //get clicked option id-name pair
             var clickedValue = {"Id":ddOption.closest("li").getAttribute('data-id'),
@@ -192,50 +126,17 @@
         //Set picklist label
         this.setPickListName(component, selectedOptions);
     },
-    
-  /*  onSelectedOptionClick: function(component, ddOption) {
-        
-        //get clicked option id-name pair
-            var clickedValue = {"Id":ddOption.closest("li").getAttribute('data-list-id'),
-                                "Name":ddOption.closest("li").getAttribute('data-list-name')};
-        //Get all selected options
-        	var selectedOptionsList = component.get("v.selectedOptionsList");
-        //Boolean to indicate if value is already present
-            var alreadySelected = false;
-        
-        selectedOptionsList.forEach((option,index) => {
-                if(option.Id === clickedValue.Id){
-                    //Clicked value already present in the set
-                    selectedOptionsList.splice(index, 1);
-                    //Make already selected variable true	
-                    alreadySelected = true;
-                    //remove check mark for the list item
-                    ddOption.closest("li").classList.remove('ms-slds-is-selected');
-                }
-            });
-        if(!alreadySelected){
-                selectedOptionsList.push(clickedValue);
-                //Add check mark for the list item
-                 ddOption.closest("li").classList.add('ms-slds-is-selected');
-                //css for check mark will come here
-            }
-        this.setSinglePickListName(component, selectedOptionsList);
-    },*/
                        
-	closeAllDropDown: function() {
-        
+	closeAllDropDown: function() 
+    {
         //Close drop down by removing slds class
         Array.from(document.querySelectorAll('#ms-picklist-dropdown')).forEach(function(node){
             node.classList.remove('slds-is-open');
         });
-        
-      /*  Array.from(document.querySelectorAll('#picklist-dropdown')).forEach(function(node){
-            node.classList.remove('ms-slds-is-open');
-        });*/
     },   
 
-    onDropDownClick: function(dropDownDiv) {
-        
+    onDropDownClick: function(dropDownDiv) 
+    {
         //Getting classlist from component
         var classList = Array.from(dropDownDiv.classList);
         if(!classList.includes("slds-is-open")){
@@ -250,8 +151,8 @@
         
     }, 
                               
-	filterDropDownValues: function(component, inputText) {
-        
+	filterDropDownValues: function(component, inputText) 
+    {
         var allSelectElements = component.getElement().querySelectorAll("li");
         Array.from(allSelectElements).forEach(function(node){
             if(!inputText){
@@ -265,8 +166,8 @@
         }); 
     },
                        
-    onRefreshClick : function(component, event, helper) {
-         
+    onRefreshClick : function(component, event, helper) 
+   {
         //clear selected options
         component.set("v.selectedOptions", []);
         component.set("v.selectedOptionsList", []);
@@ -277,17 +178,8 @@
       //  helper.setSinglePickListName(component, component.get("v.selectedOptionsList"));
     },
     
-  /*  onSelectedRefreshClick : function(component, event, helper) {
-         
-        //clear selected options
-        component.set("v.selectedOptionsList", []);
-        //Clear check mark from drop down items
-        helper.rebuildPicklist(component);
-        //Set picklist name
-        helper.setSinglePickListName(component, component.get("v.selectedOptionsList"));
-    },*/
-    
-    onClearClick : function(component, event, helper) {
+    onClearClick : function(component, event, helper) 
+    {
         debugger
         //clear filter input box
         component.getElement().querySelector('#ms-filter-input').value = '';
@@ -295,24 +187,16 @@
         helper.resetAllFilters(component);
     },
     
-  /*  onSelectedClearClick : function(component, event, helper) {
-        debugger
-        //clear filter input box
-        component.getElement().querySelector('#filter-input').value = '';
-        //reset filter
-        helper.resetAllFilters(component);
-    },*/
-        
-    rebuildPicklist: function(component) {
-        
+    rebuildPicklist: function(component) 
+    {
         var allSelectElements = component.getElement().querySelectorAll("li");
         Array.from(allSelectElements).forEach(function(node){
             node.classList.remove('slds-is-selected');
         });
     },
                        
-	setPickListName : function(component, selectedOptions) {
-       	
+	setPickListName : function(component, selectedOptions) 
+    {
         debugger
         const maxSelectionShow = component.get("v.maxSelectedShow");
         //Set drop-down name based on selected value
@@ -330,36 +214,23 @@
          component.set("v.selectedRelatedOrganisation", selections.slice(0, -1));
         }
     },
-             
-  /* setSinglePickListName : function(component, selectedOptionsList) {
-       
-			const maxSelectionShowList = component.get("v.maxSelectedShowList");
-            //Set drop-down name based on selected value
-            if(selectedOptionsList.length < 1){
-                component.set("v.selectedOrganisationGroup", component.get("v.selectedValueList"));
-            } else if(selectedOptionsList.length > maxSelectionShowList){
-                component.set("v.selectedOrganisationGroup", selectedOptionsList.length+' Options Selected');
-            } else{
-                var selections = '';
-                selectedOptionsList.forEach(option => {
-                    selections += option.Name+',';
-                });
-                component.set("v.selectedOrganisationGroup", selections.slice(0, -1));
-            }
-    },*/
-             
-                          
-    resetAllFilters : function(component) {
+                  
+    resetAllFilters : function(component) 
+    {
         this.filterDropDownValues(component, '');
     },
     
-    OnGo:function(component, event, helper){
+    OnGo:function(component, event, helper)
+    {
         debugger
 	    var organisationGroupValidity = component.find("selectedOrgGroup").get("v.validity");
         var relatedorganisationValidity = document.getElementById("ms-input").value;
-        var searchBoxValidity = component.find("searchBox").get("v.validity");
+        var searchBoxValidity;
+        if(component.find("searchBox")){
+            searchBoxValidity = component.find("searchBox").get("v.validity");
+        }
         
-        if(organisationGroupValidity.valid === false || searchBoxValidity.valid === false) 
+        if(organisationGroupValidity.valid === false || ((searchBoxValidity &&searchBoxValidity.valid === false) || component.get("v.lastNameValue").trim().length<2)) 
         {
         	component.set('v.isButtonActive',true);
             var SelectOrganisationGroupField = component.find("selectedOrgGroup");    
@@ -371,11 +242,11 @@
         }
         else
         {   
-            var OrganisationGroupName = component.find("selectedOrgGroup").get("v.value");
+            var SelectedOrganisationGroupName = component.find("selectedOrgGroup").get("v.value");
             var RelatedOrganisationName = document.getElementById("ms-input").value;
             component.get('v.selections'); 
         	var searchBy = component.find("searchByValue").get("v.value");
-        	var searchBoxValue = component.find("searchBox").get("v.value");
+        	var searchBoxValue = searchBy == 'LastName'?component.get("v.lastNameValue"):event.getSource().get("v.value"); //component.find("searchBox").get("v.value");
         	var ssnDisplayFormat = component.find("ssnDisplay").get("v.value");
         	var toggleCLISearchEmployeeListFlag = component.get("v.toggleCLISearchEmployeeList");    
         	var EmployeeDetail;
@@ -404,19 +275,20 @@
                         var hexaCode=["background-color: #f04a4d", "background-color: #f6894c", "background-color: #c14e9d","background-color: #56c8f3", "background-color: #509f4c", "background-color: #843092", "background-color: #6b6d2e"];
                         var First = e.FirstName.charAt(0);
                         var Last = e.LastName.charAt(0);
+                       if(e.MiddleName != " ") {
+                    	var Middle = e.MiddleName + ".";
+						e.middleNameWithDot = Middle; 
+                    }
                         e.Abbr = Last + "" + First;
-                        e.AvatarColor = hexaCode[hexaCodeCount++];                    
-                        console.log(e.Abbr); 
-                        console.log(e.AvatarColor);
-                     
+                        e.AvatarColor = hexaCode[hexaCodeCount++];						
                        })
                     
                     
                     //Passing the CLISearchAPI Response
-                    var appEvent = $A.get("e.c:Unum_CLISearch_FilterDataEvent");
-                    var SelectOrganisationField = component.find("selectedOrg");
-                    appEvent.setParams({ "selectedOrg" : OrganisationGroupName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
-                    appEvent.fire();
+                    var FilterDataEvent  = component.getEvent("Unum_V1_CLISearch_FilterDataEvent");
+                    var OrganisationField = component.find("selectedOrgGroup");
+                    FilterDataEvent.setParams({ "selectedOrgGroup" : SelectedOrganisationGroupName , "searchByValue" : searchBy , "searchBox" : searchBoxValue, "ssnDisplay" : ssnDisplayFormat , "showEmployeeListComponent": toggleCLISearchEmployeeListFlag,"EmployeeDetail": EmployeeDetail ,"empCount": empCount});
+                    FilterDataEvent.fire();
                 	// You would typically fire a event here to trigger 
                 	// client-side notification that the server-side 
                 	// action is complete
@@ -449,7 +321,7 @@
         debugger
     	var SearchByInput = component.find('searchByValue').get('v.value');
        	var SearchByInputSource = event.getSource();
-       	var SearchedValue = event.getSource().get("v.value");// get the right value
+        var SearchedValue = SearchByInput == 'LastName'?component.get("v.lastNameValue"):event.getSource().get("v.value"); // // get the right value
         debugger;
         if(SearchedValue === "") 
         {
@@ -472,8 +344,9 @@
         	var SearchByInput = component.find('searchByValue').get('v.value');
         if(SearchByInput==="LastName") 
         {
-        	var SearchBoxInput = component.find('searchBox').get('v.value');
+        	var SearchBoxInput =component.get("v.lastNameValue"); //component.find('searchBox').get('v.value');// //
 			var patternLastname = new RegExp("^[A-Za-z]+$");
+            /*
         	var res = patternLastname.test(SearchBoxInput);
   		 	if(res == true)
         	{
@@ -489,7 +362,7 @@
         	{
              	SearchByInputSource.setCustomValidity('Lastname must be alphabets'); //do not get any message
              	SearchByInputSource.reportValidity();
-        	}            
+        	} */           
         }
         else if(SearchByInput==="EEID") 
         {
@@ -507,22 +380,6 @@
     			SearchByInputSource.reportValidity();
         	}  
         }
-      /*  else if(SearchByInput==="LeaveNumber") 
-        {
-        	var SearchBoxInput = component.find('searchBox').get('v.value'); 
-		   	var patterncl = new RegExp("^[0-9]*$");
-       	   	var res = patterncl.test(SearchBoxInput);
-        	if(res == false) 
-         	{
-            	SearchByInputSource.setCustomValidity('Leave number must be numeric'); //do not get any message
-             	SearchByInputSource.reportValidity();
-        	}
-        	else
-            {
-            	SearchByInputSource.setCustomValidity(''); //do not get any message
-    			SearchByInputSource.reportValidity();                
-            }
-        } */
         else if(SearchByInput === "ClaimNumber") 
         {          
             var SearchBoxInput = component.find('searchBox').get('v.value'); 
@@ -575,15 +432,16 @@
     
     ClearSearch: function(component, event, helper){
 		debugger
-        var clearSearchValues = component.find("searchBox"); 
-        clearSearchValues.setCustomValidity(''); 
-        clearSearchValues.reportValidity();
+       // var clearSearchValues = component.find("searchBox"); 
+       // clearSearchValues.setCustomValidity(''); 
+       // clearSearchValues.reportValidity();
         component.set("v.NoSearchResultsFlag",true);
         component.set('v.SearchFlag',false);
+       // component.set('v.SearchFlag',false);
         component.set('v.OrganisationFlag',false);
         component.set('v.isButtonActive',true);
         component.find("searchByValue").set("v.value","LastName");
-        var HideCLISearchEmployeeListEvent = $A.get("e.c:Unum_CLISearch_HideCLISearchEmployeeList");
+        var HideCLISearchEmployeeListEvent = component.getEvent("Unum_V1_CLISearch_HideCLISearchEmployeeListEvent");
         component.set("v.toggleCLISearchEmployeeList",false);
         var toggleCLISearchEmployeeListEvent = component.get("v.toggleCLISearchEmployeeList");
         document.getElementById("searchForm").reset();
@@ -643,6 +501,41 @@
             }
         }
 		 
-	}
-             
+	},
+	getResultHelper : function(component, event, helper,param,searchBy) {
+		var action = component.get("c.GetAutoSearch");
+        action.setParams({
+            "userId":"architdutt@gmail.com",
+            "orgId":"1",
+            "searchString":param,
+            "searchBy":searchBy
+        });
+        action.setCallback(this,function(response){
+            if(response.getState() == 'SUCCESS'){
+                var result = response.getReturnValue();
+                console.log(result);
+                if(searchBy == 'lastName'){
+                    var childCmp = component.find("lookupcmp");
+                    childCmp.setItemList(result.ResultSet1); 
+                }else{
+                    
+                }
+                
+            }
+        });
+        $A.enqueueAction(action); 
+	},
+    onSelectValue : function (component,event,helper) {
+        var param = event.getParam("selectedItem");
+        component.set("v.lastNameValue",param.LASTNAME);
+        component.set('v.SearchFlag',true);
+        component.set('v.isButtonActive',false);
+        //helper.ValidationCheck(component,event,helper);
+    },
+    onRemove :  function (component,event,helper) {
+        component.set("v.lastNameValue",'');
+        component.set("v.lastNameValue",'');
+        component.set('v.SearchFlag',false);
+        component.set('v.isButtonActive',true);
+    }
 })

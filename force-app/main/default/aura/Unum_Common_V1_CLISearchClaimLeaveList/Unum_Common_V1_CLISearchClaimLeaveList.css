@@ -10,11 +10,12 @@
     font-size:100%;
 }
 .THIS .slds-table thead th{
-    background-color:#ccc;
+    background-color:#fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 3px 15px;
 }
-.THIS .slds-table_col-bordered th+th{
-    border-left: 1px solid #aaa;
-}
+
 .THIS .slds-table_col-bordered tr:nth-child(even){
     background-color:#f9f9f9;
 }
@@ -37,11 +38,38 @@
 .THIS .m-r-5{
     margin-right:5px;
 }
+.claim_leave_details_area.THIS .slds-table_bordered{
+    border-top:none;
+}
+.claim_leave_details_area.THIS .leave_tags a{
+    background:#3273af;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.claim_leave_details_area.THIS .claim_tags a{
+    background:#5fa143;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.claim_leave_details_area.THIS .slds-table td{
+    padding: 15px 15px;
+}
 .THIS .d-flex{
     display:flex;
 }
 .THIS .p5_0{
     padding:5px 0px;
+}
+.THIS .p10{
+    padding:10px;
 }
 .THIS .align-items-center{
     align-items:center;
@@ -66,15 +94,166 @@
 .claim_leave_details_area.THIS {
     position:relative;
     min-height:500px;
-    border: 1px solid #3273af;
+    border: 1px solid #5fa143;
+    border-top:4px solid #5fa143;
     border-radius: 4px;
-    overflow: hidden
+    overflow: visible;
+    padding:15px;
 }
 .claim_leave_details_area.THIS .total_item_numbers {
     position: absolute;
     bottom: 10px;
     left: 15px;
 }
+.claim_leave_details_area.THIS ul.slds-tabs_default__nav{
+    text-align: right;
+    display: inline-block;
+    float: right;
+    position: absolute;
+    top: -41px;
+    right: 30px;
+    border: none;
+}
+.claim_leave_details_area.THIS ul.slds-tabs_default__nav li{
+    display:inline-block;
+    padding:0px;
+}
+.claim_leave_details_area.THIS ul.slds-tabs_default__nav li a{
+    padding:0px .75rem;
+}
+.claim_leave_details_area.THIS ul.slds-tabs_default__nav li.slds-is-active a{
+    background-color:#3273af;
+    color:#fff;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
+    transition:all .3s;
+}
+.claim_leave_details_area.THIS ul.slds-tabs_default__nav li:last-child{
+    display:none;
+}
+.THIS .avatar_det span{
+    width: 100%;
+    display: block;
+    font-weight:bold;
+}
+.THIS .avatar_det .section_name{
+    font-size:10px;
+    text-transform:uppercase;
+}
+.THIS .download_opt img, .THIS .print_opt img{
+    height:20px;
+}
 .THIS .bg-white{
     background:#fff;
+}
+
+/*Tabset css starts here*/
+.claim_leave_details_area.THIS .tabset > input[type="radio"] {
+    position: absolute;
+    left: -200vw;
+    }
+
+    .claim_leave_details_area.THIS .tabset .tab-panel {
+    display: none;
+    }
+
+    .claim_leave_details_area.THIS .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .claim_leave_details_area.THIS .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .claim_leave_details_area.THIS .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .claim_leave_details_area.THIS .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .claim_leave_details_area.THIS .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .claim_leave_details_area.THIS .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+    display: block;
+    }
+
+
+    .claim_leave_details_area.THIS .tabset > label {
+    position: relative;
+    display: inline-block;
+    padding: 15px 15px 25px;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    cursor: pointer;
+    font-weight: 600;
+    }
+
+    .claim_leave_details_area.THIS .tabset > label:hover,
+    .claim_leave_details_area.THIS .tabset > input:focus + label {
+    color: #06c;
+    }
+
+
+
+    .claim_leave_details_area.THIS .tabset > input:checked + label {
+    
+    }
+.claim_leave_details_area.THIS .tabset label.c_label, .claim_leave_details_area.THIS .tabset label.l_label {
+    position: absolute!important;
+    top: -46px;
+    padding: 0 7px!important;
+    height: 30px;
+    line-height: 30px;
+    border-radius:5px;
+    transition:all .3s;
+    color:#fff !important;
+    }
+.claim_leave_details_area.THIS .tabset label.c_label{
+    right:70px !important;
+    background-color:#5fa143;
+}
+.claim_leave_details_area.THIS .tabset label.l_label{
+    right:40px !important;
+    background-color:#3273af;
+}
+.claim_leave_details_area.THIS .tabset > input:checked + label {
+    height:46px;
+}
+
+    .claim_leave_details_area.THIS .tab-panel {
+    padding: 30px 0;
+    }
+/*Tabset css ends here*/
+
+.THIS [data-tip] {
+	position:relative;
+
+}
+.THIS [data-tip]:before {
+	content: '';
+    display: none;
+    content: '';
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #e7edf0;
+    position: absolute;
+    top: -8px;
+    left: 6px;
+    z-index: 8;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    transform: rotate(180deg);
+    height: 0;
+}
+.THIS [data-tip]:after {
+	display: none;
+    content: attr(data-tip);
+    position: absolute;
+    top: -38px;
+    left: -62px;
+    padding: 15px 8px;
+    background: #e7edf0;
+    color: #525252;
+    z-index: 9;
+    font-size: .75em;
+    height: 18px;
+    box-shadow: 0px -1px 3px rgba(0,0,0,.2);
+    line-height: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+.THIS [data-tip]:hover:before,
+.THIS [data-tip]:hover:after {
+	display:block;
 }

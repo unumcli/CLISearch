@@ -1,7 +1,7 @@
 ({
     fetchCLISearchFormEvent : function(component, event, helper) {
         debugger
-        var selectedOrgValue = event.getParam("selectedOrg"); 
+        var selectedOrgValue = event.getParam("selectedOrgGroup"); 
         var searchByValues = event.getParam("searchByValue");
         var searchBoxValue = event.getParam("searchBox");
         var ssnDisplayValue = event.getParam("ssnDisplay");
@@ -72,7 +72,7 @@
                    
                     //Passing the selectedEmployeeDetails Details
                    // var appEvent = $A.get("e.c:Unum_V1_CLISearch_LoadEmployeeRecordsEvent");
-                    var cmpEvent  = component.getEvent("Unum_V1_CLISearch_LoadEmployeeRecordsEvent");
+                    var cmpEvent  = component.getEvent("Unum_V1_CLISearch_FilterDataEvent");
                     var OrganisationField = component.find("selectedOrg");
                     cmpEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});
                     cmpEvent.fire();
