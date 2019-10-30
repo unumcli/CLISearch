@@ -46,6 +46,7 @@ public with sharing class LeaveDetails
 		@AuraEnabled public String LeaveStatus {get;set;} 
 		@AuraEnabled public String LeaveHistory {get;set;}
         @AuraEnabled public String middleNameWithDot {get;set;}
+        @AuraEnabled public String Abbr {get;set;}
 
 	}
 	
@@ -74,6 +75,10 @@ public with sharing class LeaveDetails
 		@AuraEnabled public String Status {get;set;} 
 		@AuraEnabled public String StatusReason {get;set;} 
 	}
-
+    @AuraEnabled
+    public static List<Sobject> saveHTML(List<Sobject> sObjectList){
+        return ClaimLeaveList.saveHTML(sObjectList);
+        
+    }
     
 }

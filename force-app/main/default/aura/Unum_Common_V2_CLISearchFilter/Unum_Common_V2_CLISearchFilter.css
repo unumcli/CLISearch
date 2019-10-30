@@ -2,6 +2,7 @@
 }
 .THIS .field1, .THIS .field2{
     padding-left:100px;
+    position:relative;
 }
 .THIS .field2{
     margin:15px 0px 0px;
@@ -77,6 +78,16 @@
 }
 .THIS .searchbtnarea{
     margin-top: 40px;
+}
+.THIS .searchbtnarea button{
+    line-height:35px;
+    padding: 0 20px 0 30px;
+    font-family: 'Open Sans',sans-serif !important;
+}
+.THIS .searchbtnarea button.themify-icon-search:before{
+    position:absolute;
+    left:12px;
+    font-family: 'themify-icon' !important;
 }
 .THIS .slds-has-error .slds-form-element__help{
     right: 0px;
@@ -477,4 +488,53 @@
 .THIS .multi-select ul li.slds-is-selected .slds-icon-utility-check{
     background:#0a5492;
     border-color:#0a5492;
+}
+
+.THIS [data-tip] {
+    float: right;
+    position: absolute;
+    right: 0px;
+    top: 5px;
+    z-index: 1;
+}
+.THIS [data-tip] span{
+    color:#f89202;
+}
+.THIS [data-tip]:before {
+	content: '';
+    display: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #e7edf0;
+    position: absolute;
+    top: -8px;
+    right: 2px;
+    z-index: 8;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    transform: rotate(180deg);
+    height: 0;
+}
+.THIS [data-tip]:after {
+	display: none;
+    content: attr(data-tip);
+    position: absolute;
+    top: -38px;
+    right: -24px;
+    padding: 15px 8px;
+    background: #e7edf0;
+    color: #525252;
+    z-index: 9;
+    font-size: .75em;
+    height: 18px;
+    box-shadow: 0 -1px 3px rgba(0,0,0,.2);
+    line-height: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+.THIS [data-tip]:hover:before,
+.THIS [data-tip]:hover:after {
+	display:block;
 }

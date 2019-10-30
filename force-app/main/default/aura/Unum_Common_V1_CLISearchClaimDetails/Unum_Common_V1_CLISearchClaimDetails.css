@@ -1,11 +1,31 @@
 .THIS .common_tab .header-column {
     padding:10px 0px;
+    float: left;
+    width:100%;
 }
 .THIS .common_tab{    
     min-height: 230px;
 }
 .THIS .overflow-y-scroll{
     overflow-y:scroll;
+}
+.THIS .popup .sidebar_heading {
+    font-size: 22px;
+    padding: 15px;
+}
+.THIS .popup .right_panel_heading {
+    position: absolute;
+    top: -39px;
+    left: 30px;
+    padding: 0 15px;
+    background-color: #b6d991;
+    height: 40px;
+    font-size: 20px;
+    border: 1px solid #5fa143;
+    line-height: 40px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: 400;
 }
 .THIS .popup {
     width: 90%;
@@ -19,12 +39,15 @@
     float: left;
 }
 .THIS .popup table th{
-    background:#ccc;
-    border-color:#b1b1b1;
+    border-color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 12px;
 }
-
-.THIS .popup table{
-    border:1px solid #ccc;
+.THIS .slds-table td{
+    padding:15px;
+}
+.THIS .slds-table_bordered{
+    border-top:none;
 }
 .THIS .popup .slds-modal__close {
     background-color: transparent;
@@ -81,16 +104,17 @@
     .popup.THIS .tabset > label {
     position: relative;
     display: inline-block;
-    padding: 15px 15px 25px;
-    border: 1px solid transparent;
-    border-bottom: 0;
+    padding: 15px 5px 5px;
+    border-bottom: 3px solid transparent;
     cursor: pointer;
     font-weight: 600;
+    font-size: 16px;
+    margin: 0px 15px;
     }
 
     .popup.THIS .tabset > label:hover,
     .popup.THIS .tabset > input:focus + label {
-    color: #06c;
+    color: #005393;
     }
 	.popup.THIS .user_name_area .slds-avatar{
     width:4rem;
@@ -103,28 +127,34 @@
 }
     .popup.THIS .tabset > input:checked + label {
     border: none;
-    border-bottom: 3px solid #3273af;
+    border-bottom: 3px solid #f89202;
     margin-bottom: -1px;
+    color:#005393;
     }
 
-    .popup.THIS .tab-panel {
-    padding: 30px 0;
-    border-top: 1px solid #ccc;
-    }
 
     .popup.THIS .left_panel{
-        border:1px solid #ccc;
+        border:1px solid #5fa143;
+    	min-height: 700px;
+    	border-radius:10px;
     }
     .popup.THIS .right_panel{
-        border:1px solid #ccc;
-    	padding:0px 15px 0px;
+    	padding:0px 0px 0px 15px;
+    	position:relative;
+    }
+    .popup.THIS .right_panel .tabset{
+            min-height: 700px;
     }
 
-.popup.THIS .right_panel .tabset{
-        border:1px solid #ccc;
-    	padding:15px;
+    .popup.THIS .right_panel .tabset{
+        border:1px solid #5fa143;
+        padding:15px;
+    	border-top:6px solid #5fa143;
+    	border-radius:10px;
+     }
+    .popup.THIS .slds-modal__content:last-child{
+       box-shadow:none;
     }
-
     .popup.THIS .user_name_area {
         text-align: center;
         padding-bottom: 30px;
@@ -137,10 +167,79 @@
         line-height: 150%;
         padding: 5px 15px;
     }
-
+.THIS .popup .run_as_on {
+   	border: 1px solid #b9d4e9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 5px;
+    background: #f6f8fa;
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 15px;
+}
+.THIS .popup .run_as_on img{
+    width:100px;
+}
+.THIS .popup .align_items_center{
+    align-items:center;
+}
 .slds-fade-in-open.THIS{
     overflow-y: overlay;
 }
 .popup.THIS .slds-modal__header{
    padding-top:0px;
+}
+.THIS .popup .summary_section_head,.THIS .popup .summary_section_desc {
+    width: 50%;
+    float: left;
+}
+.THIS .print_opt, .THIS .download_opt{
+    display:inline-block;
+    position: absolute;
+    top: 22px;
+}
+.THIS .print_opt{
+    right:65px
+}
+.THIS .download_opt{
+    right:115px;
+}
+.THIS .print_opt img, .THIS .download_opt img{
+    height:20px;
+}
+.THIS .popup .summary_section_desc .neutral_tags{
+    padding: 3px 15px;
+    background: #666;
+    border-radius: 5px;
+    color: #fff;
+}
+.THIS .table-container{
+    width:100%;
+    overflow-x:scroll;
+}
+.THIS .popup .summary_section_head{
+    font-weight:700;
+    font-size:12px;
+    text-transform: uppercase;
+}
+
+
+.THIS .download_opt .slds-button_icon-border{
+    opacity:0;
+}
+.THIS .download_opt, .THIS .print_opt{
+    display:inline-block;
+}
+.THIS .download_opt .slds-dropdown-trigger_click{
+    position:absolute;
+    left:0;
+}
+.THIS .download_opt .slds-dropdown_left,.THIS .download_opt .slds-dropdown--left{
+    left:auto;
+    right:0;
+}
+
+.THIS .download_opt img, .THIS .print_opt img{
+    height:20px;
 }

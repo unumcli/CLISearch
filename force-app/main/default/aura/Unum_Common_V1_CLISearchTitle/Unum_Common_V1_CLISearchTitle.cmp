@@ -4,14 +4,7 @@
     <aura:attribute name="getResults" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="change" value="{!v.getResults}" action="{!c.setPagePath}"/>
-    
-    <!-- used to updated the Title And the Path -->
-    <aura:method name="setPagePath" action="{!c.setPagePath}" description="Used to set the page path"> 
-    	<aura:attribute name="setSearch" type="Boolean" default="true"/>
-        <aura:attribute name="setNameResults" type="Boolean" default="false"/> 
-        <aura:attribute name="setRecordResults" type="Boolean" default="false"/> 
-	</aura:method>
-    
+        
     <div class="breadcrumb_container">
         <h1 class="slds-text-heading_medium page_title" >{!v.Title}</h1>
         <a href="javascript:void(0);" class="slds-text-title pagestorylink">{!v.Path}</a>

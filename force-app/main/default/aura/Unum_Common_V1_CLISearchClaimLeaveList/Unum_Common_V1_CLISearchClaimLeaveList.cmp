@@ -1,38 +1,40 @@
 <aura:component controller="ClaimLeaveList" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	
+    
     <!-- Static Resource for datatable-->
-
- <ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
+    
+    <ltng:require styles="{!join(',',$Resource.DatatableJQuery + '/jQueryUI-1.12.1/themes/base/jquery-ui.css',
                           $Resource.DatatableJQuery + '/DataTables-1.10.18/css/jquery.dataTables.css')}"
-              	   
+                  
                   scripts="{!join(',',
                            $Resource.JQuery,
                            $Resource.DatatableV12 + '/DatatablesV12/JQuery/jquery-2.2.4.js',
                            $Resource.DatatableJQuery + '/jQueryUI-1.12.1/jquery-ui.js',
                            $Resource.DatatableJQuery + '/DataTables-1.10.18/js/jquery.dataTables.js'
-                          )}" 
-                  		afterScriptsLoaded="{!c.scriptsLoaded}"/>
+                           )}" 
+                  afterScriptsLoaded="{!c.scriptsLoaded}"/>
     
-	<!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
-	
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    
     <aura:attribute name="mycolumns" type="List"/>
     <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
     <aura:attribute name="pageSize" type="Integer" default="5"/>
     <aura:attribute name="totalPages" type="Integer" default="0"/>
     <aura:attribute name="pageList" type="List"/>
-
+    
     <aura:attribute name="selectedEmployeeID" type="String"/>
     <aura:attribute name="IsClaimOrLeave" type="Integer"/>
     <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList" />
-   <!-- <aura:attribute name="data" type="ClaimLeaveList[]"/> -->
+    <!-- <aura:attribute name="data" type="ClaimLeaveList[]"/> -->
     <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/>
     <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail[]"/>
     <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
     <aura:attribute name="ClaimLeaveDataClaimData" type="ClaimLeaveList.ClaimData"/>
     <aura:attribute name="DefaultDateFormat" type="String"/>
     <aura:attribute name="isEmployeeCount" type="Boolean"/>
- 
-  <!--  <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" /> -->
+    <aura:attribute name="recordTitle" type="String" />
+  
+    
+    <!--  <ltng:require scripts="{!$Resource.JQuery}" afterScriptsLoaded="{!c.loadJquery}" /> -->
     <!-- Events -->
     <aura:registerEvent name="Unum_V1_CLISearch_LeaveDetailsEvent" type="c:Unum_V1_CLISearch_LeaveDetailsEvent"/>
     <aura:registerEvent name="Unum_V1_CLISearch_ClaimDetailsEvent" type="c:Unum_V1_CLISearch_ClaimDetailsEvent"/>
@@ -46,15 +48,15 @@
     
     <aura:method name="Unum_CLISearch_LoadEmployeeRecords" action="{!c.fetchEmpData}"> 
         <aura:attribute name="selectedEmployeeID" type="String"/>
-    	<aura:attribute name="IsClaimOrLeave" type="Integer"/>
-    	<aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
-    	<aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/>
-    	<aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
-    	<aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
+        <aura:attribute name="IsClaimOrLeave" type="Integer"/>
+        <aura:attribute name="ClaimLeaveList" type="ClaimLeaveList"/>
+        <aura:attribute name="toggleCLISearchClaimLeaveListFlag" type="Boolean"/>
+        <aura:attribute name="claimLeaveListEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
+        <aura:attribute name="claimLeaveListClaimLeaveData" type="ClaimLeaveList.ClaimLeaveData[]"/>
         <aura:attribute name="passEmployeeDetail" type="ClaimLeaveList.EmployeeDetail"/>
-        <aura:attribute name="toogleClaimsModal" type="Boolean"/>
+        <aura:attribute name="toogleClaimsModal" type="Boolean"/>   
     </aura:method>
-  
+    
     <aura:iteration items="{!v.claimLeaveListEmployeeDetail}" var="EmployeeDetail">
         <div class="user-details slds-grid slds-gutters">
             <div class="slds-col slds-size_2-of-12 d-flex align-items-center">
@@ -63,8 +65,8 @@
                 </span>
                 &nbsp;
                 <div class="avatar_det">
-                	<span class="username">{!EmployeeDetail.LastName}, {!EmployeeDetail.FirstName}&nbsp;{!EmployeeDetail.middleNameWithDot}</span>
-                    <span class="section_name">LEAVE RECORDS</span>
+                    <span class="username">{!EmployeeDetail.LastName}, {!EmployeeDetail.FirstName}&nbsp;{!EmployeeDetail.middleNameWithDot}</span>
+                    <span class="section_name">{!v.recordTitle}</span>
                 </div>
             </div>
             <div class="slds-col slds-size_2-of-12">
@@ -76,281 +78,280 @@
                 <!--<p><b>Open Claim#:</b>{!EmployeeDetail.OpenClaimNumber}</p>-->
             </div>
             <div class="slds-col slds-size_3-of-12">
-              <!--  <p><b>Date of Birth:{!EmployeeDetail.DateOfBirth}</b></p> -->
+                <!--  <p><b>Date of Birth:{!EmployeeDetail.DateOfBirth}</b></p> -->
                 <p><b>Date of Birth: </b><lightning:formattedDateTime value="{!EmployeeDetail.DateOfBirth}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></p>
                 
             </div>
             <div class="slds-col slds-size_3-of-12 icon16">
                 <div class="p10 p-relative download_opt" onclick="{!c.exportTableToCSV}">
-                 <!--<span class="themify-icon-download"></span>-->
+                    <!--<span class="themify-icon-download"></span>-->
                     <img src="{!$Resource.csv_download}" alt=""/>
-
+                    
                 </div>
                 <div class="p10 p-relative download_opt" onclick="{!c.exportToPDF}"><img src="{!$Resource.pdf_download}" alt=""/></div>
                 <div class="p10 print_opt" onclick="{!c.print}"><img src="{!$Resource.print}" alt=""/></div>
             </div>
         </div>
-        </aura:iteration>
-                        
-     <!-- <a class="toggle-vis" data-column="6">RTW Date</a>-->
+    </aura:iteration>
     
-
-   <div class="claim_leave_details_area bg-white">
-       
-       <div class="tabset">
-          
-          <!-- Tab 1 -->
-          <input class="c_label" type="radio" name="tabset" id="tab1" aria-controls="marzen" checked="checked" />
-          <label data-tip="VIEW ALL CLAIM RECORDS" class="c_label" for="tab1" onclick="{!c.changeClaimLabel}" >C</label>
-          <!-- Tab 2 -->
-          <input class="l_label" type="radio" name="tabset" id="tab2" aria-controls="rauchbier"/>
-          <label data-tip="VIEW ALL LEAVE RECORDS" class="l_label" for="tab2" onclick="{!c.changeLeaveLabel}">L</label>
-      	
-           
-          <div class="tab-panels">
-            <section id="LABEL1" class="tab-panel claim_area">
-             
-                <div class="table-container section-to-print">
-                            <table cellspacing="0" id="tableId" class="slds-table slds-table_cell-buffer slds-table_bordered">
+    
+    
+    <div class="claim_leave_details_area bg-white">
+      <!--  <a class="toggle-vis" data-column="6">Show/Hide RTW Date</a>	-->
+        <div class="show_hide_switch">
+            <p>Show RTW Date</p>
+            <div class="switch_container">
+                <a class="yes toggle-vis" data-column="6" onclick="{!c.showHideColumns}">SHOW</a>
+                <a class="no toggle-vis" data-column="6" onclick="{!c.showHideColumns}">HIDE</a>
+                <div class="moving-tab"><span>SHOW</span></div>
+            </div>
+        </div>
+        
+        
+        <div class="tabset">
+            
+            <!-- Tab 1 -->
+            <input class="c_label" type="radio" name="tabset" id="tab1" aria-controls="marzen" checked="checked" />
+            <label data-tip="VIEW ALL CLAIM RECORDS" class="c_label" for="tab1" onclick="{!c.changeClaimLabel}" >C</label>
+            <!-- Tab 2 -->
+            <input class="l_label" type="radio" name="tabset" id="tab2" aria-controls="rauchbier"/>
+            <label data-tip="VIEW ALL LEAVE RECORDS" class="l_label" for="tab2" onclick="{!c.changeLeaveLabel}">L</label>
+            
+            
+            <div class="tab-panels">
+                <section id="LABEL1" class="tab-panel claim_area">
+                    
+                    <div class="table-container section-to-print">
+                        <table cellspacing="0" id="table-claim" class="slds-table slds-table_cell-buffer slds-table_bordered">
                             <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Claim #/Leave #">CLAIM NUMBER </div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Policy Div/Report Group">POLICY NUMBER</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Coverage">COVERAGE</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Received Date">RECIEVED</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Disability/Leave Start Date">DISBAILITY START</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Current Status">STATUS</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="RTW Date">RTW Date</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="RTW Status">RTW Status</div>
-                                </th>
-                            </tr>
-                        </thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">CLAIM NUMBER </div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">POLICY NUMBER</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">COVERAGE</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Received Date">RECIEVED</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Disability/Leave Start Date">DISBAILITY START</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Current Status">STATUS</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="RTW Date">RTW Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="RTW Status">RTW Status</div>
+                                    </th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
                                     <!-- if claim then -->
-                                <tr class="slds-hint-parent">
-                                    <th data-label="Claim #/Leave #" scope="row">
-                                        <div class="slds-truncate claim_tags" title="Claim #/Leave #">
-                                            <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-ClaimNo="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
-                                        </div>
-                                    </th>
-                                    <td data-label="Policy Div/Report Group">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
-                                    </td>
-                                    <td data-label="Coverage">
-                                        <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
-                                    </td>
-                                    <td data-label="Received Date">
-                                        <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Disability/Leave Start Date">
-                                        <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Current Status">
-                                        <div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
-                                    </td>
-                                    <td data-label="RTW Date">
-                                        <div class="slds-truncate" title="RTW Date">
-                                            {!ClaimLeaveData.ClaimData.RTWDate}
-                                        </div>
-                                    </td>
-                                    <td data-label="RTW Status">
-                                        <div class="slds-truncate" title="RTW Status">
-                                            {!ClaimLeaveData.ClaimData.RTWStatus}
-                                        </div>
-                                    </td>
-                                </tr>
-                                    
-                           <!--     </aura:iteration>
-                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">  -->
-                                  <!--  if leave then-->
-                                <tr class="slds-hint-parent">
-                                    <th data-label="Claim #/Leave #" scope="row">
-                                        <div class="slds-truncate leave_tags" title="Claim #/Leave #">
-                                            <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedLeaveDetails}">{!ClaimLeaveData.LeaveData.LeaveNo}</a>
-                                        </div>
-                                    </th>
-                                    <td data-label="Policy Div/Report Group">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
-                                    </td>
-                                    <td data-label="Coverage">
-                                        <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
-                                    </td>
-                                    <td data-label="Received Date">
-                                        <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Disability/Leave Start Date">
-                                        <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="numeric" month="numeric" day="numeric"/></div>
-                                    </td>
-                                    <td data-label="Current Status">
-                                        <div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
-                                    </td>
-                                    <td data-label="RTW Date">
-                                        <div class="slds-truncate" title="RTW Date">
-                                            {!ClaimLeaveData.ClaimData.RTWDate}
-                                        </div>
-                                    </td>
-                                    <td data-label="RTW Status">
-                                        <div class="slds-truncate" title="RTW Status">
-                                            {!ClaimLeaveData.ClaimData.RTWStatus}
-                                        </div>
-                                    </td>
-                                  </tr>
-                                </aura:iteration>
-                            </tbody>
-                        </table> 
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Claim #/Leave #" scope="row">
+                                            <div class="slds-truncate claim_tags" title="Claim #/Leave #">
+                                                <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-ClaimNo="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
                                             </div>
-                
-                
-                
-          	</section>
-            <section id="LABEL2" class="tab-panel leave_area">
-             
-                
-                
-                <div class="table-container section-to-print">
-                           <table cellspacing="0" id="tableId" class="slds-table slds-table_cell-buffer slds-table_bordered">
-                            <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Claim #/Leave #">LEAVE NUMBER </div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Policy Div/Report Group">REPORT GROUP</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Coverage">Coverage</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Received Date">RECEIVED</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Disability/Leave Start Date">LEAVE START</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Current Status">Current Status</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="RTW Date">RTW Date</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="RTW Status">STATUS</div>
-                                </th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
-                                    <!-- if claim then -->
-                                <tr class="slds-hint-parent">
-                                    <th data-label="Claim #/Leave #" scope="row">
-                                        <div class="slds-truncate claim_tags" title="Claim #/Leave #">
-                                            <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-ClaimNo="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
-                                        </div>
-                                    </th>
-                                    <td data-label="Policy Div/Report Group">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
-                                    </td>
-                                    <td data-label="Coverage">
-                                        <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
-                                    </td>
-                                    <td data-label="Received Date">
-                                        <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Disability/Leave Start Date">
-                                        <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Current Status">
-                                        <div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
-                                    </td>
-                                    <td data-label="RTW Date">
-                                        <div class="slds-truncate" title="RTW Date">
-                                            {!ClaimLeaveData.ClaimData.RTWDate}
-                                        </div>
-                                    </td>
-                                    <td data-label="RTW Status">
-                                        <div class="slds-truncate" title="RTW Status">
-                                            {!ClaimLeaveData.ClaimData.RTWStatus}
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </th>
+                                        <td data-label="Policy Div/Report Group">
+                                            <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
+                                        </td>
+                                        <td data-label="Coverage">
+                                            <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
+                                        </td>
+                                        <td data-label="Received Date">
+                                            <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Disability/Leave Start Date">
+                                            <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Current Status">
+                                            <div class="slds-truncate neutral_tags" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
+                                        </td>
+                                        <td data-label="RTW Date">
+                                            <div class="slds-truncate" title="RTW Date">
+                                                {!ClaimLeaveData.ClaimData.RTWDate}
+                                            </div>
+                                        </td>
+                                        <td data-label="RTW Status">
+                                            <div class="slds-truncate" title="RTW Status">
+                                                {!ClaimLeaveData.ClaimData.RTWStatus}
+                                            </div>
+                                        </td>
+                                    </tr>
                                     
-                                </aura:iteration>
-                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
-                                  <!--  if leave then-->
-                                <tr class="slds-hint-parent">
-                                    <th data-label="Claim #/Leave #" scope="row">
-                                        <div class="slds-truncate leave_tags" title="Claim #/Leave #">
-                                            <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedLeaveDetails}">{!ClaimLeaveData.LeaveData.LeaveNo}</a>
-                                        </div>
-                                    </th>
-                                    <td data-label="Policy Div/Report Group">
-                                        <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
-                                    </td>
-                                    <td data-label="Coverage">
-                                        <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
-                                    </td>
-                                    <td data-label="Received Date">
-                                        <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
-                                    </td>
-                                    <td data-label="Disability/Leave Start Date">
-                                        <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="numeric" month="numeric" day="numeric"/></div>
-                                    </td>
-                                    <td data-label="Current Status">
-                                        <div class="slds-truncate" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
-                                    </td>
-                                    <td data-label="RTW Date">
-                                        <div class="slds-truncate" title="RTW Date">
-                                            {!ClaimLeaveData.ClaimData.RTWDate}
-                                        </div>
-                                    </td>
-                                    <td data-label="RTW Status">
-                                        <div class="slds-truncate" title="RTW Status">
-                                            {!ClaimLeaveData.ClaimData.RTWStatus}
-                                        </div>
-                                    </td>
-                                  </tr>
+                                    <!--     </aura:iteration>
+                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">  -->
+                                    <!--  if leave then-->
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Claim #/Leave #" scope="row">
+                                            <div class="slds-truncate leave_tags" title="Claim #/Leave #">
+                                                <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-leaveNo="{!ClaimLeaveData.LeaveData.LeaveNo}" tabindex="-1" onclick="{!c.selectedLeaveDetails}">{!ClaimLeaveData.LeaveData.LeaveNo}</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Policy Div/Report Group">
+                                            <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
+                                        </td>
+                                        <td data-label="Coverage">
+                                            <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
+                                        </td>
+                                        <td data-label="Received Date">
+                                            <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Disability/Leave Start Date">
+                                            <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="numeric" month="numeric" day="numeric"/></div>
+                                        </td>
+                                        <td data-label="Current Status">
+                                            <div class="slds-truncate neutral_tags" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
+                                        </td>
+                                        <td data-label="RTW Date">
+                                            <div class="slds-truncate" title="RTW Date">
+                                                {!ClaimLeaveData.ClaimData.RTWDate}
+                                            </div>
+                                        </td>
+                                        <td data-label="RTW Status">
+                                            <div class="slds-truncate" title="RTW Status">
+                                                {!ClaimLeaveData.ClaimData.RTWStatus}
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </aura:iteration>
                             </tbody>
                         </table> 
-                	</div>
-                
-            </section>
-          </div>
-          
+                    </div>
+                    
+                    
+                    
+                </section>
+                <section id="LABEL2" class="tab-panel leave_area">
+                    
+                    
+                    
+                    <div class="table-container section-to-print">
+                        <table cellspacing="0" id="table-leave" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Claim #/Leave #">LEAVE NUMBER </div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Policy Div/Report Group">REPORT GROUP</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Coverage">Coverage</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Received Date">RECEIVED</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Disability/Leave Start Date">LEAVE START</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Current Status">Current Status</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="RTW Date">RTW Date</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="RTW Status">STATUS</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
+                                    <!-- if claim then -->
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Claim #/Leave #" scope="row">
+                                            <div class="slds-truncate claim_tags" title="Claim #/Leave #">
+                                                <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-ClaimNo="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedClaimDetails}">{!ClaimLeaveData.ClaimData.ClaimNo}</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Policy Div/Report Group">
+                                            <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
+                                        </td>
+                                        <td data-label="Coverage">
+                                            <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
+                                        </td>
+                                        <td data-label="Received Date">
+                                            <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Disability/Leave Start Date">
+                                            <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Current Status">
+                                            <div class="slds-truncate neutral_tags" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
+                                        </td>
+                                        <td data-label="RTW Date">
+                                            <div class="slds-truncate" title="RTW Date">
+                                                {!ClaimLeaveData.ClaimData.RTWDate}
+                                            </div>
+                                        </td>
+                                        <td data-label="RTW Status">
+                                            <div class="slds-truncate" title="RTW Status">
+                                                {!ClaimLeaveData.ClaimData.RTWStatus}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </aura:iteration>
+                                <aura:iteration items="{!v.claimLeaveListClaimLeaveData}" var="ClaimLeaveData">
+                                    <!--  if leave then-->
+                                    <tr class="slds-hint-parent">
+                                        <th data-label="Claim #/Leave #" scope="row">
+                                            <div class="slds-truncate leave_tags" title="Claim #/Leave #">
+                                                <a href="javascript:void(0);" data-isClaim="{!ClaimLeaveData.IsClaim}" data-number="{!ClaimLeaveData.ClaimData.ClaimNo}" tabindex="-1" onclick="{!c.selectedLeaveDetails}">{!ClaimLeaveData.LeaveData.LeaveNo}</a>
+                                            </div>
+                                        </th>
+                                        <td data-label="Policy Div/Report Group">
+                                            <div class="slds-truncate" title="Policy Div/Report Group">{!ClaimLeaveData.ClaimData.PolicyDiv}</div>
+                                        </td>
+                                        <td data-label="Coverage">
+                                            <div class="slds-truncate" title="Coverage">{!ClaimLeaveData.ClaimData.Coverage}</div>
+                                        </td>
+                                        <td data-label="Received Date">
+                                            <div class="slds-truncate" title="Received Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.ReceivedDate}" year="{!v.DefaultDateFormat}" month="{!v.DefaultDateFormat}" day="{!v.DefaultDateFormat}"/></div>
+                                        </td>
+                                        <td data-label="Disability/Leave Start Date">
+                                            <div class="slds-truncate" title="Disability/Leave Start Date"><lightning:formattedDateTime value="{!ClaimLeaveData.ClaimData.Disability}" year="numeric" month="numeric" day="numeric"/></div>
+                                        </td>
+                                        <td data-label="Current Status">
+                                            <div class="slds-truncate neutral_tags" title="Current Status">{!ClaimLeaveData.ClaimData.CurrentStatus}</div>
+                                        </td>
+                                        <td data-label="RTW Date">
+                                            <div class="slds-truncate" title="RTW Date">
+                                                {!ClaimLeaveData.ClaimData.RTWDate}
+                                            </div>
+                                        </td>
+                                        <td data-label="RTW Status">
+                                            <div class="slds-truncate" title="RTW Status">
+                                                {!ClaimLeaveData.ClaimData.RTWStatus}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table> 
+                    </div>
+                    
+                </section>
+            </div>
+            
         </div>
-       
-  
-           
-        </div>
-       
-       
+        
+        
+        
+    </div>
+    
+    
     <!--   <div class="total_item_numbers">
                 <span>Showing 0 items</span>
             </div> -->
-       
-       
- <!--<div id="print">Print this </div>
-   
-       <div id="printableArea">
-      <h1>Print me</h1>
-</div>
- <input type="button" onclick="{!c.print}" value="print a div!" />-->
-   
-  
-
+    
 </aura:component>

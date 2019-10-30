@@ -147,7 +147,20 @@
     background:#fff;
 }
 
+.THIS .neutral_tags{
+    padding: 3px 15px;
+    background: #666;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+}
+
 /*Tabset css starts here*/
+
+.claim_leave_details_area.THIS .tabset {
+    float: left;
+    width: 100%;
+}
 .claim_leave_details_area.THIS .tabset > input[type="radio"] {
     position: absolute;
     left: -200vw;
@@ -257,3 +270,47 @@
 .THIS [data-tip]:hover:after {
 	display:block;
 }
+
+/* show / hide toggle */
+.THIS .show_hide_switch{
+                position: relative;
+                float: right;
+                width: 280px;
+                display: inline-block;
+            }
+            .THIS .show_hide_switch p{
+                display: inline-block;
+                margin: 5px 0px;
+            }
+            .THIS .switch_container{
+                width: 150px;
+                position: relative;
+                height: 30px;
+                background: #ccc;
+                border-radius: 5px;
+                color: #777;
+                overflow: hidden;
+                text-align: center;
+                display: inline-block;
+                float: right;
+            }
+            .THIS .yes, .THIS .no{
+                width:50%;
+                float: left;
+                height: 30px;
+                line-height: 30px;
+                cursor: pointer;
+            }
+            .THIS .moving-tab{
+                position: absolute;
+                width:75px;
+                height:30px; 
+                background: #5fa143;
+                text-align: center;
+                line-height: 30px;
+                align-items: center;
+                left: 0px;
+                top:0px;
+                color: #fff;
+                transition: all .3s;
+            }

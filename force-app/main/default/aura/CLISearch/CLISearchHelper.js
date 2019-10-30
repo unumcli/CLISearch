@@ -87,6 +87,10 @@
         var LeaveDetailsAvailableTime = event.getParam("LeaveDetailsAvailableTime");
         var CLISearchLeavePopupEventComponentt = component.find("CLISearchLeavePopup");
         CLISearchLeavePopupEventComponentt.LeaveDetailsEvent(LeaveDetailsHeader,LeaveDetailsLeaveSummary,LeaveDetailsLeavePeriod,LeaveDetailsIntermittentAbsence,LeaveDetailsProtection,LeaveDetailsAvailableTime);
-    }
+    },
+    handleUnum_V1_TitleChangeEvent : function(component, event, helper) {
+		//setting the title to RecordResults
+		component.set("v.setResults","RecordResults");	
+	}
     
 })

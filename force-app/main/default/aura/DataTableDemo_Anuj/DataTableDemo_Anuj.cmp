@@ -1,0 +1,10 @@
+<aura:component >
+<ltng:require 
+ 		styles="{!$Resource.Select2css}"    
+        scripts="{!join(',',
+                           $Resource.JQuery,
+                           $Resource.DT_Anuj+'/DataTables-1.10.20/js/dataTables.bootstrap.js'               
+                           )}"
+       afterScriptsLoaded="{!c.scriptsLoaded}" />    
+
+</aura:component>

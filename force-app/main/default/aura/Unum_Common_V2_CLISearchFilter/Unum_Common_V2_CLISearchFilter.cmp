@@ -44,6 +44,7 @@
                             	<div class="circle">1</div>
                             </div>
                             <div class="field1">
+                                <label data-tip="Help Text" class="selectOrgGroup_label" for="selectOrgGroup_label" ><span class="themify-icon-help-alt"></span></label>
                                 <lightning:select aura:id="selectedOrgGroup" label="Select Organization / Group" name="selectedOrganisation" required="true" messageWhenValueMissing="Please Select the Organisation" onchange="{!c.onOrgansationGroupChange}">
                                     <option value="Organisation">SELECT</option>
                                     <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
@@ -52,6 +53,7 @@
                                 </lightning:select> 
                          </div>
                             <div class="field2">
+                                <label data-tip="Help Text" class="selectOrgGroup_label" for="selectOrgGroup_label" ><span class="themify-icon-help-alt"></span></label>
                                 <div class="slds-form-element">
                                 <aura:if isTrue="{! !empty(v.relatedOrganisation)}">
                                     <label class="slds-form-element__label">{!v.relatedOrganisation}</label>
@@ -108,6 +110,7 @@
                             	<div class="circle">2</div>
                             </div>
                             <div class="field1">
+                                <label data-tip="Help Text" class="selectOrgGroup_label" for="selectOrgGroup_label" ><span class="themify-icon-help-alt"></span></label>
                                 <lightning:select value="{!v.selectedValueData}" aura:id="searchByValue" label="Select what to search by" name="Select Search By" messageWhenValueMissing="Please Enter the Name" onchange="{!c.clearSearchInput}">
                                     <option value="LastName">Last Name</option>
                                     <option value="SSN">SSN</option>
@@ -116,6 +119,7 @@
                                 </lightning:select>  
                             </div>
                             <div class="field2">
+                                <label data-tip="Help Text" class="selectOrgGroup_label" for="selectOrgGroup_label" ><span class="themify-icon-help-alt"></span></label>
                                 <aura:if isTrue="{!v.selectedValueData == 'LastName'}">
                                     <c:Unum_LookUpComponent label="Last Name"
                                                             aura:id="lookupcmp"
@@ -135,6 +139,7 @@
                             	<div class="circle">3</div>
                             </div>
                             <div class="field1">
+                                <label data-tip="Help Text" class="selectOrgGroup_label" for="selectOrgGroup_label" ><span class="themify-icon-help-alt"></span></label>
                             <lightning:select aura:id="ssnDisplay" label="Select SSN Display Format:" name="ssnDisplayFormat" >
                                 <option value="">SELECT</option>
                                 <option value="Show Partial">Show Partial</option>
@@ -143,7 +148,7 @@
                             </lightning:select>
                             </div>
                             <div class="field2 searchbtnarea">
-                                <lightning:button label="Search" class="slds-button slds-button_brand green_btn" variant="brand" onclick="{!c.OnGo}" disabled= "{!v.isButtonActive}" />
+                                <lightning:button label="Search" class="slds-button slds-button_brand green_btn themify-icon-search search_ico" variant="brand" onclick="{!c.OnGo}" disabled= "{!v.isButtonActive}" />
                               <!--  <button class="slds-button slds-button_brand green_btn"><span class="themify-icon-search search_ico" aria-label="Search"></span>Search</button> -->
                                 <lightning:button class="slds-button slds-button_neutral gray_btn" label="Clear" onclick="{!c.ClearSearch}"/>
                             </div>

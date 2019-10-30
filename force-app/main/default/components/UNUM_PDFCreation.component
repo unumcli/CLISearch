@@ -1,4 +1,4 @@
-<apex:component controller="UNUM_PdfController" >
+<apex:component controller="Unum_PdfController" >
    
    <head> 
        <apex:slds />

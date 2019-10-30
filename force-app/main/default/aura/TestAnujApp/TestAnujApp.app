@@ -12,14 +12,21 @@
     <aura:attribute name="setSearch" type="Boolean" />
     <aura:attribute name="setNameResults" type="Boolean" /> 
     <aura:attribute name="setRecordResults" type="Boolean" /> 
-    <!-- attributes for the Title and Page Path ends here-->
     
-    <!--   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>	-->
+  
+    
+    
+    <c:DataTableDemo_Anuj></c:DataTableDemo_Anuj>
+  
+   
+    <!-- attributes for the Title and Page Path ends here
+    <c:Unum_DateTimeComponent  aura:id="dateCmp"/>	-->
+    <!--   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
         
     <aura:handler name="FormDataCompEvent" event="c:FormDataCompEvent" action="{!c.handleComponentEvent}"/>
     
     
-    <c:UNum_LookUpWrapperComponent />
+    <c:UNum_LookUpWrapperComponent />	-->
     
 <!--  	<c:CLISearchFilter /> -->
   <!--  <c:Unum_Common_V1_CLISearchFilter /> -->

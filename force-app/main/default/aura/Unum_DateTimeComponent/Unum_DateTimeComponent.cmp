@@ -1,0 +1,24 @@
+<aura:component >
+    <aura:attribute name="dateComponentJSON" type="Object" />
+    <aura:attribute name="outputDate" type="String"  />
+    <aura:attribute name="timeZone" type="String"  />
+    <!-- Specify your all handler  -->
+    
+    <aura:method name="dateJSON"
+                 >
+        <aura:attribute name="dateTimeValue" type="String" default="default message" />
+        <aura:attribute name="isEdit" type="String" default="default message" />
+        <aura:attribute name="formate" type="String" default="default message" />
+        <aura:attribute name="type" type="String" default="default message" />
+    </aura:method>
+    <!-- CMP Details -->
+    {!not(v.dateComponentJSON.isEdit)}
+    <aura:if isTrue="{!not(v.dateComponentJSON.isEdit)}">
+        
+            <lightning:formattedDateTime aura:id="date" value="{!v.dateComponentJSON.dateTimeValue}"  timeZone="{!v.timeZone}"
+                                         year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit"  />
+           
+    
+        <span>{!v.outputDate}</span>
+    </aura:if>
+</aura:component>

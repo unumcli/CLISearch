@@ -44,7 +44,7 @@
                                            var appEvent = $A.get("e.c:Unum_CLISearch_DateFormat");
                                            var formattedDateTime = "numeric";
                                            appEvent.setParams({"FormattedDateTime": formattedDateTime});
-        appEvent.fire();
+        								appEvent.fire();
         
         //GetClaimLeave API Call
         var actionGetClaimLeave = component.get("c.GetClaimLeaveList");
@@ -82,8 +82,12 @@
                                                 //  });
                                                 //  urlEvent.fire(); 
                                                 
+                                                
+                                                //Passing the flag for Title component 
+                    							var setRecordResultsFlagEvent = component.getEvent("Unum_V1_TitleChangeEvent");
+                    							setRecordResultsFlagEvent.setParams({"showRecordResults" : "RecordResults" });
+                   	 							setRecordResultsFlagEvent.fire();
                                                 //Passing the selectedEmployeeDetails Details
-                                                // var appEvent = $A.get("e.c:Unum_CLISearch_LoadEmployeeRecordsEvent");
                                                 var Unum_CLISearch_LoadEmployeeRecords = component.find("CLISearchClaimLeaveList");
                                                 Unum_CLISearch_LoadEmployeeRecords.Unum_CLISearch_LoadEmployeeRecords(selectedEmployeeID,IsClaimOrLeave,ClaimLeaveList,toggleCLISearchClaimLeaveListFlag,ClaimLeaveList.EmployeeDetail,ClaimLeaveList.ClaimLeaveData,passEmployeeDetail);
                                                 //appEvent.setParams({ "selectedEmployeeID" : selectedEmployeeID , "IsClaimOrLeave" : IsClaimOrLeave , "toggleCLISearchClaimLeaveListFlag": toggleCLISearchClaimLeaveListFlag,"ClaimLeaveList": ClaimLeaveList,"claimLeaveListEmployeeDetail": ClaimLeaveList.EmployeeDetail,"claimLeaveListClaimLeaveData": ClaimLeaveList.ClaimLeaveData});

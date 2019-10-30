@@ -18,6 +18,9 @@
     
     handleUnum_V1_CLISearch_LeaveDetailsEvent : function(component, event, helper) {
 		helper.handleUnum_V1_CLISearch_LeaveDetailsEvent(component, event, helper);	
+	},
+    handleUnum_V1_TitleChangeEvent : function(component, event, helper) {
+		helper.handleUnum_V1_TitleChangeEvent(component, event, helper);	
 	}
     
 })

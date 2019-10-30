@@ -1,13 +1,44 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	
-    <ltng:require 
-
-        
-
-        scripts="{!$Resource.JQuery}"
-
-        afterScriptsLoaded="{!c.scriptsLoaded}" />
+   <!--  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 	-->
     
+    <aura:attribute name="truthy" type="Boolean"/>
+    
+    <ltng:require 
+                  
+                  styles="{!$Resource.Select2css}"    
+                  
+                  scripts="{!join(',',
+                           $Resource.JQuery,
+                           $Resource.Select2js               
+                           )}"
+                  
+                  afterScriptsLoaded="{!c.scriptsLoaded}" />	
+    
+    <!--  <div class="slds-form-element">
+        <label for="picklist" style="font-size:medium;"><b>Public Release</b></label> <br/>
+        <select style="width:200px" id="picklist" onchange="{!c.test}" class="js-example-basic-multiple" multiple="multiple" >
+        <option value="All"> All</option>
+        <option value="Yes"> Yes</option>
+        <option value="No"> No</option>
+        </select>
+    </div>  -->
+    <div>
+        div
+        <aura:if isTrue="{!v.truthy}">
+            
+            <select id="testArray" class="js-example-data-array">
+                
+            </select>
+            
+            
+            <aura:set attribute="else">
+                False
+            </aura:set>
+        </aura:if> 
+    </div>
+    
+    
+    <!-- 
     <div class="searchable">
         <input type="text" placeholder="search countries" data-this="{!this}" onkeyup="{!c.filterFunction}" />
     <ul>
@@ -27,15 +58,15 @@
         <li>Yemen</li>
     </ul>
 </div>
+    -->
     
-    
-   <!-- <select list="organizations" label="Select Organization" name="selectedOrganisation" required="true" /> 
+    <!-- <select list="organizations" label="Select Organization" name="selectedOrganisation" required="true" /> 
                             
-					<datalist id="organizations">
-  							<option value="Select Organisation">Select Organisation</option>
+     <datalist id="organizations">
+         <option value="Select Organisation">Select Organisation</option>
                             <option value="NORTON HEALTHCARE">NORTON HEALTHCARE</option>
                             <option value="AA New Org">AA New Org</option>
                             <option value="AB New Org">AB New Org</option>
-					</datalist>  -->
-   
+     </datalist>  -->
+    
 </aura:component>

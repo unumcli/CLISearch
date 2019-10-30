@@ -15,11 +15,12 @@ public with sharing class ClaimLeaveList
         @AuraEnabled public Boolean IsClaim {get; set;}
          public ClaimLeaveData()
          {
-        
+            
+             ClaimData = new ClaimData();
+             LeaveData = new LeaveData();  
+          
     	}
     }
-    
-   
 
     public with sharing class ClaimData
     {
@@ -32,6 +33,11 @@ public with sharing class ClaimLeaveList
         @AuraEnabled public String RTWDate {get; set;}
         @AuraEnabled public String RTWStatus {get; set;}
         @AuraEnabled public String ClaimEmpId {get; set;}
+        
+        public ClaimData()
+        {
+           
+        }
     }
 
     public with sharing class LeaveData
@@ -45,10 +51,13 @@ public with sharing class ClaimLeaveList
         @AuraEnabled public String CurrentStatus {get; set;}
         @AuraEnabled public String RTWDate {get; set;}
         @AuraEnabled public String RTWStatus {get; set;}
+        
+        public LeaveData()
+        {
+            
+        }
     }
-    
-    
-    
+
     @AuraEnabled(cacheable=true)
     public static ClaimDetails GetEmployeeClaimDetail (String userId, String orgId, String employeeId, String claimNo) {
         

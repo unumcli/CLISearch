@@ -56,7 +56,13 @@ public with sharing class ClaimDetails {
 		@AuraEnabled public String PolicyNo {get;set;} 
 		@AuraEnabled public String PolicyDiv {get;set;} 
 		@AuraEnabled public String ClaimHistory {get;set;}
+        @AuraEnabled public String Abbr {get;set;}
        
 	}
+     @AuraEnabled
+    public static List<Sobject> saveHTML(List<Sobject> sObjectList){
+       return ClaimLeaveList.saveHTML(sObjectList);
+        
+    }
 	
 }

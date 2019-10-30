@@ -140,13 +140,34 @@
     },
     changeLeaveLabel : function(component, event, helper) 
     {
+        debugger
+        //b6d991 user-details
+        document.getElementsByClassName("user-details")[0].style.cssText ="background:#a1d3ea";
+        document.getElementsByClassName("moving-tab")[0].style.cssText ="background:#3273af";
         document.getElementsByClassName("claim_leave_details_area")[0].style.cssText ="border-color:#3273af";
-        document.getElementsByClassName("employee_box active")[0].style.cssText ="border-color:#3273af";     
+        document.getElementsByClassName("employee_box active")[0].style.cssText ="border-color:#3273af";
+        component.set("v.recordTitle", "LEAVE RECORDS");
     },
     changeClaimLabel : function(component, event, helper) 
     {
+        debugger
+        document.getElementsByClassName("user-details")[0].style.cssText ="background:#b6d991";
+        document.getElementsByClassName("moving-tab")[0].style.cssText ="background:#5fa143";
         document.getElementsByClassName("claim_leave_details_area")[0].style.cssText ="border-color:#5fa143";
         document.getElementsByClassName("employee_box active")[0].style.cssText ="border-color:#5fa143";
+        component.set("v.recordTitle", "CLAIM RECORDS");
+        
+    },
+    showHideColumns : function(component, event, helper) 
+    {
+    $(document).ready(function(){
+                $('.no').click(function(){
+                    $('.moving-tab').css({'left':'50%'}).html('HIDE');
+                });
+                $('.yes').click(function(){
+                    $('.moving-tab').css({'left':'0%'}).html('SHOW');
+                });
+            });
     }
 
 })

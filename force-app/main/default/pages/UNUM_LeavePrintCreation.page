@@ -1,0 +1,218 @@
+<apex:page controller="Unum_PdfController"  action="{!MyActionMethod}"   showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+	<html>
+        <head>
+            <style> 
+               body{
+                margin:0;
+                padding:0;
+                border:none;
+                padding:0px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .table-container th{
+                text-align: left;
+                vertical-align: top;
+                font-size: 12px;
+                text-transform: uppercase;
+                padding:0px 5px;
+            }
+            .table-container {
+                position: relative;
+                float: left;
+                width: 100%;
+                font-size: 14px;
+            }
+            .table-container table {
+                width: 100%;
+                margin: 40px 0px;
+            }
+            .table-container table tr td, .table-container table tr th {
+                border-bottom: 1px solid #ccc;
+                padding: 10px 0px;
+            }
+            .tab-panel{
+                float: left;
+                position: relative;
+                width: 100%;
+            }
+            .tab-panel.claim_area:before{
+                position: absolute;
+                content: 'Claim Records';
+                top: 0;
+                left: 0;
+                color: #3273af;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .tab-panel.leave_area:before{
+                position: absolute;
+                content: 'Leave Records';
+                top: 0;
+                left: 0;
+                color: #5fa143;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .tab-panel .claim_tags a {
+                width: auto;
+                display: inline-block;
+                padding: 5px 15px;
+                color: #fff;
+                text-decoration: none;
+                background-color: #3273af;
+            }
+            .tab-panel .leave_tags a {
+                width: auto;
+                display: inline-block;
+                padding: 5px 15px;
+                color: #fff;
+                text-decoration: none;
+                background-color: #5fa143;
+            }
+            .popup *{
+                box-sizing: unset;
+            }
+            .popup, .popup_container{
+                width:100%;
+                margin-top: 35px;
+                float: left;
+            }
+            header{
+                display:none;
+            }
+            .left_panel{
+                width:99%;
+				margin:0px .5%;
+				float:left;                
+                position: relative;
+                border:1px solid #5fa143;
+            }
+            .right_panel{
+                width:99%;
+				margin:0px .5%;
+                margin-top:50px;
+                
+				float:left;                
+                position: relative;
+                border:1px solid #5fa143;
+            }
+            .user_name_area{
+                width:100%;
+                font-weight: 700;;
+                text-align:center;
+                padding-bottom:25px;
+            }
+            .slds-avatar__initials{
+                display: block;
+                width:100px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px;
+                margin: auto;
+                margin-top: -50px;;
+                background:#ccc;
+                border-radius: 50%;
+                margin-bottom: 15px;;
+            }
+            .user_name_area .header-column{
+                display: none;
+            }
+            .common_details{
+                padding: 15px;;
+            }
+            .common_details .header-column{
+                width:100%;
+                margin:10px 0px ;
+                float: left;
+            }
+            .header-column .summary_section_head, .header-column .summary_section_desc{
+                width:50%;
+                float:left;
+            }
+            .common_details .sidebar_heading{
+                font-size: 24px;
+                float: left;
+                margin: 20px 0px 10px;
+            }
+            .right_panel_heading{
+                position: absolute;
+                top: -42px;
+                left: 35%;
+                padding: 0 15px;
+                background-color: #b6d991;
+                height: 40px;
+                font-size: 20px;
+                border: 1px solid #5fa143;
+                line-height: 40px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                font-weight: 400;
+            }
+            .tabset{
+                padding:15px;
+            }
+            #claim_status,#payments,label, .run_as_on{
+                display:none;
+            }
+            .tab-panel#claim_status, .tab-panel#payments{
+            	display:block;
+            }
+            .tab-panels{
+                width:100%;
+                float: left;
+            }
+            .tab-panels .tab-panel{
+                width:100%;
+                float: left;
+                position:relative;
+                margin-top:60px;
+            }
+            .tab-panels .tab-panel .slds-col .header-column{
+                width:100%;
+                margin:10px 0px ;
+                float: left;
+            }
+            .tab-panels .leave_period_area:before{
+            	position:absolute;
+                left:0px;
+                top:-30px;
+                content:'Leave Period';
+                font-size:22px;
+                font-weight:700;
+            }
+            .tab-panels .intermittent_absence_area:before{
+            	position:absolute;
+                left:0px;
+                top:-30px;
+                content:'Intermittent Absence';
+                font-size:22px;
+                font-weight:700;
+            }
+            .tab-panels .protection_area:before{
+            	position:absolute;
+                left:0px;
+                top:-30px;
+                content:'Protection';
+                font-size:22px;
+                font-weight:700;
+            }
+            .tab-panels .available_time_area:before{
+            	position:absolute;
+                left:0px;
+                top:-30px;
+                content:'Available Time';
+                font-size:22px;
+                font-weight:700;
+            }
+            </style>
+            <script> 
+            window.onload = function(){
+                window.print();
+            } 
+            </script>
+        </head>
+        <body>
+            <apex:outputText value="{!model.content}" escape="false"/>
+        </body>
+    </html>
+</apex:page>

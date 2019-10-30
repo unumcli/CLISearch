@@ -12,7 +12,7 @@
     <aura:attribute name="setSearch" type="String" />
     <aura:attribute name="setNameResults" type="String" /> 
     <aura:attribute name="setRecordResults" type="String" /> 
-    <aura:attribute name="setResults" type="String" default="A"/>
+    <aura:attribute name="setResults" type="String"/>
     <!-- attributes for the Title and Page Path ends here-->
     
     <!--   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>	-->     
@@ -23,6 +23,7 @@
     <aura:handler name="Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" event="c:Unum_V1_CLISearch_HideCLISearchEmployeeListEvent" action="{!c.handleUnum_V1_CLISearch_HideCLISearchEmployeeListEvent}"/>
     <aura:handler name="Unum_V1_CLISearch_ClaimDetailsEvent" event="c:Unum_V1_CLISearch_ClaimDetailsEvent" action="{!c.handleUnum_V1_CLISearch_ClaimDetailsEvent}"/>
     <aura:handler name="Unum_V1_CLISearch_LeaveDetailsEvent" event="c:Unum_V1_CLISearch_LeaveDetailsEvent" action="{!c.handleUnum_V1_CLISearch_LeaveDetailsEvent}"/>
+    <aura:handler name="Unum_V1_TitleChangeEvent" event="c:Unum_V1_TitleChangeEvent" action="{!c.handleUnum_V1_TitleChangeEvent}"/>
 	
     <c:Unum_Common_V1_CLISearchTitle getResults="{!v.setResults}" aura:id="CLISearchTitle"/>
     <c:Unum_Common_V2_CLISearchFilter /> 

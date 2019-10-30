@@ -2,21 +2,7 @@
     
     scriptsLoaded : function(component, event, helper) {
        console.log('table Script loaded..'); 
-       
-	
-   /*    html2canvas(document.getElementById('tblCustomers'), {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("Table.pdf");
-                }
-            }); */
-        
+               
     },
     
    fetchEmpData : function(component, event, helper) {
@@ -29,24 +15,25 @@
         component.set("v.claimLeaveListEmployeeDetail",  params.claimLeaveListEmployeeDetail);
         component.set("v.claimLeaveListClaimLeaveData", params.claimLeaveListClaimLeaveData);
         component.set("v.passEmployeeDetail", params.passEmployeeDetail);
-		
-       
-        setTimeout(function(){ 
-                    var claimLeaveTable = $('#tableId').DataTable({
+        component.set("v.recordTitle", "CLAIM RECORDS");
+     
+        setTimeout(function(){
+            
+            		//$('#table-claim').DataTable().destroy();
+            		//$('#table-claim tbody').empty();
+                    var claimTable = $('#table-claim').DataTable({
                        // dom: 'Bfrtip',
                         "paging":   true,
         				"ordering": true,
        					"info":     true,
                         "lengthChange": false,
 						"pagingType": "full_numbers",
-      					"pageLength": 1,
-      				//	"processing": true,
-      				//	"destroy": true,
+      					"pageLength": 5,
+      					"processing": true,
+      					//"destroy": true,
       					"searching": false,	
       				    "sorting": true,
-				//	buttons: [
-                //    'copy', 'csv', 'excel', 'pdf', 'print'
-                //			]                        
+                        "retrieve": true
                     });
                     
                     $('a.toggle-vis').on( 'click', function (e) {
@@ -54,12 +41,27 @@
         				e.preventDefault();
  
         			// Get the column API object
-        			var column = claimLeaveTable.column( $(this).attr('data-column') );
+        			var column = claimTable.column( $(this).attr('data-column') );
  
         			// Toggle the visibility
         			column.visible( ! column.visible() );
    	 				} );
-                    
+            
+            
+  /*          var claimTable = $('#table-leave').DataTable({
+                       // dom: 'Bfrtip',
+                        "paging":   true,
+        				"ordering": true,
+       					"info":     true,
+                        "lengthChange": false,
+						"pagingType": "full_numbers",
+      					"pageLength": 5,
+      				//	"processing": true,
+      					"destroy": true,
+      					"searching": false,	
+      				    "sorting": true,				                       
+                    });
+               */     
             
             //claimLeaveTable.buttons().container().appendTo( $('#empGridBtn', claimLeaveTable.table().container() ) );
             //.container().appendTo($('#empGridBtn'));  
@@ -68,7 +70,42 @@
                     // add lightning class to search filter field with some bottom margin..  
                     $('div.dataTables_filter input').addClass('slds-input');
                     $('div.dataTables_filter input').css("marginBottom", "10px");
-                }, 500);
+                }, 100);
+       
+       setTimeout(function(){ 
+           				//$('#table-leave').DataTable().destroy();
+           				//$('#table-leave tbody').empty();
+                   		var leaveTable = $('#table-leave').DataTable({
+                       // dom: 'Bfrtip',
+                        "paging":   true,
+        				"ordering": true,
+       					"info":     true,
+                        "lengthChange": false,
+						"pagingType": "full_numbers",
+      					"pageLength": 5,
+      					"processing": true,
+      					//"destroy": true,
+      					"searching": false,	
+      				    "sorting": true,
+                            "retrieve": true
+                    });
+              
+                    
+                    $('a.toggle-vis').on( 'click', function (e) {
+                        debugger
+        				e.preventDefault();
+ 
+        			// Get the column API object
+        			var column = leaveTable.column( $(this).attr('data-column') );
+ 
+        			// Toggle the visibility
+        			column.visible( ! column.visible() );
+   	 				} );
+
+                    // add lightning class to search filter field with some bottom margin..  
+                    $('div.dataTables_filter input').addClass('slds-input');
+                    $('div.dataTables_filter input').css("marginBottom", "10px");
+                }, 100);
 
     },
     
@@ -110,6 +147,7 @@
         	var selectedclaimNumber = parseInt(event.currentTarget.getAttribute('data-claimNo'));
         	var selectedEmployeeID = component.get("v.selectedEmployeeID");
         	var ClaimLeaveList;
+        	
 
         //GetClaimDetail API Call
             var actionGetEmployeeClaimDetail = component.get("c.GetEmployeeClaimDetail");
@@ -132,11 +170,17 @@
                     console.log("From v.claimLeaveListClaimLeaveData: " + component.get("v.claimDetailsClaimStatus"));
                     console.log("From v.claimDetailsPayments: " + component.get("v.claimDetailsPayments"));
                     ClaimLeaveList = component.get("v.ClaimLeaveList"); */
-                    
+                    var claimDetailsHeader = response.getReturnValue().Header;
+                                       	
+                        var First = claimDetailsHeader.FirstName.charAt(0);
+                        var Last = claimDetailsHeader.LastName.charAt(0);
+                        claimDetailsHeader.Abbr = Last + "" + First; 				
+                      
 
                     //Passing the selectedEmployeeDetails Details
+                    
                     var ClaimDetailsEvent = component.getEvent("Unum_V1_CLISearch_ClaimDetailsEvent");
-                    ClaimDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedclaimNumber" : selectedclaimNumber , "claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
+                    ClaimDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedclaimNumber" : selectedclaimNumber , "claimDetailsEmployeeDetail": claimDetailsHeader, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
                   //  ClaimDetailsEvent.setParams({"claimDetailsEmployeeDetail": response.getReturnValue().Header, "claimDetailsClaimStatus": response.getReturnValue().ClaimStatus,"claimDetailsPayments": response.getReturnValue().Payments});
                     ClaimDetailsEvent.fire();
                 }
@@ -181,9 +225,14 @@
                 if (state === "SUCCESS")
                 {
                     console.log("From server: " + response.getReturnValue());
+                    var leaveDetailsHeader = response.getReturnValue().Header;
+                                       	
+                        var First = leaveDetailsHeader.FirstName.charAt(0);
+                        var Last = leaveDetailsHeader.LastName.charAt(0);
+                        leaveDetailsHeader.Abbr = Last + "" + First;
                     //Passing the selectedEmployeeDetails Details
                     var LeaveDetailsEvent = component.getEvent("Unum_V1_CLISearch_LeaveDetailsEvent");
-                    LeaveDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedleaveNumber" : selectedleaveNumber ,"LeaveDetailsHeader": response.getReturnValue().Header, "LeaveDetailsLeaveSummary": response.getReturnValue().LeaveSummary, "LeaveDetailsLeavePeriod":response.getReturnValue().LeavePeriod,"LeaveDetailsIntermittentAbsence":response.getReturnValue().IntermittentAbsence,"LeaveDetailsProtection":response.getReturnValue().Protection,"LeaveDetailsAvailableTime":response.getReturnValue().AvailableTime});
+                    LeaveDetailsEvent.setParams({"selectedisClaim" : selectedisClaim , "selectedleaveNumber" : selectedleaveNumber ,"LeaveDetailsHeader": leaveDetailsHeader, "LeaveDetailsLeaveSummary": response.getReturnValue().LeaveSummary, "LeaveDetailsLeavePeriod":response.getReturnValue().LeavePeriod,"LeaveDetailsIntermittentAbsence":response.getReturnValue().IntermittentAbsence,"LeaveDetailsProtection":response.getReturnValue().Protection,"LeaveDetailsAvailableTime":response.getReturnValue().AvailableTime});
                     LeaveDetailsEvent.fire();
                 }
                 else if (state === "INCOMPLETE")

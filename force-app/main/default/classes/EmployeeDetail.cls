@@ -15,7 +15,7 @@ public with sharing class EmployeeDetail {
     @AuraEnabled public String Abbr {get;set;}
     @AuraEnabled public String AvatarColor {get;set;}
     @AuraEnabled public String middleNameWithDot {get;set;}
-    
+             
     public with sharing class UserInfo
     {
         @AuraEnabled public String userName {get;set;}
@@ -56,12 +56,24 @@ public with sharing class EmployeeDetail {
         @AuraEnabled public String tableauSiteId {get; set;}        
         @AuraEnabled public String tableauToken {get; set;}
         @AuraEnabled public UserInfo UserInfo {get; set;}
-        @AuraEnabled public List<OrgCollection> OrgCollection {get; set;}                
+        @AuraEnabled public List<OrgCollection> OrgCollection {get; set;}  
+        
+         public Authorization()
+         {  
+             UserInfo = new UserInfo();
+             OrgCollection = new List<OrgCollection>();  
+    	}
+        
     }
     
     public with sharing class AutoSearch
     {     
-		@AuraEnabled public List<ResultSet1> ResultSet1 {get; set;}				       
+		@AuraEnabled public List<ResultSet1> ResultSet1 {get; set;}
+        
+          public AutoSearch()
+         {  
+             ResultSet1 = new List<ResultSet1>();  
+    	 }
     }
     public with sharing class ResultSet1 
     {

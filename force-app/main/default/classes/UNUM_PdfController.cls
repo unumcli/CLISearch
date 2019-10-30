@@ -1,5 +1,13 @@
-public with sharing class UNUM_PdfController {
-    public static UNUM_SobjectModel model{set;get;}
+/*
+ *  Version 1.0
+ *  Deveoper Name : Anuj Sahu
+ *  Function : get the specific record id and delete the item. Used for PDF and Print 
+ *  operation .
+ * 
+ * */
+
+public with sharing class Unum_PdfController {
+    public static Unum_SobjectModel model{set;get;}
     public string recordId{set;get;}
     
     public UNUM_PdfController(){
@@ -10,7 +18,7 @@ public with sharing class UNUM_PdfController {
     public void MyActionMethod()
    {
        System.debug('action method'+recordId);
-       UNUM_SobjectModel sobjModel = new UNUM_SobjectModel();
+       Unum_SobjectModel sobjModel = new Unum_SobjectModel();
        try{
            PDFStorage__c pdfData = [SELECT Id, Content__c FROM PDFStorage__c Where Id=:recordId ];
            sobjModel.Id = pdfData.Id;
